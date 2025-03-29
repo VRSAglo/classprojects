@@ -1,0 +1,166 @@
+package edu.mtc.egr283.Project03;
+
+import java.util.Scanner;
+/**
+ * This is the Elephant Seal object class that
+ * defines the characteristics of the Elephant Seal
+ * such as name, age, and weight.
+ * @author Adam Glover
+ * @version 1.00 Copyright (c) 2-12-2023 All Rights Reserved.
+ */
+public class ElephantSeal {
+//Constants
+	/**
+	 * Constants for the Elephants seal, Tags like Name, Age,
+	 * and weight, as well as default values for default constructor
+	 */
+	public final static String NAMETAG = "Name: ";
+	public final static String AGETAG = "Age: ";
+	public final static String WEIGHTTAG = "Weight: ";
+	private final static String DEFAULTNAME = "Default";
+	private final static int DEFAULTAGE = -1;
+	private final static double DEFAULTWEIGHT = -1;
+	
+//Fields
+	/**
+	 * Private variables for elephant seal including name,
+	 * age, and weight.
+	 */
+	private String name;
+	private int age;
+	private double weight;
+	
+//Constructor
+	/**
+	 * Parameter constructor for the elephant seals.
+	 * @param newName for the new Name of an elephant seal.
+	 * @param newAge for the new Age of the elephant seal.
+	 * @param newWeight for the new Weight of the elephant seal.
+	 */
+	public ElephantSeal(String newName, int newAge, double newWeight) {
+		this.setName(newName);
+		this.setAge(newAge);
+		this.setWeight(newWeight);
+	}//End bracket of Elephant seal parameter constructor
+	
+	/**
+	 * Default constructor for elephant seal utilizing default constants.
+	 */
+	public ElephantSeal() {
+		this.setName(DEFAULTNAME);
+		this.setAge(DEFAULTAGE);
+		this.setWeight(DEFAULTWEIGHT);
+	}
+//Methods
+	/**
+	 * Method to return the name of an elephant seal object.
+	 * @return name of an elephant seal
+	 */
+	public String getName() {
+		return this.name;
+	}//end bracket of getName method
+	
+	/**
+	 * Method to assign the name of an elephant seal.
+	 * @param newName to be assigned to the variable name.
+	 */
+	private void setName(String newName) {
+		this.name = newName;
+	}//end bracket of setName method
+	
+	/**
+	 * Method to return the age of an elephant seal object.
+	 * @return age of an elephant seal.
+	 */
+	public int getAge() {
+		return this.age;
+	}//end bracket of getAge method
+	
+	/**
+	 * Method to assign the age of an elephant seal object.
+	 * @param newAge to be assigned to the variable age.
+	 */
+	private void setAge(int newAge) {
+		 
+		this.age = newAge;
+	}//end bracket of setAge method
+	
+	/**
+	 * Method to return the weight of an elephant seal object.
+	 * @return weight of an elephant seal.
+	 */
+	public double getWeight() {
+		return this.weight;
+	}//end bracket of getWeight method
+	
+	/**
+	 * Method to assign the weight of an elephant seal object.
+	 * @param newWeight to be assigned to the variable weight.
+	 */
+	private void setWeight(double newWeight) {
+		this.weight = newWeight;
+	}//end bracket of setWeight method
+	
+	/**
+	 * Method to compare the name of an elephant seal
+	 * to see if it is the same as another elephant seals.
+	 * @param otherName The name of a comparing elephant seal.
+	 * @return A boolean if the names are the same.
+	 */
+	public boolean compareName(String otherName) {
+		return this.getName().equals(otherName);
+	}//end bracket of compareName method
+	
+	/**
+	 * Method to compare the name of an elephant seal to 
+	 * see if it is greater or less than that of another 
+	 * elephant seal.
+	 * @param otherSeal The name of a comparing elephant seal.
+	 * @return An integer for when a name is larger or smaller.
+	 */
+	public int compareTo(ElephantSeal otherSeal) {
+		int rv = 0;
+		if(this.getName().compareTo(otherSeal.getName()) < 0 ) {
+			rv = -1;
+		}else if(this.getName().compareTo(otherSeal.getName()) > 0) {
+			rv = +1;
+		}//end bracket of if this.compareTo(otheSeal)
+		return rv;
+	}//end bracket of compareTo method.
+	
+	/**
+	 * Method to read a file and gather the name,
+	 * age, and weight of elephant seal data to create
+	 * an elephant seal object.
+	 * @param inFile The File to be Read
+	 * @return an ElephantSeal object.
+	 */
+	public ElephantSeal readRecord(Scanner inFile) {
+		if(inFile.hasNext()) {
+			this.setName(inFile.next());
+			this.setAge(Integer.parseInt(inFile.next()));
+			this.setWeight(Double.parseDouble(inFile.next()));
+		}//end bracket of if
+		return this;
+	}//end bracket of readRecord
+	
+	/**
+	 * Standard toString override for outputing information
+	 * to the screen.
+	 */
+	@Override
+	public String toString() {
+		return ElephantSeal.NAMETAG + this.getName() + "\t\t" + ElephantSeal.AGETAG + this.getAge()
+		+ "\t\t" + ElephantSeal.WEIGHTTAG + this.getWeight();
+	}//End bracket of toString method
+	
+	/**
+	 * Method to output data in a user friendly manner
+	 * to an output file.
+	 * @return A Formatted String of the Elephant Seal data to output.
+	 */
+	public String toStringFile() {
+		return String.format("%-15s %-10d %-10g %n", this.getName(), this.getAge(), this.getWeight());
+	}//end bracket of toStringFile
+	
+}//end bracket of ElephantSeal class

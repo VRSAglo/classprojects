@@ -1,0 +1,78 @@
+package Project02;
+import java.util.Random;
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+
+/**
+ * This class defines the properties of the YellowDeck
+ * with the <code>Yellowcard</code> class.
+ * @author Adam Glover
+ *@version 1.0.0 Copyright (C) 2023-1-21 All Rights Reserved
+ */
+public class YellowDeck {
+//--------------------------------------Fields----------------------------------------
+	/**
+	 * Datatype fors the <code>Yellow Deck</code> object, random number generator <code>numGen</code>,
+	 * <code>cardsRemaining</code> for number of cards remaining in the deck, <code>DECK_SIZE</code> constant
+	 * for total number of cards in the deck, and <code>Yellowcard</code> array to hold the yellow cards in the deck.
+	 */
+	private static Random numGen;
+	public static int cardsRemaining;
+	public static int DECK_SIZE = 11;
+	private static Yellowcard[] cards;
+// ----------------------------------Constructors-------------------------------------
+	/**
+	 * Constructor for <code>YellowDeck</code> to build the Yellow deck 
+	 */
+	public YellowDeck() {
+		YellowDeck.numGen = new Random();
+		YellowDeck.cardsRemaining = YellowDeck.DECK_SIZE;
+		YellowDeck.cards = new Yellowcard[YellowDeck.DECK_SIZE];
+		
+		int index = 0;
+		for(Yellow s : Yellow.values()) {
+			YellowDeck.cards[index] = new Yellowcard(s);
+			++index;
+		}//end bracket of for each loop
+	}//Ending bracket of YellowDeck constructor
+
+//--------------------------------------Methods---------------------------------------
+	/**
+	 * Method to get the number of cards remaining in the <code>YellowDeck</code>.
+	 * @return An Integer that is the number of cards remaining in the deck.
+	 */
+	public int getCardsRemaining() {
+		return YellowDeck.cardsRemaining;
+	}//end bracket of getCardsRemaining
+	
+	/**
+	 * Method to deal a single <code>Yellowcard</code>.
+	 * @return A single <code>Yellowcard</code> from the <code>YellowDeck</code>.
+	 */
+	public Yellowcard deal() {
+		 Yellowcard rv = null;
+		 int index = -1;
+		 do {
+			 index = YellowDeck.numGen.nextInt(YellowDeck.DECK_SIZE);
+			 rv = YellowDeck.cards[index];
+		 } while(rv == null);
+		 YellowDeck.cardsRemaining -= 1;
+		 YellowDeck.cards[index] = null;
+		 
+		 return rv;
+	}//end bracket of deal method
+	
+	/**
+	 * Method to output the card values in the <code>YellowDeck</code>.
+	 */
+	 public  void displayDeck() {
+		 for(Yellowcard pc : YellowDeck.cards) {
+			 System.out.println(pc.getAffect() + " : " + pc.toString());
+		 }//ending bracket of for each loop
+	 }//Ending bracket of displayDeck method
+
+}//End bracket of YellowDeck class

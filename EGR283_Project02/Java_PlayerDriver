@@ -1,0 +1,12 @@
+package Project02;
+
+public class PlayerDriver {
+	public static void main(String[] args) {
+		Player player1 = new Player("Adam", "Red");
+		Player player2 = new Player("Joe", "Green");
+		
+		
+		player1.setWaitTurn(0);
+		System.out.println(player1.hasTurn());
+	}
+}

@@ -1,0 +1,367 @@
+package edu.mtc.egr283.Project03;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.io.File;
+
+/**
+ * Driver Program to allow for reading and writing of a 
+ * ElephantSeal colony and generate an ArrayList.  Allows for
+ * the creation of new Elephant Seals as well as the removal
+ * of existing Elephant Seals and will then write them to the output file.
+ * 
+ * @author Adam Glover
+ * @version 1.00 Copyright (c) 2-12-2023 All Rights Reserved.
+ *
+ */
+public class ElephantSealColonyDriver {
+
+	/**
+	 * Constant values to be used when reading and writing to files as
+	 * well as printing out to a screen.  Many used with StringBuffer
+	 * to limit memory usage.
+	 */
+	private static final String COLONYTAG = "Colony: ";
+	private static final String YOUNGESTTAG = "Youngest Elephant Seal: ";
+	private static final String OLDESTTAG = "Oldest Elephant Seal: ";
+	private static final String AGETAG = " at the age of ";
+	private static final String LARGETAG = "Largest Elephant Seal: ";
+	private static final String SMALLTAG = "Smallest Elephant Seal: ";
+	private static final String WEIGHTTAG = " weighing ";
+	private static final String WEIGHTUNIT = "lbs.";
+	private static final String AVERAGEAGE = "The average age of the seals is: ";
+	private static final String AVERAGEWEIGHT = "The average weight of the seals is: ";
+
+
+	
+	/**
+	 * Variables to be used within the operation of the program including:
+	 * file to be read and file to be written, printwriter, colony, stringbuffer, 
+	 * scanner objects.
+	 */
+	private static String inFileName;
+	private static String outFileName;
+	private static PrintWriter outFile;
+	private static Scanner inFile;
+	private static Scanner keys;
+	private static StringBuffer sb;
+	private static Colony seals;
+
+	/**
+	 * Main method handling opening/closing of resources 
+	 * and instantiation of objects.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		keys = new Scanner(System.in);
+		sb = new StringBuffer();
+		inFileName = "sealinputfile.txt";
+		outFileName = "sealoutputfile.txt";
+		seals = new Colony();
+		try {
+			inFile = new Scanner(new File(inFileName));
+			outFile = new PrintWriter(new File(outFileName));
+			
+		}catch(FileNotFoundException fnfe) {
+			System.out.println(ElephantSealColonyDriver.COLONYTAG + "ERROR Opening inFile " +
+					inFileName);
+			System.out.println(fnfe.getMessage());
+			System.out.println("in " + System.getProperty("user.dir"));
+			System.out.flush();
+			System.exit(1);
+		}//end bracket of try catch opening files
+		
+		systemGuide();
+		
+		inFile.close();
+		outFile.close();
+		keys.close();
+	}//end bracket of main
+	
+	/**
+	 * System guide that handles progressing through the program.
+	 * Navigation for various components of the program with user input.
+	 */
+	public static void systemGuide() {	
+		int userInput = 0;
+		System.out.println("Welcome to The New Zealand Elephant Seal management system.");
+		System.out.println("Press 1 for Displaying Current File, Press 2 to continue");
+		try {
+		userInput = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please enter only 1 for displaying the current file and 2 for adding a seal to the database");
+			userInput = Integer.parseInt(keys.next());
+		}//end bracket of try catch
+		seals.readFile(inFile);
+		if(userInput == 1) {
+			System.out.println(seals.toString());
+		}//end if
+		System.out.println("Press 1 to Add/Delete seals Press 2 to Write to File");
+		try {
+			userInput = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please only enter 1 for Add/Delete or 2 to Continue");
+			userInput = Integer.parseInt(keys.next());
+		}//end bracket of try/catch
+		if(userInput == 1) {
+			System.out.println("Would you like to Add/Delete any seals? (Press 1 for Add and 2 for Delete)");
+				try {
+					userInput = Integer.parseInt(keys.next());
+				}catch(NumberFormatException nfe) {
+					System.out.println("Please enter only 1 for add or 2 for delete.");
+					userInput = Integer.parseInt(keys.next());
+				}//End try/catch
+				if(userInput == 1) {
+					enterNewSeals();
+				}else {
+					deleteSeal();
+				}//end bracket of if add / delete
+		}//end bracket of If Add/Delete or Write File
+		System.out.println("Please enter 1 for writing the data to the file, enter 2 for exiting program");
+		try {
+			userInput = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please enter only 1 for writing file, and 2 for exiting");
+			userInput = Integer.parseInt(keys.next());
+		}//end end try catch
+		if(userInput == 1) {
+			outputFileData();
+		}else {
+			System.exit(0);
+		}//end bracket of end program if
+	}//end bracket of createColony method
+	
+	/**
+	 * Method to generate new seals for the ArrayList.
+	 * Called within the SystemGuide method.
+	 */
+	public static void enterNewSeals() {
+		int index = seals.getSize();
+		char sentinel = 'Y';
+			String name;
+			int age;
+			double weight;
+			int userInput;
+		
+		do {
+			++index;
+			System.out.println(seals.toString());
+			System.out.println("Do you have the name, age, and weight of the elephant seal you want to enter? (Enter 1 for Yes or 2 for No):");
+			userInput = Integer.parseInt(keys.next());
+			if(userInput == 1) {
+				System.out.println("Seal " + index + ": Please enter name: ");
+				name = keys.next();
+				System.out.println("Seal " + index + ": Please enter age (Please enter only integers): ");
+				try {
+					age = Integer.parseInt(keys.next());
+				}catch(NumberFormatException nfe) {
+					System.out.println("Please be sure to enter only a number (IE: 1 , 2, 3, 49, 56)");
+					age = Integer.parseInt(keys.next());
+				}//End bracket of Try/Catch
+				System.out.println("Seal " + index + ": Please enter weight (Please enter at least one decimal point, IE: 10.0): ");
+				try {
+					weight = Double.parseDouble(keys.next());
+				}catch(NumberFormatException nfe) {
+					System.out.println("Please be sure to enter only a decimal number (IE :1.0, 2.2, 33.5, 456.54)");
+					weight = Double.parseDouble(keys.next());
+				}//end bracket of try/catch
+				seals.addSealData(name, age, weight);
+			}else {
+				System.out.println("Seal " + index + ": Do you have a name? (Enter 1 for Yes or 2 for No)");
+				try {
+				userInput = Integer.parseInt(keys.next());
+				}catch(NumberFormatException nfe) {
+					System.out.println("Please enter only 1 for Yes, or 2 for No");
+					userInput = Integer.parseInt(keys.next());
+				}
+				if(userInput == 1) {
+					System.out.println("Seal " + index + ": Enter the name");
+					name = keys.next();
+				}else {
+					name = "Unnamed";
+				}//end bracket of if has name
+			System.out.println("Seal " + index + ": Do you have the age? (Enter 1 for Yes or 2 for No)");
+			try {
+			userInput = Integer.parseInt(keys.next());
+			}catch(NumberFormatException nfe) {
+				System.out.println("Please enter only 1 for Yes or 2 for No");
+				userInput = Integer.parseInt(keys.next());
+			}//end try/catch
+				if(userInput == 1) {
+					System.out.println("Seal " + index + ": Enter the Age (IE: 1, 2, 4, 5, 34)");
+					try {
+						age = Integer.parseInt(keys.next());
+					}catch(NumberFormatException nfe) {
+						System.out.println("Please be sure to enter only a number (IE: 1 , 2, 3, 49, 56)");
+						age = Integer.parseInt(keys.next());
+					}//End bracket of Try/Catch
+					}else {
+						System.out.println("Seal " + index + ": The age has been set to default (-1)");
+						age = -1;
+					}//End bracket of else
+			System.out.println("Seal " + index + ": Do you have the weight? (Enter 1 for Yes or 2 for No)");
+			try {
+			userInput = Integer.parseInt(keys.next());
+			}catch(NumberFormatException nfe) {
+				System.out.println("Please enter only 1 for Yes or 2 for No");
+				userInput = Integer.parseInt(keys.next());
+			}
+				if(userInput == 1) {
+					System.out.println("Seal " + index + ": Please enter the weight(IE: 1.2, 2.33, 234.2)");
+					try {
+						weight = Double.parseDouble(keys.next());
+					}catch(NumberFormatException nfe) {
+						System.out.println("Please be sure to enter only a decimal value (IE: 1.3 , 23.3, 3.2, 49.3, 56.4)");
+						weight = Double.parseDouble(keys.next());
+					}//End bracket of Try/Catch
+				}else {
+					System.out.println("Seal " + index + ": The weight has been set to default (-1)");
+					weight = -1;
+				}//end bracket of if else
+				seals.addSealData(name, age, weight);
+			}//end bracket of if have info or not	
+			
+			System.out.println("Would you like to enter another seal? (Enter 1 for Yes or 2 for No)");
+			try {
+			userInput = Integer.parseInt(keys.next());
+			}catch(NumberFormatException nfe) {
+				System.out.println("Please enter only 1 for yes or 2 for no");
+				userInput = Integer.parseInt(keys.next());
+			}//end try/catch
+		}while(sentinel == '1');
+	}//end bracket of enterSeals method
+	
+	/**
+	 * Method to delete seals from the ArrayList.
+	 * Called from the SystemGuide method.
+	 */
+	public static void deleteSeal() {
+		int userInput = 0;
+		String sealInput = "";
+		do {
+			System.out.println(seals.toString());
+			System.out.println("Would you like to delete any seals? Press 1 for Yes and 2 for No");
+			try {
+				userInput = Integer.parseInt(keys.next());
+			}catch(NumberFormatException nfe) {
+				System.out.println("Please enter 1 for Yes, 2 for No");
+				userInput = Integer.parseInt(keys.next());
+			}//end bracket of try/catch
+			if(userInput == 1) {
+				System.out.println("Press 1 to Search by name, Press 2 to search by Index");
+				try {
+					userInput = Integer.parseInt(keys.next());
+				}catch(NumberFormatException nfe) {
+					System.out.println("Please enter only 1 for Search by Name and 2 for Search by Index");
+					userInput = Integer.parseInt(keys.next());
+				}//end bracket of try/catch
+				if(userInput == 1) {
+					System.out.print("Please enter the name of the seal:");
+					sealInput = keys.next();
+					System.out.print(seals.findSealName(sealInput).toString());
+					System.out.println("Is this the seal you wish to delete? Press 1 for yes and 2 for no");
+					try {
+						userInput = Integer.parseInt(keys.next());
+					}catch(NumberFormatException nfe) {
+						System.out.println("Please enter only 1 for yes or 2 for no");
+					}//end bracket of try catch
+					if(userInput == 1) {
+						seals.deleteSealName(sealInput);
+					}else {
+						System.out.println("Would you like to delete another seal? Press 1 for yes or 2 for no");
+						try {
+							userInput = Integer.parseInt(keys.next());
+						}catch(NumberFormatException nfe) {
+							System.out.println("Please enter only 1 for yes or 2 for no");
+							userInput = Integer.parseInt(keys.next());
+						}//end try catch
+					}//end if correct seal
+				}else {
+					System.out.println("Please enter the Index of the seal you wish to delete (Enter a number)");
+					sealInput = keys.next();
+
+					seals.findSealIndex(Integer.parseInt(sealInput));
+					System.out.print(seals.getElephantSeal(Integer.parseInt(sealInput)).toString());
+					System.out.println("Is this the seal you wish to delete? Press 1 for Yes and 2 for No ");
+						try {
+							userInput = Integer.parseInt(keys.next());
+						}catch(NumberFormatException nfe) {
+							System.out.println("Please enter only 1 for Yes or 2 for No");
+							userInput = Integer.parseInt(keys.next());
+						}//end try/catch
+						if(userInput == 1) {
+							seals.deleteSealName(seals.getElephantSeal(Integer.parseInt(sealInput)).getName());
+						}else {
+							System.out.println("Would you like to delete another seal? Enter 1 for Yes 2 for No");
+							try {
+								userInput = Integer.parseInt(keys.next());
+							}catch(NumberFormatException nfe) {
+								System.out.println("Please enter only a 1 for yes or a 2 for no");
+								userInput = Integer.parseInt(keys.next());
+							}//end try catch
+						}//end if else delete another seal
+					}//end if else index of seal
+				}//end if else delete a seal (name/index)
+		}while(userInput == 1);
+	}//end bracket of delete seals class.
+	
+	/**
+	 * Method to output information onto the screen in a user Friendly manner.
+	 * Called during the outputToFileMethod
+	 * Includes the sortNames method call.
+	 * @return A Formatted String with ColonyData.
+	 */
+	public static String outputDataToScreen() {
+		sb.append(ElephantSealColonyDriver.YOUNGESTTAG + seals.getYoungestSeal().getName() + 
+				ElephantSealColonyDriver.AGETAG + seals.getYoungestSeal().getAge() + "\n");
+		sb.append(ElephantSealColonyDriver.OLDESTTAG + seals.getOldestSeal().getName() +
+				ElephantSealColonyDriver.AGETAG + seals.getOldestSeal().getAge() + "\n");
+		sb.append(ElephantSealColonyDriver.LARGETAG + seals.getLargestSeal().getName() +
+				ElephantSealColonyDriver.WEIGHTTAG + seals.getLargestSeal().getWeight() + 
+				ElephantSealColonyDriver.WEIGHTUNIT + "\n");
+		sb.append(ElephantSealColonyDriver.SMALLTAG + seals.getSmallestSeal().getName() +
+				ElephantSealColonyDriver.SMALLTAG + seals.getSmallestSeal().getWeight() +
+				ElephantSealColonyDriver.WEIGHTUNIT + "\n");
+		sb.append(ElephantSealColonyDriver.AVERAGEAGE + seals.getAverageAge() + "\n");
+		sb.append(ElephantSealColonyDriver.AVERAGEWEIGHT + seals.getAverageWeight() + "\n");
+		sb.append(ElephantSeal.NAMETAG + "\t\t\t" + ElephantSeal.AGETAG + "\t\t" + ElephantSeal.WEIGHTTAG + "\t\t\t\n");
+		sb.append("\nUnsorted Data:\n");
+		sb.append(seals.toString()); 
+		seals.sortNames();
+		sb.append("\n\n Sorted Data:\n");
+		sb.append(seals.toString());
+		return sb.toString();
+	 }//end bracket of outputData
+	
+	/**
+	 * Method to output the Colony data to a file 
+	 * Called from SystemGuide method
+	 * Includes call to outputDataToScreen method.
+	 */
+	public static void outputFileData() {
+		System.out.println("The data being written is: ");
+		System.out.println("Please wait: Writing Data to File:");
+		outFile.printf("%s New Zealand Wildlife Colony Tracker%n", ElephantSealColonyDriver.COLONYTAG);
+		outFile.printf("%s Unsorted %n", ElephantSealColonyDriver.COLONYTAG);
+		outFile.print(seals.toStringFile());
+		outFile.printf("%s Sorted %n", ElephantSealColonyDriver.COLONYTAG);
+		
+		System.out.println(outputDataToScreen());
+		
+		outFile.print(seals.toStringFile());
+		outFile.printf("%-24s %-10s %-15s %-5d %n", ElephantSealColonyDriver.YOUNGESTTAG, seals.getYoungestSeal().getName(),
+				ElephantSealColonyDriver.AGETAG, seals.getYoungestSeal().getAge());
+		outFile.printf("%-24s %-10s %-15s %-5d %n", ElephantSealColonyDriver.OLDESTTAG, seals.getOldestSeal().getName(),
+				ElephantSealColonyDriver.AGETAG, seals.getOldestSeal().getAge());
+		outFile.printf("%-24s %-10s %-15s %-5g %n", ElephantSealColonyDriver.LARGETAG, seals.getLargestSeal().getName(),
+				ElephantSealColonyDriver.WEIGHTTAG, seals.getLargestSeal().getWeight());
+		outFile.printf("%-24s %-10s %-15s %-5g %n", ElephantSealColonyDriver.SMALLTAG, seals.getSmallestSeal().getName(),
+				ElephantSealColonyDriver.WEIGHTTAG, seals.getSmallestSeal().getWeight());
+		
+		
+		System.out.println("Write complete, have a nice day!");
+		
+	}//end outputFileData method
+	
+}//end bracket of ElephantSealColonyDriver

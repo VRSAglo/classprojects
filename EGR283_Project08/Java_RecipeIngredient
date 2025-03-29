@@ -1,0 +1,112 @@
+package edu.mtc.egr283.Project08;
+//Adam Glover
+//Project 08
+//Professor Sims
+//Completed 4-23-2023
+//Due 4-27-2023
+
+/**
+ * Recipe ingredient that stored Ingredient, Unit, and a quantity 
+ * to make up the Recipes ingredients.
+ * @author Adam Glover
+ *
+ */
+public class RecipeIngredient {
+    private double quantity;
+    private Ingredient ingredient;
+    private Unit unit;
+    
+    /**
+     * Default no parameter constructor
+     */
+    public RecipeIngredient() {
+    	this(0, null, null);
+    }//end bracket of default constructor
+    
+    /**
+     * 3 Parameter Constructor containing the quantity, name, and unit.
+     * @param newQuantity A double value for the amount of a unit within an ingredient
+     * @param newName The Ingredient's name 
+     * @param newUnit The unit of measurement for the ingredient
+     */
+    public RecipeIngredient(double newQuantity, Ingredient newName, Unit newUnit) {
+    	this.setQuantity(newQuantity);
+    	this.setIngredient(newName);
+    	this.setUnit(newUnit);
+    }//end bracket of Single parameter constructor
+    
+    /**
+     * Accessor Method to get the quantity of a unit in an ingredient
+     * @return a primitive double that is the amount of a unit
+     */
+    public double getQuantity() {
+    	return this.quantity;
+    }//end bracket of getQuantity method
+    
+    /**
+     * Accessor method to get the Ingredient name
+     * @return an Ingredient for the recipe
+     */
+    public Ingredient getIngredient() {
+    	return this.ingredient;
+    }//end bracket of getIngredient method
+    
+    /**
+     * Accessor method to get the unit of measurement for an ingredient
+     * @return A Unit for the recipe
+     */
+    public Unit getUnit() {
+    	return this.unit;
+    }//end bracket of getUnit method
+    
+    /**
+     * Mutator method to set the quantity of the unit of measurement for an ingredient
+     * @param newQuantity The new double value that is the amount of the unit
+     */
+    private void setQuantity(double newQuantity) {
+    	this.quantity = newQuantity;
+    }//end bracket of setQuantity method
+    
+    /**
+     * Mutator method to set the Ingredient for a recipe
+     * @param newIngredient the Ingredient of a recipe
+     */
+    private void setIngredient(Ingredient newIngredient) {
+    	this.ingredient = newIngredient;
+    }//end bracket of setIngredient method
+    
+    /**
+     * Mutator method to set the unit of measurement for a recipe
+     * @param newUnit The new unit of measurement for the recipe
+     */
+    private void setUnit(Unit newUnit) {
+    	this.unit = newUnit;
+    }//end bracket of setUnit method
+    
+    /**
+     * Method to determine if a RecipeIngredient is equal to a compared to RecipeIngredient
+     * @param recipeToCheck The RecipeIngredient that is compared against.
+     * @return True if the RecipeIngredients are equal, false if they are not.
+     */
+    public boolean equals(RecipeIngredient recipeToCheck) {
+    	boolean rv = false;
+    	if(this.getIngredient().equals(recipeToCheck.getIngredient()) &&
+    			 this.getUnit().equals(recipeToCheck.getUnit()) &&
+    			this.getQuantity() == recipeToCheck.getQuantity()) {
+    		rv = true;
+    	}//end bracket of if
+    	return rv;
+    }//end bracket of equals method
+    
+    /**
+     * To String override to output the name, quantity, and unit of measurement for a RecipeIngredient
+     */
+    @Override
+    public String toString() {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append(this.getQuantity() + " " + this.getUnit().getName() + "(s) of " + this.getIngredient().getName());
+    	return sb.toString();
+    }//end bracket of toSTring override
+    
+}//end bracket of RecipeIngredient class
+

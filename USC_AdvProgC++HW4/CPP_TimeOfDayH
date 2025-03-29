@@ -1,0 +1,89 @@
+#ifndef _TIMEOFDAY_H_
+#define _TIMEOFDAY_H_
+/**
+* Written by Adam Glover
+* 11-2-2024
+*@class TimeOfDay
+*@brief Represents a time as integers in hours, minutes, and seconds
+*
+* The TimeOfDay class encapsulates the hour, minute, and second components and
+* ensures validates their entries as appropriate time values (0-23 for hours, 
+* 0-59 for minutes and seconds).
+*/
+class TimeOfDay{
+public:
+//===============================Constructors=============================================
+/**
+ * @brief Constructor with initial values of 00:00:00.
+ */
+TimeOfDay(int hour = 0, int minute = 0, int second = 0);
+
+//================================Mutator Methods=========================================
+/**
+ * @brief Sets the hour component.
+ * 
+ * @param hour Sets hour to a valid entry of 0-23. If invalid, remains unchanged.
+ */
+void SetHour(int hour);
+/**
+ * @brief Sets the minute component.
+ * 
+ * @param minute Sets minute to a valid entry if 0-59. If invalid, remains unchanged.
+ */
+void SetMinute(int minute);
+/**
+ * @brief Sets the second component.
+ * 
+ * @param second Sets second to a valid entry if 0-59. If invalid, remains unchanged.
+ */
+void SetSecond(int second);
+/**
+ * @brief Prints the time in a specified format.
+ * 
+ * @param isMilTime If true, prints in Military Time (24 hours format).
+ * If false, prints in a.m./p.m. format.
+ * @param hasSeconds if true, includes seconds to be printed. 
+ * If false, prints the time without seconds.
+ */
+void Print(bool isMilTime = false, bool hasSeconds = false) const;
+
+
+//======================================Accessor methods==================================
+/**
+ * @brief Returns the hour value of the TimeOfDay object.
+ */
+int GetHour() const { return hour_; }
+/**
+ * @brief Returns the minute value of the TimeOfDay object.
+ */
+int GetMinute() const { return minute_; }
+/**
+ * @brief Returns the Second value of the TimeOfDay object.
+ */
+
+int GetSecond() const { return second_; }
+
+/**
+ * @brief Overloaded < Operator to compare if one TimeOfDay is earlier in the day than the other.
+ * @param other The TimeOfDay object to compare against.
+ * @returns boolean if calling object is less than the compared to object(parameter).
+ */
+bool operator<(const TimeOfDay& other) const;
+
+/**
+ * @brief Overloaded == Operator to compare if one TimeOfDay object is equal to another.
+ * @param other The TimeOfDay object to compare against.
+ * @returns boolean if calling object is equal to the compared to object(parameter).
+ */
+bool operator==(const TimeOfDay& other) const;
+
+
+
+
+private:
+int hour_; ///< The hour variable of type int. Valid values of 0-23.
+int minute_;///<The minute variable of type int. Valid values of 0-59.
+int second_;///<The second variable of type int. Valid values of 0-59.
+};//End bracket for TimeOfDay class.
+
+#endif

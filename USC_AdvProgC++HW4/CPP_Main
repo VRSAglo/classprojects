@@ -1,0 +1,24 @@
+#include "timeofday.h"
+#include "timeofday.cpp"
+#include "timeinterval.h"
+#include "timeinterval.cpp"
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
+int main(){
+    TimeOfDay t1(10,45,36);
+    TimeOfDay t2(10,45,35);
+
+    TimeInterval ti(t1, t2);
+    cout << "First output:" ;
+    ti.Print(false, true);
+    ti.SetEndTime(t1);
+    cout << "Second Output:";
+    ti.Print(false, true);
+
+    cout << "Third output:";
+    ti.SetEndTime(t2);
+    ti.Print(false, true);
+
+}

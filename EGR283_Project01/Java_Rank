@@ -1,0 +1,27 @@
+package edu.mtc.egr283.Project01;
+
+public enum Rank {
+
+	DUECE("Deuce", '2'),  TREY("Trey", '3'),    FOUR("Four", '4'),
+	FIVE("Five", '5'),    SIX("Six", '6'),      SEVEN("Seven", '7'),
+	EIGHT("Eight", '8'),  NINE("Nine", '9'),    TEN("Ten", 'T'),
+	JACK("Jack", 'J'),    QUEEN("Queen", 'Q'),  KING("King", 'K'),
+	ACE("Ace", 'A');
+	
+	
+	private String name;
+	private char symbol;
+	
+	private Rank(String newName, char newSymbol) {
+		this.name = newName;
+		this.symbol = newSymbol;
+	}//ending bracket of Constructor
+	
+	public String getName() {
+		return this.name;
+	}//Ending bracket of getName method
+	
+	public char getSymbol() {
+		return this.symbol;
+	}//ending bracket of getSymbol method
+}//Ending bracket of enum Rank

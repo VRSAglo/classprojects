@@ -1,0 +1,90 @@
+#ifndef _TIMEINTERVAL_H_
+#define _TIMEINTERVAL_H_
+#include<string>
+#include "timeofday.h"
+using std::string;
+/** 
+ * Written by Adam Glover
+ * 11-3-2024
+ * @class TimeInterval
+ * @brief Represents a time interval comprised of 2 TimeOfDay objects.
+ * 
+ * The TimeInterval class encapsulates a starting and ending TimeOfDay object and
+ * ensures that they are valid TimeIntervals. (Starting time being an earlier time in 
+ * same day then the ending time).
+ */
+class TimeInterval{
+public:
+//==============================Constructors=============================================
+/**
+ * @brief Default constructor for a TimeInterval that initializes two TimeOfDay objects at 00:00:00
+ */
+    TimeInterval();
+
+/**
+ * @brief Paramaterized Constructor for a TimeInterval with a specified start and end time.
+ * @param start A TimeOfDay object that represents the start of the time interval in a single day.
+ * @param end A TimeOfDay object that represents the end of the time interval in a single day. 
+ * Must be later in the day than the start interval.
+ */
+    TimeInterval(const TimeOfDay& start,const TimeOfDay& end);
+
+/**
+ * @brief Paramaterized Constructor for a TimeInterval with a specified start, an interval length of time,
+ * and a unit of time to add the interval to. Sets the ending time to the start time with the added
+ * interval given in the specified units.
+ * @param start A TimeOfDay object that represents the start of the time interval in a single day.
+ * @param interval An integer value that represents the amount of time to add to the start time.
+ * @param units A unit of time to increase the interval by. Must be in hours, minutes, or seconds.
+ */
+    TimeInterval(const TimeOfDay& start, int interval, string units);
+
+
+//===============================================Accessor methods===============================
+/**
+ * @brief Returns the TimeOfDay object held in the start_ variable.
+ */
+TimeOfDay GetStartTime() const {return start_; }
+/**
+ * @brief Returns the TimeOfDay object held in the end_ variable.
+ */
+TimeOfDay GetEndTime() const {return end_;}
+
+/**
+ * @brief Method to set the start_ variable as long as the argument does not appear later
+ * in the day than the end_ value.
+ * @param start New TimeOfDay object to represent the start of the interval.
+ */
+void SetStartTime(const TimeOfDay& start);
+
+/**
+ * @brief Method to set the end_ variable as long as the argument does not appear earlier 
+ * in the day then the initial start_ value.
+ * @param end New TimeOfDay object to represent the end of the interval.
+ */
+void SetEndTime(const TimeOfDay& end);
+
+/**
+ * @brief Method to increment the start_ variable by a desired length and by a desired unit.
+ * @param length Integer value to increment the time by.
+ * @param units String value to define which unit of time to increment by. 
+ * Must be in hours, minutes, seconds.
+ */
+void SetEndTime(int length, string units);
+
+/**
+ * @brief Method to print out the TimeInterval based on the desired formatting.
+ * @param IsMilTime Boolean that decides whether the output should be in military time.
+ * @param hasSeconds Boolean that decides whether the output should have the seconds appended.
+ */
+void Print(bool IsMilTime = false, bool hasSeconds = false);
+
+
+
+private:
+TimeOfDay start_;///<The start time variable of type TimeOfDay. Valid if earlier then end_.
+TimeOfDay end_;///<The end time variable of type TimeOfDay. Valid if later then start_.
+
+
+};
+#endif

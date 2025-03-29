@@ -1,0 +1,147 @@
+package TrafficLight;
+//Adam Glover
+//Project 06 Traffic Sim
+//Professor Sims
+//Completed: 3-25-23
+//Due: 3-30-23
+//This program runs a simulation of a traffic intersection to determine congestion
+
+/** Lane
+ *  Represents a lane of vehicles using an array
+ */
+public class Lane {
+
+    private Vehicle[] theLane;
+
+    /**
+     *  Constructs a  Lane-object with place for n vehicles
+     */
+    public Lane(int n, String newName)
+    {
+    	theLane = new Vehicle[n];
+    }
+
+    /**
+     * Step all vehicles (except the one in place 0) one step
+     * (if possible). (The vehicle at position 0 is removed before calling
+     * this method using the method below).
+     */
+    public void step()
+    {
+
+    	boolean isEmpty = false;
+    	for(int x = 0; x < this.theLane.length; ++x) {
+    		if(this.theLane[x] == null) {
+    			isEmpty = true;
+    		}//end bracket of if
+    	}//end bracket of for
+    	
+    	if( isEmpty) {
+    		for(int i = 1; i < this.theLane.length; ++i) {
+    			if(this.theLane[i] != null && this.theLane[i-1] != null) {
+    				continue;
+    			}else {
+    				if(this.theLane[i] != null) {
+    					Vehicle move = this.theLane[i];
+    					this.theLane[i] = this.theLane[i-1];
+    					this.theLane[i-1] = move;
+    				}//end bracket of if block
+    			}//end bracket of if else
+    		}//end bracket of for loop
+    	}//end bracket of if has empty
+    }//end bracket of step method
+
+    /**
+     * Removes the first vehicle
+     * @return The Vehicle at the first place or null if it is empty
+     */
+    public Vehicle removeFirst()
+    {
+    	Vehicle rv = null;
+    	rv = this.getFirst();
+    	if(rv != null) {
+    		theLane[0] = null;
+    	}//end bracket of if
+        return rv;
+    }//end bracket of removeFirst method
+
+    /**
+     * Returns the first vehicle without removing it
+     * @return A reference to the vehicle in the first place or null if it is
+     * empty
+     */
+    public Vehicle getFirst()
+    {
+    	Vehicle rv = null;
+    	if(theLane[0] != null) {
+    		
+    	rv = theLane[0];
+    	}//end bracket of if
+        return rv;
+    }//end bracket of getFirst method
+
+    /**
+     * @return true if the last place if empty, else false
+     */
+    public boolean lastFree()
+    {
+    	boolean rv = false;
+    	if(theLane[theLane.length-1] == null) {
+    		rv = true;
+    	}//end bracket of if statement
+        return rv;
+    }//endb racket of lastFree method
+
+    /**
+     * Stores a vehicle at the end of the lane
+     * @param v The vehicle that is to be stored
+     */
+    public void putLast(Vehicle v)
+    {
+    	if(this.lastFree()) {
+    		this.theLane[theLane.length -1] = v; 
+    	}//end bracket of if
+    }//end bracket of putLast method
+
+    /**
+     * @return A string representation of a lane and its vehicles
+     */
+    public String toString()
+    {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append("[");
+    	for(int i = 0; i < this.theLane.length; ++i) {
+    		if(this.theLane[i] == null) {
+    			sb.append("| |");
+    		} else {
+    			sb.append("|" + theLane[i].getDestination() + "|" );
+    		}
+    	}
+    	sb.append("]");
+        return sb.toString();
+    }//end bracket of toString
+    
+    /**
+     * Method to define whether a lane is empty or not
+     * @return True for empty false for not
+     */
+
+     
+     
+    /**
+     * An equals method that defines whether a vehicle is the same as otherVehicle
+     * by checking its instance variables.
+     * @param otherVehicle The other vehicle to check
+     * @return True if the instance variables match, false if they do not.
+     */
+    public boolean equals(Vehicle otherVehicle) {
+    	boolean rv = false;
+    	if(getFirst().getBornTime() == otherVehicle.getBornTime()){
+    		if(getFirst().getDestination() == (otherVehicle.getDestination())) {
+    			rv = true;
+    		}//end bracket of inner if
+    	}//end bracket of outer if
+    	
+    	return rv;
+    }//end bracket of equals method
+}//end bracket of Lane class

@@ -1,0 +1,210 @@
+package edu.mtc.egr283.Project08;
+//Adam Glover
+//Project 08
+//Professor Sims
+//Completed 4-23-2023
+//Due 4-27-2023
+/**
+ * This class operates as the completed list of ingredients and instructions
+ * for a recipe.
+ * @author Adam Glover
+ *
+ */
+public class Recipe {
+    private String name;
+    private DLL<RecipeIngredient> ingredients;
+    private DLL<Instruction> instructions;
+    
+
+    /**
+     * Default no parameter constructor
+     */
+    public Recipe() {
+    	this(null,null,null);
+    }//end bracket of default constructor
+    
+    /**
+     * Secondary single parameter constructor 
+     * @param newName The new name of a recipe
+     */
+    public Recipe(String newName) {
+    	this(newName,null,null);
+    }//end bracket of constructor
+    
+    /**
+     * Full parameter constructor with the ingredient list, instruction list, and name.
+     * @param newName The new name of the Recipe
+     * @param newIngredients The RecipeIngredient list for the recipe
+     * @param newInstructions The Instruction list for the recipe
+     */
+    public Recipe(String newName, DLL<RecipeIngredient> newIngredients,
+    		DLL<Instruction> newInstructions) {
+    	this.setName(newName);
+    	ingredients = new DLL<RecipeIngredient>();
+    	instructions = new DLL<Instruction>();
+    }//end bracket of parameter constructor.
+    
+    /**
+     * Accessor Method to return the name of the recipe
+     * @return A String that is a name for the recipe
+     */
+    public String getName() {
+    	return this.name;
+    }//end bracket of getName method
+    
+    /**
+     * Accessor method for the ingredients list.
+     * @return A RecipeIngredient list for the recipe.
+     */
+    public DLL<RecipeIngredient> getIngredients(){
+    	return this.ingredients;
+    }//end bracket of getIngredients method
+    
+    /**
+     * Accessor method for the instructions list.
+     * @return A Instruction list for the recipe.
+     */
+    public DLL<Instruction> getInstructions(){
+    	return this.instructions;
+    }//end bracket of getInstructions method
+    
+    /**
+     * Mutator method to assign the name of a recipe
+     * @param newName The new name to be assigned to a recipe.
+     */
+    public void setName(String newName) {
+    	this.name = newName;
+    }//end bracket of setName method
+    
+    /**
+     * Method to remove a RecipeIngredient based on the Ingredients name
+     * @param itemToRemove The name of the Ingredient in RecipeIngredient to remove
+     * @return The RecipeIngredient to be removed, data validation purposes.
+     */
+    public RecipeIngredient removeIngredient(Ingredient itemToRemove) {
+    	RecipeIngredient removeCheck = null;
+    	int position = 0;
+    	for(int i = 0; i < this.ingredients.size(); ++i) {
+    		if(this.ingredients.get(i).getIngredient().equals(itemToRemove)) {
+    			removeCheck = this.ingredients.get(i);
+    			position = i;
+    		}//end bracket of if
+    	}//end bracket of for
+    	if(removeCheck.getIngredient() != null) {
+    		this.ingredients.remove(position);
+    	}//end bracket of if 
+    	return removeCheck;
+    }//end bracket of removeIngredient method
+    
+    /**
+     * Method to remove an instruction based on it's Instruction field
+     * @param itemToRemove The Instruction to be removed from the list
+     * @return The instruction removed, data validation purposes.
+     */
+    public Instruction removeInstruction(Instruction itemToRemove) {
+    	Instruction removeCheck = null;
+    	int position = 0;
+    	for(int i = 0; i < this.instructions.size(); ++i) {
+    		if(this.instructions.get(i).getInstruction().equals(itemToRemove.getInstruction())){
+    			removeCheck = this.instructions.get(i);
+    			position = i;
+    		}//end bracket of if
+    	}//End bracket of for
+    	    		if(removeCheck.getInstruction() != null) {
+    			this.instructions.remove(position);
+    		}//end bracket of if
+    	   return removeCheck;
+    }//end bracket of removeINstruction method
+    
+    /**
+     * Method to add an ingredient at the head of the list .
+     * @param newIngredient New RecipeIngredient to be added to the head of the list.
+     */
+    public void addIngredientAtHead(RecipeIngredient newIngredient) {
+    	this.getIngredients().addAtHead(newIngredient);
+    
+    }//end bracket of addIngredientAtHead
+    
+    /**
+     * Method to add a RecipeIngredient at a specific point in a list.
+     * @param newIngredient The RecipeIngredient to be added to the list.
+     * @param position The Position within the list to add to.
+     */
+    public void addIngredientAtPosition(RecipeIngredient newIngredient, int position) {
+    	this.getIngredients().addAtPosition(newIngredient, position);
+    }//end bracket of addIngredientAtPosition
+    
+    /**
+     * Method to add an Instruction at the head of the list.
+     * @param newInstruction The new Instruction to be added to the head of the list
+     */
+    public void addInstructionAtHead(Instruction newInstruction) {
+    	this.getInstructions().addAtHead(newInstruction);
+    }//end bracket of addInstructionatHead method
+    
+    /**
+     * Method to add an instruction to the list at a specific point.
+     * @param newInstruction The new instruction to be added to the list
+     * @param position The position to add the new instruction to
+     */
+    public void addInstructionAtPosition(Instruction newInstruction, int position) {
+    	this.getInstructions().addAtPosition(newInstruction, position);
+    }//end bracket of addInstructionAtPosition method
+    
+    /**
+     * Method to locate whether an instruction is in the list or not.
+     * @param instructionToFind The Instruction to check
+     * @return A true if the instruction is in the list, False if it is not
+     */
+    public boolean searchInstruction(Instruction instructionToFind) {
+    	boolean rv = false;
+    	for(int i = 0; i < this.instructions.size(); ++i) {
+    		if(this.instructions.get(i).equals(instructionToFind.getInstruction())) {
+    			rv = true;
+    		}//end bracket of if
+    	}//end bracket of for
+    	return rv;
+    }//end bracket of searchInstruction
+    
+    /**
+     * Method to locate whether an ingredient is in the list or not
+     * @param ingredientToFind The ingredient to check
+     * @return True if the ingredient is in the list, false if not.
+     */
+    public boolean searchIngredient(Ingredient ingredientToFind) {
+    	boolean rv = false;
+    	for(int i = 0; i < this.ingredients.size(); ++i) {
+    		if(this.ingredients.get(i).getIngredient().equals(ingredientToFind)) {
+    			rv = true;
+    		}//end bracket of if
+    	}//end bracket of for
+    	return rv;
+    }//end bracket of searchIngredient method
+    
+    /**
+     * Method to compare if the name, ingredient list, and instruction list of one
+     * Recipe is equal to another.
+     * @param otherRecipe The other recipe to compare against.
+     * @return True if they are equal, false if they are not.
+     */
+    public boolean equals(Recipe otherRecipe) {
+    	boolean rv = false;
+    	if(this.name.equalsIgnoreCase(otherRecipe.getName()) &&
+    			this.ingredients.equals(otherRecipe.getIngredients()) &&
+    			this.instructions.equals(otherRecipe.getInstructions())) {
+    		rv = true;
+    	}//end bracket of if
+    	return rv;
+    }//end bracket of equals method.
+    
+    /**
+     * To string method to output the Recipe's name 
+     */
+    @Override
+    public String toString() {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append(this.getName());
+    	return sb.toString();
+    }//end bracket of recipe to string
+}//end bracket of Recipe
+

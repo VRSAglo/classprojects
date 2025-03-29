@@ -1,0 +1,68 @@
+package Project02;
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+/**
+ * This creates the enumeration object for the yellow cards
+ * and defines their intrinsic properties.
+ * @author Adam Glover
+ * @version 1.0.0 Copyright 2023-1-21 All Rights Reserved.
+ */
+public enum Yellow {
+	
+RED		(0, "Take a red card if you please.  Hope you win this game with ease."),
+ONE		(1, "Uncle Wiggily moves ahead by one.  He takes a walk and has some fun."),
+TWO		(2, "Uncle Wiggily hops forward by two.  He moves right now and then he's through."),
+THREE	(3, "How near the finish will you be?  When Uncle Wiggily hops ahead three."),
+FOUR	(4, "Uncle Wiggily hops along by four.  Now he likes you even more."),
+FIVE	(5, "He'd rather walk than take a drive.  Uncle Wiggily jumps ahead by five."),
+SIX		(6, "Move Uncle Wiggily forward by six.  The clever rabbit knows all the tricks."),
+SEVEN	(7, "Uncle Wiggily takes seven hops.  He moves right now and then he stops."),
+EIGHT	(8, "Hurry! Hurry! Don't be late!  Move Uncle Wiggily ahead by eight."),
+NINE	(9, "Uncle Wiggily hops ahead by nine.  He thinks this game is really fine."),
+TEN		(10, "Hope you get this card again!  Uncle Wiggily goes ahead by ten.");
+	
+//--------------------------------------Fields----------------------------------------
+	/**
+	 * Data types int for <code>space</code> and String for <code>flavorText</code>.
+	 * To be used with the <code>Yellow</code> enumeration object.
+	 */
+	public int space;
+	public String flavorText;
+
+// ----------------------------------Constructors-------------------------------------
+	/**
+	 * Constructs the object <code>Yellow</code> with properties of the Yellow Card
+	 * including Number of Spaces to move in <code>space</code> and Rhyme to output
+	 * int <code>getText</code>
+	 * @param newSpace The space that is to be moved when the card is drawn.
+	 * @param newText The rhyming text that is to be printed when card is drawn.
+	 * 
+	 */
+	private Yellow(int newSpace, String newText) {
+		this.space = newSpace;
+		this.flavorText = newText;
+	}//end bracket of Yellow constructor
+
+
+//--------------------------------------Methods---------------------------------------
+	/**
+	 * Returns the integer value stored in <code>space</code>
+	 * @return An integer stored in <code>space</code>
+	 */
+	public int getSpace() {
+		return this.space;
+	}//end bracket of getSpace method
+
+	/**
+	 * Return the String value stored in <code>flavorText</code>
+	 * @return A String stored in <code>flavorText</code>
+	 */
+	public String getText() {
+		return this.flavorText;
+	}//end bracket of getText() method.
+	
+}//end bracket of Yellow class

@@ -1,0 +1,203 @@
+#include "program3functions.h"
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
+
+void getFileCharData(std::ifstream &file, char alphabetArr[],int charCountArr[], int indexArr[] ,const int size){
+    char next;
+    file >> next;
+    while(file.good()){
+        for(int j = 0; j < size; j++){
+            if(std::tolower(next) == alphabetArr[j]){
+                charCountArr[j]++;
+                break;
+            }//end if
+        }//end for
+        file >> next;
+    }//end while
+    file.close();
+}//end getFileCharData
+
+
+void sortCharacters(char * charArr, int * asciArr, int * indexArr,const int &size){
+    int i = 0;
+    while (i+1 < size){
+        int j = i+1;
+        while( j > 0 && asciArr[j] < asciArr[j-1]){
+            int temp1 = asciArr[j];
+            asciArr[j] = asciArr[j-1];
+            asciArr[j-1] = temp1;
+
+            char temp2 = charArr[j];
+            charArr[j] = charArr[j-1];
+            charArr[j-1] = temp2;
+
+            int temp3 = indexArr[j];
+            indexArr[j] = indexArr[j-1];
+            indexArr[j-1] = temp3;
+
+            j = j-1;
+        }//end inner While
+        i = i+1;
+    }//end outer While
+}//end sortcharacters function.
+
+int getHighestCharIndex(char * alphabetArr, int * countArr,int * indexArr, const int &size){
+    int index = 0;
+    sortByValue(countArr, alphabetArr, indexArr, size);
+    index = indexArr[size-1];
+    return index;
+}
+
+int getLowestNumOfChars(int * charCountArr, const int &size){
+    int lowestValue = charCountArr[0];
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            if(charCountArr[i] < charCountArr[j] && charCountArr[i] < lowestValue){
+                lowestValue = charCountArr[i];
+            }
+        }
+    }
+    return lowestValue;
+}
+
+void printHighestFreq(char * alphabetArr, int * countArr,int * indexArr, const int &size, int &index){
+        sortAlphabetically(countArr, alphabetArr, indexArr, size);
+    int numAppearance = 0;
+    int highestValue = countArr[index];
+    char * tempCharArr = nullptr;
+    for(int i = 0; i < size; i++){
+        if(countArr[i] == highestValue){
+            numAppearance++;
+        }
+    }
+    tempCharArr = new char[numAppearance];
+    int charIndex = 0;
+    for(int i =0 ; i < size; i++){
+        if(countArr[i] == highestValue){
+            tempCharArr[charIndex] = alphabetArr[i];
+            charIndex++;
+        }
+    }
+    for(int i = 0; i < numAppearance ; i++){
+        cout << tempCharArr[i] << endl;
+    }
+    cout << "Highest Frequency character (appeared " << countArr[index] << " times in the file): " ;
+    if(numAppearance > 2){
+        for(int i = 0; i < numAppearance-1;i++){
+            cout << tempCharArr[i] <<  ", ";
+        }//end for
+        cout << "and " << tempCharArr[numAppearance] << endl;
+    }else if(numAppearance == 2){
+        cout << tempCharArr[numAppearance-2] << " and " << tempCharArr[numAppearance-1];
+    }else{
+        cout << alphabetArr[index];
+    }//end if else
+    delete [] tempCharArr;
+}//end printHIghestFreq method
+
+
+void printLowestChars(int * charIntArr, char * charArr, const int &size, int &lowest){
+    int numAppearance = 0;
+    for(int i = 0; i < size; i++){
+        if(charIntArr[i] == lowest){
+            numAppearance++;
+        }//end if
+    }//end for
+
+    cout << "Lowest frequency characters (appeared " << lowest << " time in the file): ";
+    if(numAppearance > 2){
+        for(int i = 0; i < numAppearance -1; i++){
+            cout << charArr[i] << ", ";
+            }
+        cout << "and " << charArr[numAppearance-1];
+    }else if (numAppearance == 2){
+        cout << charArr[0] << " and " << charArr[1];
+    }else{
+        cout << charArr[0];
+    }
+}
+
+void sortByValue(int * intArr, char * charArr,int * indexArr, const int &size){
+        int i = 0;
+    while (i+1 < size){
+        int j = i+1;
+        while( j > 0 && intArr[j] < intArr[j-1]){
+            int temp1 = intArr[j];
+            intArr[j] = intArr[j-1];
+            intArr[j-1] = temp1;
+
+            char temp2 = charArr[j];
+            charArr[j] = charArr[j-1];
+            charArr[j-1] = temp2;
+
+            int temp3 = indexArr[j];
+            indexArr[j] = indexArr[j-1];
+            indexArr[j-1] = temp3;
+
+            j = j-1;
+        }//end inner While
+        i = i+1;
+    }//end outer While
+}
+
+void printFull(int * intArr, char * charArr, const int& size){
+    for(int i = size-1; i >= 0; i--){
+        cout << charArr[i] << ": " << intArr[i] << endl;
+    }
+}
+
+void printHistogram(int * intArr, char * charArr, int * indexArr, const int&size, int&highestIndex){
+    int highest = intArr[size-1];
+
+    sortAlphabetically(intArr, charArr, indexArr, size);
+
+    for(int i = highest; i > 0; i--){
+        if(i < 10 && highest >= 10){
+            cout << " ";
+        }
+        cout << i;
+        for(int j = 0; j < size; j++){
+            cout << " ";
+            if(intArr[j] >= i){
+                cout << "*";
+            }else{
+                cout << " ";
+            }
+        }
+        cout << endl;
+    }
+    cout << " ";
+    if(highest >= 10){
+        cout << " ";
+    }
+    for(int i = 0; i < size; i++){
+        cout << " " << charArr[i];
+    }
+}
+
+void sortAlphabetically(int * intArr, char * charArr, int * indexArr, const int&size){
+            int i = 0;
+    while (i+1 < size){
+        int j = i+1;
+        while( j > 0 && (int)charArr[j] < (int)charArr[j-1]){
+            int temp1 = intArr[j];
+            intArr[j] = intArr[j-1];
+            intArr[j-1] = temp1;
+
+            char temp2 = charArr[j];
+            charArr[j] = charArr[j-1];
+            charArr[j-1] = temp2;
+
+            int temp3 = indexArr[j];
+            indexArr[j] = indexArr[j-1];
+            indexArr[j-1] = temp3;
+
+
+            j = j-1;
+        }//end inner While
+        i = i+1;
+    }//end outer While
+}

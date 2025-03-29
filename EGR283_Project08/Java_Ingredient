@@ -1,0 +1,61 @@
+package edu.mtc.egr283.Project08;
+//Adam Glover
+//Project 08
+//Professor Sims
+//Completed 4-23-2023
+//Due 4-27-2023
+
+/**
+ * This class serves as a data type for the RecipeIngredient
+ * Containing the name of an ingredient for recipe
+ * @author Adam Glover
+ *
+ */
+public class Ingredient {
+	
+	    private String name;
+	    /**
+	     *  Default Constructor for the Ingredient Class
+	     */
+	    public Ingredient() {
+	    	this(null);
+	    }//end bracket of default constructor
+	    
+	    /**
+	     * Single Parameter constructor for the ingredient class.
+	     * @param newIngredient the name of the ingredient to be created.
+	     */
+	    public Ingredient(String newIngredient) {
+	    	this.setName(newIngredient);
+	    }//end bracket of single parameter constructor
+	    
+	    /**
+	     * Accessor method for setting the name of an ingredient
+	     * @return The assigned name of an ingredient
+	     */
+	    public String getName() {
+	    	return this.name;
+	    }//end bracket of getName method
+	    
+	    /**
+	     * Mutator method for the name of the ingredient
+	     * @param newName The new name to be assigned to an ingredient
+	     */
+	    private void setName(String newName) {
+	    	this.name = newName;
+	    }//end bracket of setName method
+	    
+	    /**
+	     * Equals method to determine if two ingredients are the same/
+	     * @param checkIngredient The other ingredient that is compared to
+	     * @return A true if the ingredients names match, false if they do not
+	     */
+	    public boolean equals(Ingredient checkIngredient) {
+	    	boolean rv = false;
+	    	if(this.getName() == checkIngredient.getName()) {
+	    		rv = true;
+	    	}//end bracket of if
+	    	return rv;
+	    }//end bracket of equals method
+	    
+}//end bracket of Ingredient class

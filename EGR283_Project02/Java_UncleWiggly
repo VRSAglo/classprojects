@@ -1,0 +1,132 @@
+package Project02;
+
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+import java.util.Scanner;
+
+/**
+ * This class defines the characters for the necessary components of the 
+ * actually gameplay for Uncle Wiggily.  Sets up the game, plays the game, 
+ * and defines special effects for board spaces.
+ * @author Adam Glover
+ * @version 1.0.0 Copyright (c) 1-31-2023 All Rights Reserved.
+ */
+public class UncleWiggily {
+	
+//--------------------------------------Fields----------------------------------------
+	private static String spaceText;
+	private static Player[] players;
+	private static RedDeck reddeck;
+	private static YellowDeck yellowdeck;
+	
+	private static final int DEFAULT_SPACE = 0;
+	private static final int END_SPACE = 152;
+	
+//--------------------------------------Methods---------------------------------------
+	
+	/**
+	 * Method to setup the game with setting the number of players in the <code>Player</code> array,
+	 * as well as setting the player <code>name</code> and <code>color</code>.
+	 * @param keys Scanner for user input.
+	 */
+	public static void setupGame(Scanner keys) {
+		System.out.println("Welcome to Uncle Wiggily, how many players are there? (Enter a number between 1 and 4)");		
+		int playerInput = keys.nextInt();
+		players = new Player[playerInput];
+
+		for(int i = 0; i < players.length; ++i) {
+			System.out.println("Enter the name for player " + (i+1) + ".");
+			String playerName = keys.next();
+			System.out.println("What color would you like? Choose from :");
+			for(int r = 0; r < Player.COLORS.length; ++r) {
+				if(!Player.COLORS[r].contains("Taken")) {
+					System.out.println(Player.COLORS[r]);
+				}//end bracket of if
+			}//end bracket of inner for each loop 
+			String playerColor = keys.next();
+			players[i] = new Player(playerName, playerColor);
+		}//end bracket of outer for each loop
+	
+		System.out.println("Lets play!");
+	
+	}//end bracket of setupGame method
+	
+	/**
+	 * Method to play the game.  It draws cycles through each player, drawing a yellow card, 
+	 * if yellow card indicates they draw a red card, draws a red card and performs the necessary 
+	 * action.  It determines who reaches the end first, and who won the round, tabulating the 
+	 * number of wins for each player.
+	 * @param keys Scanner to be used for user input.
+	 */
+	public static void playGame(Scanner keys) {
+		Player current;
+		yellowdeck = new YellowDeck();
+		reddeck = new RedDeck();
+		Yellowcard currentYellow;
+		Redcard currentRed = null;
+		int index = -1;
+		int gameCounter = 0;
+		boolean playAgain = true;
+		do {
+			++index;
+			current = players[index % players.length];
+			//If a player has a turn, move to draw a card.
+			if(current.hasTurn()) {
+				//If the yellow deck has cards in the deck, draw a card, otherwise,
+				//reset the yellow deck and then draw a card.
+				if(YellowDeck.cardsRemaining > 0) {
+					currentYellow = yellowdeck.deal();
+				}else {
+					yellowdeck = new YellowDeck();
+					currentYellow = yellowdeck.deal();
+				}//end bracket of if YellowDeck has cards..
+			
+				System.out.println(current.getName() + " draws a Yellow card: \n" 
+							+ currentYellow.toString());
+				//If yellow card is index 0 (draw a red card), draw a red card if 
+				//there are cards left in the red deck, otherwise, reset red deck
+				//and then draw a card.
+				if(currentYellow.getAffect() == 0) {
+					if(reddeck.getCardsRemaining() > 0) {
+						currentRed = reddeck.deal();
+					}else {
+					reddeck = new RedDeck();
+						currentRed = reddeck.deal();
+					}//end bracket of if redDeck has cards
+				
+					System.out.println(current.getName() + " draws a red card: \n"
+							+ currentRed.toString());
+				}//end bracket of if/else currentYellow is Draw card
+				//Get the affect of the red or yellow card and update the player
+				//space or penalize depending on affect 
+				if(currentYellow.getAffect() != 0) {
+					current.incrementSpace(currentYellow.getAffect());
+				}else {
+					current.incrementSpace(currentRed.getAffect());
+				}//end bracket of if currentSpace < Red Affect
+				
+				if(current.getCurrentSpace() < 0) {
+					current.updateSpace(UncleWiggily.DEFAULT_SPACE);
+				}//end bracket of negative space adjust.
+				
+				//Evaluate players space on the board and get the affect
+				//the board space has and output / update the affect
+				if(boardPosition(current.getCurrentSpace()) == 0) {
+					System.out.println(current.getName() + spaceText);
+				}else if(boardPosition(current.getCurrentSpace()) == -1) {
+					System.out.println(current.getName() + " lands on space " + current.getCurrentSpace());
+					System.out.println(spaceText);
+					current.setWaitTurn(current.getWaitTurn() + 1);
+				}else if(boardPosition(current.getCurrentSpace()) == -2) {
+					System.out.println(current.getName() + " lands on space " + current.getCurrentSpace());
+					System.out.println(spaceText);
+					current.setWaitTurn(current.getWaitTurn() + 2);
+				}else {
+					System.out.println(current.getName() + " lands on space " + current.getCurrentSpace());
+					current.updateSpace(boardPosition(current.getCurrentSpace()));
+					System.out.println(spaceText);				
+				}//end bracket of if/else if boardPosi

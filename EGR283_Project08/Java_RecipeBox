@@ -1,0 +1,126 @@
+package edu.mtc.egr283.Project08;
+//Adam Glover
+//Project 08
+//Professor Sims
+//Completed 4-23-2023
+//Due 4-27-2023
+
+/**
+ * This class acts as the data structure to store the Recipes.
+ * @author nobod
+ *
+ */
+public class RecipeBox {
+	
+	private DLL<Recipe> recipes;
+	/**
+	 * Default constructor for RecipeBox
+	 */
+	public RecipeBox() {
+		recipes = new DLL<Recipe>();
+	}//end bracket of default constructor
+	
+	/**
+	 * Accessor method to get the size of the RecipeBox
+	 * @return Int value that is the size of the RecipeBox
+	 */
+	public int size() {
+		return this.recipes.size();
+	}//end bracket of size method
+	
+	/**
+	 * Accessor method to get the Recipe at a given position.
+	 * @param position the Position to Check
+	 * @return A Recipe at the given position.
+	 */
+	public Recipe get(int position) {
+		return this.recipes.get(position);
+	}//end bracket of get method
+	
+	/**
+	 * Accessor method to get the Recipe that is at the head of the RecipeBox
+	 * @return The Recipe that is at the Head of the list
+	 */
+	public Recipe getHead() {
+		return this.recipes.getHead().getNodeData();
+	}//end bracket of getHead method
+	
+	/**
+	 * Accessor method to get the Recipe that is at the tail of the RecipeBox
+	 * @return The Recipe that is at the Tail of the list
+	 */
+	public Recipe getTail() {
+		return this.recipes.getTail().getNodeData();
+	}//end bracket of getTail method
+	
+	/**
+	 * Method to add a recipe at a given position
+	 * @param newRecipe The new recipe to be added to the list
+	 * @param position The Position in the list to add the recipe at.
+	 */
+	public void addAtPosition(Recipe newRecipe, int position) {
+		this.recipes.addAtPosition(newRecipe,position);
+	}//end bracket of addRecipeAtPosition method
+	
+	/**
+	 * Method to add a recipe at the head of a list.
+	 * @param newRecipe The new recipe to add at the head.
+	 */
+	public void addAtHead(Recipe newRecipe) {
+		this.recipes.addAtHead(newRecipe);
+	}//end bracket of addRecipeAtHead method
+	
+	/**
+	 * Method to add a recipe at the tail of a list.
+	 * @param newRecipe The new Recipe to add at the tail of the list.
+	 */
+	public void addAtTail(Recipe newRecipe) {
+		this.recipes.addAtTail(newRecipe);
+	}//end bracket of addRecipeAtTail method
+	
+	/**
+	 * Method to remove a recipe based on the Recipe name
+	 * @param remove the Recipe to remove
+	 */
+	public void removeRecipe(Recipe remove) {
+		this.recipes.remove(remove);
+	}//end bracket of removeRecipe
+	
+	/**
+	 * Method to remove a recipe at a given position.
+	 * @param position The position of a recipe to be removed.
+	 */
+	public void removeAtPosition(int position) {
+		this.recipes.remove(position);
+	}//end bracket of removeRecipePosition
+	
+	/**
+	 * Method to locate the position of a Recipe based on the Recipe name.
+	 * @param locate the Recipe to be located
+	 * @return The integer value of the position of the recipe in the list.
+	 */
+	public int find(Recipe locate) {
+		int position = 0;
+		for(int i = 0; i < this.recipes.size(); ++i) {
+			if(this.recipes.get(i).equals(locate)){
+				position = i;
+			}//end bracket of if
+		}//end bracket of for
+		return position;
+	}//end bracket of find.
+	
+	/**
+	 * Method to determine whether a recipe is in the list 
+	 * @param search The String name of the Recipe to be located
+	 * @return True if the Recipe is located, False if it is not.
+	 */
+	public boolean search(String search) {
+		boolean rv = false;
+		for(int i = 0; i < this.recipes.size(); ++i) {
+			if(this.recipes.get(i).getName().equalsIgnoreCase(search)) {
+				rv = true;
+			}//end bracket of if
+		}//endb racket of for
+		return rv;
+	}//end bracket of search method
+}//end bracket of RecipeBox class

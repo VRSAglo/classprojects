@@ -1,0 +1,57 @@
+package edu.mtc.egr283.Project08;
+//Adam Glover
+//Project 08
+//Professor Sims
+//Completed 4-23-2023
+//Due 4-27-2023
+/**
+ * This class is used to store unit values for recipes. IE cup, tablespoon.
+ * @author nobod
+ *
+ */
+public class Unit {
+    private String name;
+    
+    /**
+     * Default constructor for the Unit class
+     */
+    public Unit() {
+    	this(null);
+    	
+    }//end bracket of Default constructor
+    /**
+     * Single parameter constructor for the Unit class
+     * @param newName the new name of the unit to be stored.
+     */
+    public Unit(String newName) {
+    	this.setName(newName);
+    }//end bracket of Parameter constructor
+    /**
+     * Accessor method to get the name of the unit stored
+     * @return The unit stored
+     */
+    public String getName() {
+    	return this.name;
+    }//end bracket of getName method
+    /**
+     * Mutator method to set the name of the unit
+     * @param newName The new name of the unit to be stored
+     */
+    private void setName(String newName) {
+    	this.name = newName;
+    }//end bracket of setName method
+    
+    /**
+     * Method to determine if one unit matches the compared to unit
+     * @param unitToCheck The other unit that is compared against.
+     * @return A true if the units match, false if they do not.
+     */
+    public boolean equals(Unit unitToCheck) {
+    	boolean rv = false;
+    	if(this.getName().equalsIgnoreCase(unitToCheck.getName())) {
+    		rv = true;
+    	}//end bracket of if
+    	return rv;
+    }//end bracket of equals method
+   
+}//end bracket of Unit class

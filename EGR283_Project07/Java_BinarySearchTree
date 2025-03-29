@@ -1,0 +1,464 @@
+package Project07;
+//Adam Glover
+//Project 07
+//Professor Sims
+//Completed: 4-9-2023
+//Due: 4-13-2023
+//This program constructs and performs operations on a binary search tree
+
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+/**
+ * This class defines the characteristics for the Binary Search Tree
+ * @author Adam Glover
+ *
+ * @param <T> The Generic data to be used within the Binary Search Tree
+ */
+public class BinarySearchTree<T extends Comparable<T>> {
+	//Fields
+	private BSTNode<T> root;
+
+	/**
+	 * Default constructor that calls it's subsequent constructor.
+	 */
+	public BinarySearchTree() {
+		this(null);
+	}//end bracket of default constructor
+	
+	/**
+	 * Single parameter constructor that calls it's subsequent constructor.
+	 * @param newRoot The node that will become the trees new root.
+	 */
+	public BinarySearchTree(BSTNode<T> newRoot) {
+		this.setRoot(newRoot);
+	}//end bracket of BinarySearchTree constructor
+	
+	/**
+	 * Accessor method to obtain the trees root node.
+	 * @return The node that is the root to the tree.
+	 */
+	public BSTNode<T> getRoot() {
+		return this.root;
+	}//end bracket of getRoot method
+	
+	/**
+	 * Mutator method that assigns the trees root node. 
+	 * @param newRoot The node that will become the trees root node.
+	 */
+	public void setRoot(BSTNode<T> newRoot) {
+		this.root = newRoot;
+	}//end bracket of setRoot method
+	
+
+	/**
+	 * Method to assess the needed placement of a node and add it into the tree.
+	 * @param newData The data that a node will be constructed with.
+	 */
+	public void addNode(T newData) {
+		BSTNode<T> nodeToAdd = new BSTNode<T>(newData);
+		
+		boolean hasFound = false;
+		//If node is the root, add it to the tree as the root value
+		if(this.getRoot() == null) {
+			//System.out.println("Adding new root");
+			this.setRoot(nodeToAdd);
+		}else {
+			//Otherwise, assign current node as the root, compare to nodetofind and move through 
+			//the tree to locate it's proper placement and add it there.
+			BSTNode<T> currentNode = this.getRoot();
+		while(!hasFound) {
+			
+			if(currentNode.compareTo(nodeToAdd) < 0) {
+				if(currentNode.getRight() != null) {
+					currentNode = currentNode.getRight();
+				}else {
+						currentNode.setRight(nodeToAdd);
+						hasFound = true;
+					}//end bracket of if/else right side
+				}else {
+					if(currentNode.getLeft() != null) {
+						currentNode = currentNode.getLeft();
+					}else {
+						currentNode.setLeft(nodeToAdd);
+						hasFound = true;
+					}//end bracket of inner if/else
+				
+				}//end bracket of outer if/else
+			}//end bracket of while.
+		}//end bracket of if/else
+		
+	}//end bracket of addNode method
+	
+	/**
+	 * Private node to locate an actual node based on it's data.
+	 * @param dataToFind The data of a node that will be located.
+	 * @return The node with the data that has been located.
+	 */
+	private BSTNode<T> findNode(T dataToFind){
+		BSTNode<T> nodeToFind = new BSTNode<T>(dataToFind);
+		BSTNode<T> cursor = this.getRoot();
+	
+		boolean hasFound = false;
+		//Loop and move through the data to find the neccessary node, then return as the node instead of data
+		if(this.search(dataToFind)) {
+			while(!hasFound) {
+				if(cursor.equals(nodeToFind)) {
+					break;
+				}else if(cursor.getLeft() != null && cursor.compareTo(nodeToFind) > 0) {
+					cursor = cursor.getLeft();
+				}else if(cursor.getRight() != null && cursor.compareTo(nodeToFind) < 0) {
+					cursor = cursor.getRight();
+				}//end bracket of if else
+			}//end bracket of while loop
+			
+		}//End bracket of if 
+			
+		return cursor;
+	}//end bracket of findNode method
+	
+	/**
+	 * Method to locate and remove a node based on the data the node contains.
+	 * @param dataToRemove The data of the node that will be removed.
+	 */
+	public void removeNode(T dataToRemove) {
+		
+		//BSTNode<T> removeNode = this.findNode(dataToRemove);
+		
+		
+		BSTNode<T> parent = this.getRoot();
+		BSTNode<T> nodeToRemove = this.findNode(dataToRemove);
+		boolean hasFound = false;
+	//While loop to find parent and node to remove
+	//	System.out.println("NodeToRemove: " +nodeToRemove.toString());
+		while(!hasFound) {
+			if(parent.equals(nodeToRemove)){
+				hasFound = true;
+			}else if(parent.getRight().equals(nodeToRemove)) {
+				hasFound = true;
+			}else if(parent.getLeft().equals(nodeToRemove)) {
+				hasFound = true;
+			}else if(parent.compareTo(nodeToRemove) > 0) {
+				parent = parent.getLeft();
+			}else if(parent.compareTo(nodeToRemove) < 0) {
+				parent = parent.getRight();
+			}//end bracket of if/else
+		}//end bracket of while loop
+	//check for children and half the different cases
+		//If node is leaf node, just delete
+		if(nodeToRemove.getLeft() == null && nodeToRemove.getRight() == null) {
+			if(parent.getRight().equals(nodeToRemove)){
+				parent.getRight().setData(null);	
+		
+			}//end bracket of if
+			if(parent.getLeft().equals(nodeToRemove)){
+				parent.getLeft().setData(null);
+			//	parent.setLeft(null);
+
+			}//end bracket of if
+			//If node has no left child, delete and move right child
+		}else if(nodeToRemove.getLeft() == null) {
+				parent.setRight(nodeToRemove.getRight());
+			//If node has no right child, delete and move left child
+		}else if(nodeToRemove.getRight() == null) {
+				parent.setRight(nodeToRemove.getLeft());
+		}else {
+			//Most complicated, if there are two child nodes and further children
+			if(nodeToRemove.getRight() != null) {
+		//		System.out.println("Remove else statement Evaluating leefRight");
+			//Call swapChild to locate necessary replacement and perform swaps/removals
+				swapChild(parent, nodeToRemove, nodeToRemove.getRight());
+			}else if(nodeToRemove.getLeft() != null) {
+		//		System.out.println("Remove Else statement evaluating leefLeft");
+				swapChild(parent,nodeToRemove,nodeToRemove.getLeft());
+			}//End bracket of inner if else
+		}//end bracket of outer if else
+		
+	}//end bracket of removeNode method
+//									Parent Node			Node to Remove		Remove Node Replacement Child
+	/**
+	 * Private method to obtain the data needed to locate a proper successor and exchange it's location
+	 * with the desired node.
+	 * @param parent The parent to the node swap. Parent.getRight() or Parent.getLeft() equals the removeChild parameter
+	 * @param removeChild The node that we wish to replace with a proper successor.
+	 * @param newChild The child to the desired swap node, used to locate a proper successor. removeChild.getLeft() or removeChild.getRight() equals the new child parameter.
+	 */
+	private void swapChild(BSTNode<T> parent, BSTNode<T> removeChild, BSTNode<T> newChild){
+	//Check if its the root, is so update root variable
+		if(this.getRoot().equals(removeChild)) {
+			BSTNode<T> replacement = this.findRightReplacement(newChild);
+		//Create variables to store data to ensure they are not corrupted on swaps
+			BSTNode<T> temp = new BSTNode<T>();
+			BSTNode<T> tempTwo = new BSTNode<T>();
+		//Assign data according to how it will be in it's new location
+			tempTwo.setData(this.getRoot().getData());
+			tempTwo.setRight(replacement.getRight());
+			tempTwo.setLeft(replacement.getLeft());
+			temp.setData(replacement.getData());
+			temp.setRight(this.getRoot().getRight());
+			temp.setLeft(this.getRoot().getLeft());
+		//Map necessary swaps and null out the desired removed node.
+			this.getRoot().setData(temp.getData());
+			this.getRoot().setRight(temp.getRight());
+			this.getRoot().setLeft(temp.getLeft());
+			replacement.setData(null);
+			replacement.setRight(null);
+			replacement.setLeft(null);
+			
+	//Check if it goes down the right tree, find replacement, and swap
+		}else if (parent.getRight().equals(removeChild) && newChild.getRight() != null) {
+			BSTNode<T> replacement = this.findRightReplacement(newChild);
+	//	System.out.println("Replacement : " + replacement.toString());
+			BSTNode<T> temp = new BSTNode<T>();
+			BSTNode<T> tempTwo = new BSTNode<T>();
+			temp.setData(removeChild.getData());
+			temp.setRight(replacement.getRight());
+			temp.setLeft(replacement.getLeft());
+			tempTwo.setData(replacement.getData());
+			tempTwo.setLeft(removeChild.getLeft());
+			tempTwo.setRight(removeChild.getRight());
+			removeChild.setData(tempTwo.getData());
+			removeChild.setRight(tempTwo.getRight());
+			removeChild.setLeft(tempTwo.getLeft());
+			replacement.setData(null);
+			replacement.setRight(null);
+			replacement.setLeft(null);
+	//Check if it goes down left tree, find replacement, and swap
+		}else if (parent.getLeft().equals(removeChild) && newChild.getRight() != null){
+			BSTNode<T> replacement = this.findLeftReplacement(removeChild.getLeft());
+		//	System.out.println("Replacement : " + replacement.toString());
+			BSTNode<T> temp = new BSTNode<T>();
+			BSTNode<T> tempTwo = new BSTNode<T>();
+			temp.setData(removeChild.getData());
+			temp.setRight(replacement.getRight());
+			temp.setLeft(replacement.getLeft());
+			tempTwo.setData(replacement.getData());
+			tempTwo.setLeft(removeChild.getLeft());
+			tempTwo.setRight(removeChild.getRight());
+			removeChild.setData(tempTwo.getData());
+			removeChild.setRight(tempTwo.getRight());
+			removeChild.setLeft(tempTwo.getLeft());
+			replacement.setData(null);
+			replacement.setRight(null);
+			replacement.setLeft(null);
+	//Check if inner node on right tree replaces with non-childed node
+		}else if (parent.getRight().equals(removeChild)) {
+		//	System.out.println("Find Right Removal In play");
+			BSTNode<T> replacement = this.findRightReplacement(newChild);
+	//		System.out.println("Replacement : " + replacement.toString());
+			BSTNode<T> temp = new BSTNode<T>();
+			BSTNode<T> tempTwo = new BSTNode<T>();
+			temp.setData(removeChild.getData());
+			temp.setRight(replacement.getRight());
+			temp.setLeft(replacement.getLeft());
+			tempTwo.setData(replacement.getData());
+			tempTwo.setLeft(removeChild.getLeft());
+			tempTwo.setRight(removeChild.getRight());
+			removeChild.setData(tempTwo.getData());
+			removeChild.setRight(tempTwo.getRight());
+			removeChild.setLeft(tempTwo.getLeft());
+			replacement.setData(null);
+			replacement.setRight(null);
+			replacement.setLeft(null);
+	//check if inner node on left tree replaces with non-childed node
+		}else if (parent.getLeft().equals(removeChild)){
+	//		System.out.println("Find left Remove in play");
+			BSTNode<T> replacement = this.findLeftReplacement(removeChild.getRight());
+	//		System.out.println("Replacement : " + replacement.toString());
+			BSTNode<T> temp = new BSTNode<T>();
+			BSTNode<T> tempTwo = new BSTNode<T>();
+			temp.setData(removeChild.getData());
+			temp.setRight(replacement.getRight());
+			temp.setLeft(replacement.getLeft());
+			tempTwo.setData(replacement.getData());
+			tempTwo.setLeft(removeChild.getLeft());
+			tempTwo.setRight(removeChild.getRight());
+			removeChild.setData(tempTwo.getData());
+			removeChild.setRight(tempTwo.getRight());
+			removeChild.setLeft(tempTwo.getLeft());
+			replacement.setData(null);
+			replacement.setRight(null);
+			replacement.setLeft(null);
+		}//end bracket of inner if
+	}//end bracket of swapChild method
+	
+	/**
+	 * Method that uses an in order traversal on the right side of the tree to store values in a queue, 
+	 * starting at the desired nodes location, and returning the first in order traversal
+	 * node.
+	 * @param startNode The beginning node of the traversal
+	 * @return The first in order traversal node.
+	 */
+	private BSTNode<T> findRightReplacement(BSTNode<T> startNode){
+		Queue<BSTNode<T>> storage = new LinkedList<BSTNode<T>>();
+		
+
+		if(startNode != null) {
+			 if(startNode.getLeft() != null) {
+		 		storage.add(findRightReplacement(startNode.getLeft()));
+			 }//end bracket of if
+				storage.add(startNode);
+			if(startNode.getRight() != null) {
+			storage.add(findRightReplacement(startNode.getRight()));
+			}//end bracket of inner if
+		}//end bracket of outer if
+		
+		return storage.remove();
+	}//end bracket of findRightReplacement method
+	
+	/**
+	 * Method that uses an reverse in order traversal on the left side of the tree to store values in a queue,
+	 * starting at the desired nodes location, and returning the first reverse in order traversal.
+	 * @param startNode The node to start the post order traversal.
+	 * @return The first post order traversal node.
+	 */
+	private BSTNode<T> findLeftReplacement(BSTNode<T> startNode){
+		Queue<BSTNode<T>> storage = new LinkedList<BSTNode<T>>();
+		if(startNode != null) {
+			if(startNode.getRight() != null) {
+				storage.add(findLeftReplacement(startNode.getRight()));
+			}//end bracket of inner if
+			storage.add(startNode);
+			if(startNode.getLeft() != null) {
+				storage.add(findLeftReplacement(startNode.getLeft()));
+			}//end bracket of inner if
+		}//end bracket of outer if
+		return storage.remove();
+	}//end bracket of findLeftReplacement method
+	
+	/**
+	 * Method to search if the data is within the tree.
+	 * @param dataToFind The data of any type that will be located within the tree.
+	 * @return True if the data is available, false if it is not.
+	 */
+	public boolean search(T dataToFind) {
+		boolean rv = false;
+		BSTNode<T> nodeToFind = new BSTNode<T>(dataToFind);
+		BSTNode<T> currentNode = this.getRoot();
+	//	System.out.println("Search CurrentNode: " + currentNode.toString());
+	//	System.out.println("Search nodeToFind: " + nodeToFind.toString());
+		do {
+			
+			if(nodeToFind.equals(currentNode)) {
+				//System.out.println("NoteToFind = currentNode");
+				rv = true;
+				break;
+			}else if(currentNode != null && currentNode.compareTo(nodeToFind) < 0) {
+				//System.out.println("current - nodeToFind < 0");
+				//System.out.println(currentNode.toString());
+				//System.out.println("Finding: " + nodeToFind.toString());
+				currentNode = currentNode.getRight();
+			}else if(currentNode != null && currentNode.compareTo(nodeToFind) > 0) {
+				//System.out.println("current - nodeToFind > 0");
+				//System.out.println(currentNode.toString());
+				//System.out.println("Finding: " + nodeToFind.toString());
+				currentNode = currentNode.getLeft();
+			}else {
+				System.out.println("Node cannot be found");
+				break;
+			}//end if else
+			
+		}while(!rv);//end while
+		
+		
+		return rv;
+	}//end bracket of search Method
+	
+	/**
+	 * Method to perform pre-order traversal, beginning with the selected node
+	 * then the left child, then the right child.
+	 * @param startNode The starting node of the pre order traversal
+	 * @return A preordered String that represents the data in the tree.
+	 */
+	public String preorderTraversal(BSTNode<T> startNode) {
+		StringBuffer sb = new StringBuffer();
+		if(startNode != null) {
+			sb.append(startNode.toString());
+			sb.append(" ");
+			sb.append(this.preorderTraversal(startNode.getLeft()));
+			sb.append(this.preorderTraversal(startNode.getRight()));
+		}//end bracket of if
+		return sb.toString();
+	}//end bracket of preOrder traversal
+	
+	/**
+	 * Method to perform in-order traversal, beginning with the left child node,
+	 * then the parent node, then the right child.
+	 * @param startNode The starting node of the in order traversal
+	 * @return A inordered String that represents the data in the tree.
+	 */
+	public String inorderTraversal(BSTNode<T> startNode) {
+		StringBuffer sb = new StringBuffer();
+		if(startNode != null) {
+			sb.append(this.inorderTraversal(startNode.getLeft()));
+			sb.append(startNode.toString());
+			sb.append(" ");
+			sb.append(this.inorderTraversal(startNode.getRight()));
+		}//end bracket of if
+		return sb.toString();
+	}//end bracket of inorderTraversal method
+	
+	/**
+	 * Method to perform a post-order traversal, beginning on the left child node,
+	 * then the right child node, then the parent node.
+	 * @param startNode The starting node to perform the traversal.
+	 * @return A post-ordered String representation of the data in the tree.
+	 */
+	public String postorderTraversal(BSTNode<T> startNode) {
+		StringBuffer sb = new StringBuffer();
+		if(startNode != null) {
+			sb.append(this.postorderTraversal(startNode.getLeft()));
+			sb.append(this.postorderTraversal(startNode.getRight()));
+			sb.append(startNode.toString());
+			sb.append(" ");
+		}//end bracket of if
+		return sb.toString();
+	}//end bracket of postordertraversal method
+	
+
+
+	/**
+	 * Method to perform a level-order traversal, beginning at the top of the tree
+	 * and moving down.
+	 * @param startNode The starting node of the traversal
+ 	 * @return A level-ordered String representation of the data in the tree.
+	 */
+	public String levelorderTraversal(BSTNode<T> startNode) {
+		StringBuffer sb = new StringBuffer();
+		Queue<BSTNode<T>> storage = new LinkedList<BSTNode<T>>();
+		BSTNode<T> cursor = startNode;
+			//add first node to queue
+			storage.add(cursor);
+			//Loop while queue is not empty
+		//while(!storage.isEmpty()) {
+			//Pop first value in the and append to stringbuffer
+			cursor = storage.remove();
+			sb.append(cursor.toString());
+			sb.append(" ");
+		
+			//check if left child is null, if not, add to queue
+			if( cursor.getLeft() != null) {
+				levelorderTraversal(startNode.getLeft());
+			}//end bracket of if statement
+			//check if right child is null, if not , add to queue
+			if(cursor.getRight() != null) {
+				levelorderTraversal(startNode.getRight());
+			}//end bracket of if statement
+		//}//end bracket of while loop
+			
+		return  sb.toString();
+	}//end bracket of levelordertraversal method
+
+	/**
+	 * A standard toString override, outputing the data in a level-ordered 
+	 * traversal.  Root node first, it's children, their children, and so on.
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(levelorderTraversal(this.getRoot()));
+		return sb.toString();
+	}//end bracket of toString method
+	
+}//end bracket of BinarySearchTree class

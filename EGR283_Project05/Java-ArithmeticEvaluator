@@ -1,0 +1,254 @@
+//Adam Glover
+//Project 05
+//Professor Sims - EGR 283
+//Date Completed: 3-11-2023
+//Date Due: 3-16-2023
+package Project05;
+/**
+ * This class contains two methods, the first evaluates a String
+ * with an infix arithmetic expression and converts it to a postfix arithmetic
+ * expression.
+ * @author Adam Glover
+ * @Version 1.0 
+ */
+public class ArithmeticEvaluator {
+
+	private static StackDLL<Character> operators;
+	private static StackDLL<Integer> numbers;
+	
+	/**
+	 * This method takes in an input String with a infixed arithmetic
+	 * expression, evaluates the characters in the string, places them accordingly
+	 * in a stack and outputs a StringBuffer that is the postfix conversion.
+	 * @param input The InFixed Arithmetic Expression
+	 * @return The Postfixed Arithmetic Expression
+	 */
+	public static String postFix(String input) {
+		StringBuffer sb = new StringBuffer();
+		operators = new StackDLL<Character>();
+		
+		for(int i = 0; i < input.length(); ++i) {
+			
+			switch(input.charAt(i)) {
+				case '+':
+					operators.push(input.charAt(i));
+					break;
+				case '-':
+					operators.push(input.charAt(i));
+					break;
+				case '/':
+					operators.push(input.charAt(i));
+					break;
+				case '*':
+					operators.push(input.charAt(i));
+					break;
+				case ')':
+					sb.append(operators.pop());
+					break;
+				case '0':
+				
+					sb.append(" " + 0 + " ");
+					break;
+				case '1':
+					
+					sb.append(" " + 1 + " ");
+					break;
+				case '2':
+					
+					sb.append(" " + 2 + " ");
+					break;
+				case '3':
+					
+					sb.append(" " + 3 + " ");
+					break;
+				case '4':
+				
+					sb.append(" " + 4 + " ");
+					break;
+				case '5':
+				
+					sb.append(" " + 5 + " ");
+					break;
+				case '6':
+				
+					sb.append(" " + 6 + " ");
+					break;
+				case '7':
+					
+					sb.append(" " + 7 + " ");
+					break;
+				case '8':
+					
+					sb.append(" " + 8 + " ");
+					break;
+				case '9':
+				
+					sb.append(" " + 9 + " ");
+					break;
+			}//end bracket of switch
+		}//end bracket of for
+		while(!operators.isEmpty()) {
+
+			sb.append(" " + operators.pop() + " ");
+			
+			
+		}//end bracket of it is not empty
+		return sb.toString();
+	}//end bracket of postFix
+	
+	
+	/**
+	 * This method evaluates the postfixed expression and outputs
+	 * the calculated value.
+	 * @param input A Postfixed Arithmetic Expression
+	 * @return An Integer that is the calculated value of the PostFixed arithmetic expression.
+	 */
+	public static int evaluate(String input) {
+		numbers = new StackDLL<Integer>();
+		int sum = 0;
+		int temp1;
+		int temp2;
+		for(int i = 0; i < input.length(); ++i) {
+			switch(input.charAt(i)) {
+			case '+':
+				temp1 = numbers.pop();
+				temp2 = numbers.pop();
+				sum = temp2 + temp1;
+				numbers.push(sum);
+				break;
+			case '-':
+				temp1 = numbers.pop();
+				temp2 = numbers.pop();
+				sum = temp2 - temp1;
+				numbers.push(sum);
+				break;
+			case '/':
+				temp1 = numbers.pop();
+				temp2 = numbers.pop();
+				sum = temp2 / temp1;
+				numbers.push(sum);
+				break;
+			case '*':
+				temp1 = numbers.pop();
+				temp2 = numbers.pop();
+				sum = temp2 * temp1;
+				numbers.push(sum);
+				break;
+			case '(':
+				break;
+			case ')':
+				break;
+			case '0':
+				numbers.push(0);
+				break;
+			case '1':
+				numbers.push(1);
+				break;
+			case '2':
+				numbers.push(2);
+				break;
+			case '3':
+				numbers.push(3);
+				break;
+			case '4':
+				numbers.push(4);
+				break;
+			case '5':
+				numbers.push(5);
+				break;
+			case '6':
+				numbers.push(6);
+				break;
+			case '7':
+				numbers.push(7);
+				break;
+			case '8':
+				numbers.push(8);
+				break;
+			case '9':
+				numbers.push(9);
+				break;
+			}//end bracket of switch
+		
+		}//end bracket of for loop
+		return numbers.pop();
+	}//end bracket of evaluate method
+	
+	
+	/**
+	 * TBD Implementation to support Double digits.
+	 */
+//	public static int checkDoubleDigits(char firstChar, char secondChar) {
+//		int firstNumber = 0;
+//		int secondNumber = 0;
+//		String combined;
+//		
+//		switch(firstChar) {
+//		case '0':
+//			firstNumber = 0;
+//			break;
+//		case '1':
+//			firstNumber = 1;
+//			break;
+//		case '2':
+//			firstNumber = 2;
+//			break;
+//		case '3':
+//			firstNumber = 3;
+//			break;
+//		case '4':
+//			firstNumber = 4;
+//			break;
+//		case '5':
+//			firstNumber = 5;
+//			break;
+//		case '6':
+//			firstNumber = 6;
+//			break;
+//		case '7':
+//			firstNumber = 7;
+//			break;
+//		case '8':
+//			firstNumber = 8;
+//			break;
+//		case '9':
+//			firstNumber = 9;
+//			break;
+//		}//end bracket of switch firstNumber
+//		switch(secondChar) {
+//		case '0':
+//			secondNumber = 0;
+//			break;
+//		case '1':
+//			secondNumber = 1;
+//			break;
+//		case '2':
+//			secondNumber = 2;
+//			break;
+//		case '3':
+//			secondNumber = 3;
+//			break;
+//		case '4':
+//			secondNumber = 4;
+//			break;
+//		case '5':
+//			secondNumber = 5;
+//			break;
+//		case '6':
+//			secondNumber = 6;
+//			break;
+//		case '7':
+//			secondNumber = 7;
+//			break;
+//		case '8':
+//			secondNumber = 8;
+//			break;
+//		case '9':
+//			secondNumber = 9;
+//			break;
+//		}//end bracket of switch secondNumber
+//		combined = firstNumber +  "" + secondNumber;
+//		return Integer.parseInt(combined);
+//		
+//	}
+}//endb racket of ArithmeticEvaluator method

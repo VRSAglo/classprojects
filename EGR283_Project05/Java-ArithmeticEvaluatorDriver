@@ -1,0 +1,54 @@
+//Adam Glover
+//Project 05
+//Professor Sims - EGR 283
+//Date Completed: 3-11-2023
+//Date Due: 3-16-2023
+package Project05;
+
+import java.util.Scanner;
+/**
+ * Main driver class to allow a user to input a infixed arithmetic expression 
+ * have it output the Postfixed expression as well as its calculated
+ * value.
+ * @author Adam Glover
+ * @version 1.0
+ *
+ */
+public class ArithmeticEvaluatorDriver {
+	private static Scanner keys;
+	
+	/**
+	 * Main method, opens resources, calls systemGuide, and closes resources.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		keys = new Scanner(System.in);
+		
+		systemGuide();
+		
+		keys.close();
+		System.exit(0);
+	}//end bracket of main method
+	
+	/**
+	 * Method that guides the user through the input and output portions of the program. 
+	 * Called in main method.
+	 */
+	private static void systemGuide() {
+		String userInput;
+		String outputExpression;
+		System.out.println("Welcome to the Reverse Polish Notation converter.");
+		System.out.println("Please enter your Infix arithmetic expression.");
+		userInput = keys.nextLine();
+		System.out.print("The postfix expression is: ");
+		outputExpression = ArithmeticEvaluator.postFix(userInput);
+		System.out.println(outputExpression);
+		
+		System.out.print("The postfix expression evaluates to: ");
+		System.out.println(ArithmeticEvaluator.evaluate(outputExpression));
+	
+		System.out.println("Thank you for using the Reverse Polish Notation converter.");
+		
+	}//end bracket of systemGuide method
+	
+}//endb racket of ArithmeticEvaluatorDriver class

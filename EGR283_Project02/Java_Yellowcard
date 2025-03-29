@@ -1,0 +1,66 @@
+package Project02;
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+
+/**
+ * This class defines the properties of the Yellow card 
+ * with the <code>Yellow</code> enum object.
+ * @author Adam Glover
+ * @version 1.0.0 Copyright 2023-1-21 All Rights Reserved
+ */
+public class Yellowcard {
+//--------------------------------------Fields----------------------------------------
+	/**
+	 * Datatype <cod>Yellow</code>0 used for <code>Yellowcard</code>
+	 */
+	public Yellow yellowcard;
+	
+// ----------------------------------Constructors-------------------------------------
+	/**
+	 * Yellowcard constructor to be used with the <code>YellowDeck</code> class
+	 * @param newYellow A new <code>Yellow</code> card constructed with the <code>Yellow</code> enum properties.
+	 */
+	public Yellowcard(Yellow newYellow) {
+		this.yellowcard = newYellow;
+	}//end bracket of constructor
+
+//--------------------------------------Methods---------------------------------------
+	/**
+	 * getAffect method designed to return the integer value in the <code>Yellow</code>
+	 * objects <code>space</code> field.
+	 * @return int space from <code>Yellow</code> enumeration object.
+	 */
+	public int getAffect() {
+		return this.yellowcard.getSpace();
+	}//end bracket of getAffect method
+	/**
+	 * Standard toString override to return flavorText from <code>Yellow</code>
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(this.yellowcard.getText());
+		return sb.toString();
+	}//End bracket of toString override
+	
+	/**
+	 * Standard equals method to compare whether multiple instances of <code>Yellowcard</code>
+	 * are the same.
+	 */
+	@Override
+	public boolean equals(Object otherCard) {
+		boolean rv = false;
+		if(otherCard instanceof Yellowcard) {
+			Yellowcard pc = (Yellowcard) otherCard;
+			if(this.getAffect() == pc.getAffect()) {
+				rv = true;
+			}//Ending bracket of inner if statement
+		}//Ending bracket of outer if statement
+		return rv;
+	}//end bracket of equals override
+	
+}//end bracket of Yellowcard class

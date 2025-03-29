@@ -1,0 +1,69 @@
+package edu.mtc.egr283.Project08;
+
+public class TestDriver {
+	
+
+	
+	public static void main(String[] args) {
+		
+		RecipeBox rb = new RecipeBox();
+	
+	Ingredient milk = new Ingredient("milk");
+	Unit cup = new Unit("cup");
+	Ingredient cereal = new Ingredient("cereal");
+	Unit bowl = new Unit("Bowl");
+	
+	System.out.println("Milk ingredient toString check: " + milk.getName());
+	System.out.println("Cup unit toString check: " + cup.getName());
+	System.out.println("Cereal ingredient toString check: " + cereal.getName());
+	System.out.println("Bowl value check: " + bowl.toString());
+	
+	RecipeIngredient flakes = new RecipeIngredient(1, milk, cup);
+	RecipeIngredient flakes2 = new RecipeIngredient(1, cereal, bowl);
+	
+	System.out.println("RecipeIngredient toString check : " + flakes.toString());
+	Instruction one = new Instruction("Add cereal to bowl");
+	Instruction two = new Instruction("Add milk to bowl");
+	
+	Unit testUnit = new Unit("test");
+	
+	
+	Ingredient testIng = new Ingredient("test");
+	Instruction testIns = new Instruction("test");
+	Instruction test2 = new Instruction("Add milk to bowl");
+	RecipeIngredient testRI = new RecipeIngredient(0, testIng, testUnit);
+	
+	Recipe makeCereal = new Recipe();
+	makeCereal.setName("Cereal");
+	System.out.println("Make cereal name check: "+ makeCereal.getName());
+	RecipeIngredient riTest = new RecipeIngredient(1, milk, cup);
+	makeCereal.addInstructionAtPosition(one, 0);
+	makeCereal.addInstructionAtPosition(two, 1);
+	
+	makeCereal.addIngredientAtHead(flakes);
+	makeCereal.addIngredientAtPosition(flakes2, 1);
+	rb.addAtHead(makeCereal);
+	System.out.println(makeCereal.getInstructions().getHead().getNext().getNodeData().getInstruction());
+	System.out.println(makeCereal.getInstructions().getHead().getNext().getNext().getNodeData().getInstruction());
+	System.out.println(makeCereal.searchInstruction(testIns));
+	
+	System.out.println(makeCereal.getIngredients().getHead().getNext().getNodeData().toString());
+	System.out.println(makeCereal.getIngredients().getHead().getNext().getNext().getNodeData().toString());
+	
+	//stem.out.println(makeCereal.searchIngredient(riTest));	
+	System.out.println("Rb head check: " +rb.get(0).getName());
+
+	System.out.println(rb.get(0).getName());
+	
+	System.out.println(rb.find(makeCereal));
+	System.out.println(rb.search("Cereal"));
+	Instruction inTest = new Instruction("add milk to bowl");
+	Instruction inTest2 = new Instruction("test");
+	System.out.println( rb.get(0).getInstructions().get(0).toString());
+	System.out.println( rb.get(0).searchInstruction(inTest2));
+	System.out.println(rb.get(0).searchIngredient(milk));
+	Ingredient test3 = new Ingredient("milk");
+	System.out.println("T"+ rb.get(0).searchIngredient(riTest.getIngredient()));
+	
+	}
+}

@@ -1,0 +1,331 @@
+package edu.mtc.egr283.Project01;
+//Adam Glover
+//EGR283 Project 01
+//Professor Sims
+//This project plays a round of poker 
+//Current Date: 1/15/2023
+//Due Date: 1/19/2023
+
+public class Hand {
+
+	//Data
+	public static final String COMMA_SPACE = ", ";
+	public static final int DEFAULT_VALUE = 5;
+	private HandRank handRank;
+	public final static HandRank DEFAULT_RANK = HandRank.HIGHCARD;
+	
+
+	
+	private PlayingCard[] cards;
+	private int currentNumberOfCards;
+	
+		
+	//Constructor
+	public Hand() {
+		this(Hand.DEFAULT_VALUE, Hand.DEFAULT_RANK);
+	}//Ending bracket of Default Constructor
+	
+	public Hand(int newNumberOfCardsToHold, HandRank newHandRank) {
+		this.cards = new PlayingCard[newNumberOfCardsToHold];
+		this.currentNumberOfCards = 0;
+		this.handRank = newHandRank;
+	}//ending bracket of Constructor.
+	
+	//Methods
+	
+	public void addACard(PlayingCard pc) {
+		this.cards[this.currentNumberOfCards] = pc;
+		++this.currentNumberOfCards;
+	}//ending bracket of addACard method
+	
+	public void sort() {
+		boolean haveCardsBeenSwapped;
+		PlayingCard temp;
+		do {
+			haveCardsBeenSwapped = false;
+			for(int i = 0; i < this.cards.length - 1; ++i) {
+				if(this.cards[i].getRankValue() < this.cards[i+1].getRankValue()) {
+					temp = this.cards[i];
+					this.cards[i] = this.cards[i+1];
+					this.cards[i+1] = temp;
+					haveCardsBeenSwapped = true;
+				}//Ending bracket of if loop
+			}//Ending bracket of for loop
+		} while(haveCardsBeenSwapped);
+		
+	}//Ending bracket of sort method
+	
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append(this.cards[0].toString());
+		for(int i = 1; i < this.cards.length; ++i) {
+			sb.append(Hand.COMMA_SPACE);
+			sb.append(this.cards[i].toString());
+		}//end bracket of for loop
+		return sb.toString();
+	}//end bracket of toString method
+
+	
+	public String toStringSymbol() {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append(this.cards[0].toStringSymbol());
+		for(int i = 1; i < this.cards.length; ++i) {
+			sb.append(Hand.COMMA_SPACE);
+			sb.append(this.cards[i].toStringSymbol());
+		}//end bracket of for loop
+		return sb.toString();
+	}//End bracket of toStringSymbol
+	
+	public boolean isAPair() {
+		boolean rv = false;
+		
+		if(this.cards[0].isSameRank(this.cards[1])){
+			rv = true;
+		}else if(this.cards[1].isSameRank(this.cards[2])) {
+			rv = true;
+		}else if(this.cards[2].isSameRank(this.cards[3])) {
+			rv = true;
+		}else if(this.cards[3].isSameRank(this.cards[4])){
+			rv = true;
+		}//end bracket of if statement
+	
+		return rv;
+	}//Ending bracket of isAPair method
+	
+	
+	
+	public boolean isATwoPair() {
+		boolean rv = false;
+		
+		if((this.cards[0].isSameRank(this.cards[1]) && (this.cards[2].isSameRank(this.cards[3])) || 
+				((this.cards[1].isSameRank(this.cards[2]) && this.cards[3].isSameRank(this.cards[4])))) || 
+				((this.cards[0].isSameRank(this.cards[1])) && (this.cards[3].isSameRank(this.cards[4])))){
+			rv = true;
+		} //end bracket of if statement
+		
+				
+		
+		return rv;
+	}//ending bracket of IsATwoPair method
+	
+	public boolean isThreeOfKind() {
+		boolean rv = false;
+		
+		if((this.cards[0].isSameRank(this.cards[2])) ||  (this.cards[1].isSameRank(this.cards[3])) || 
+		this.cards[2].isSameRank(this.cards[4])){
+			rv = true;
+		}//Ending bracket of isATwoPair method
+
+		
+		return rv;
+	}//Ending bracket of isATwoPair method
+	
+	public boolean isAStraight() {
+		boolean rv = false;
+		if ((this.cards[0].getRankValue() == (this.cards[1].getRankValue()+1)) &&  (this.cards[1].getRankValue() == (this.cards[2].getRankValue()+1))
+			&&	(this.cards[2].getRankValue() == (this.cards[3].getRankValue()+1)) && this.cards[3].getRankValue() == (this.cards[4].getRankValue()+1)){
+			rv = true;
+		}//end bracket of isAStraight method
+
+		return rv;
+	}//Ending bracket of isAStraight
+	
+	public boolean isAFlush() {
+		boolean rv = true;
+		
+		for(int i = 0; i < this.cards.length -1; ++i) {
+			if(!this.cards[i].isSameSuit(this.cards[i+1])) {
+				rv = false;
+				break;
+			}//ending bracket of if statement
+		}//ending bracket of for loop
+	
+		return rv;
+	}//Ending bracket of isAFlush method
+	
+	public boolean isAFullHouse() {
+		boolean rv = false;
+		
+		if((this.cards[0].isSameRank(this.cards[2]) && this.cards[3].isSameRank(this.cards[4]))){
+			rv = true;
+			return rv;
+		}//end if 
+		if(this.cards[0].isSameRank(this.cards[1]) && (this.cards[2].isSameRank(this.cards[4]))) {
+			rv = true;
+			return rv;
+		}//end of if
+	
+		
+		return rv;
+	}//end of isAFullHouse method
+
+	
+	public boolean isFourOfAKind() {
+		boolean rv = false;
+		
+		if(this.cards[0].isSameRank(this.cards[3]) || this.cards[1].isSameRank(this.cards[4])) {
+			rv = true;
+		}//end bracket of if statement
+
+		
+		return rv;
+	}//ending bracket of isFourOfAKind method
+	
+	public boolean isStraightFlush() {
+		boolean rv = false;
+		
+		if(this.isAFlush() && this.isAStraight()) {
+			if(this.cards[0].getRankValue() < 14) {
+				rv = true;
+				}//end of inner if
+			}//end of if statement
+	
+		
+		return rv;
+	}//Ending bracket of isStraightFlush
+	
+	public boolean isRoyalFlush() {
+		boolean rv = false;
+		
+		if(this.isAFlush() && this.isAStraight()) {
+			if(this.cards[0].getRankValue() == 14) {
+				rv = true;
+			}//end bracket of inner if statement
+		}//end bracket of outer if statement
+
+		
+		return rv;
+	}//End bracket of isRoyalFlush method
+		
+	public HandRank getHandRank() {
+		if(this.isRoyalFlush()) {
+			this.setHandRank(HandRank.ROYALFLUSH);
+		}else if(this.isStraightFlush()) {
+			this.setHandRank(HandRank.STRAIGHTFLUSH);
+		}else if(this.isFourOfAKind()) {
+			this.setHandRank(HandRank.FOUROFAKIND);
+		}else if(this.isAFullHouse()) {
+			this.setHandRank(HandRank.FULLHOUSE);
+		}else if(this.isAFlush()) {
+			this.setHandRank(HandRank.FLUSH);
+		}else if(this.isAStraight()) {
+			this.setHandRank(HandRank.STRAIGHT);
+		}else if(this.isThreeOfKind()) {
+			this.setHandRank(HandRank.THREEOFAKIND);
+		}else if(this.isATwoPair()) {
+			this.setHandRank(HandRank.TWOPAIR);
+		}else if(this.isAPair()) {
+			this.setHandRank(HandRank.ONEPAIR);
+		}else {
+			this.setHandRank(HandRank.HIGHCARD);
+		}//end bracket of if
+		
+		return this.handRank;
+	}//end bracket of getHandRank method
+	
+	public void setHandRank(HandRank newHandRank) {
+		this.handRank = newHandRank;
+	}
+	
+	public HandRank getBestHand() {
+		HandRank returnHandRank = null;
+		for(HandRank rs : HandRank.values()) {
+			if(this.getHandRank().ordinal() >= rs.ordinal()) {
+				returnHandRank = this.getHandRank();
+			}//end bracket of if
+		}//end bracket of for each loop
+		return returnHandRank;
+	}//end bracket of getPlayerBestHand method
+		
+	
+	public int getBestHandRankValue() {
+		return this.getHandRank().ordinal();
+	}//end bracket of int getPlayerBestHandRankValue
+	
+	public int getHandRankCardRank() {
+		int rv = 0;
+		if(this.isRoyalFlush()) {
+			rv = this.cards[0].getRankValue();
+		}else if(this.isStraightFlush()) {
+			rv = this.cards[0].getRankValue();
+		}else if(this.isFourOfAKind()) {
+			if(this.cards[0].isSameRank(this.cards[3])) {
+				rv = this.cards[0].getRankValue();
+			}else {
+				rv = this.cards[1].getRankValue();
+			}
+		}else if(this.isAFullHouse()) {
+			PlayingCard firstSet = null;
+			PlayingCard secondSet = null;
+			
+			this.sort();
+			
+			if(this.cards[0].isSameRank(this.cards[1]) && this.cards[2].isSameRank(this.cards[4])) {
+					firstSet = this.cards[0];
+					secondSet = this.cards[2];
+			}else  {
+					firstSet = this.cards[0];
+					secondSet = this.cards[3];
+			}//end bracket of else 
+			
+			if (firstSet.getRankValue() > secondSet.getRankValue()) {
+				rv = firstSet.getRankValue();
+			}else {
+				rv = secondSet.getRankValue();
+			}//end bracket of else
+		} else if(this.isAFlush()) {
+			rv = this.cards[0].getRankValue();
+		} else if(this.isAStraight()) {
+			rv = this.cards[0].getRankValue();
+		}else if(this.isThreeOfKind()) {
+			
+			if(this.cards[0].isSameRank(this.cards[2])) {
+				rv = this.cards[0].getRankValue();
+			}else if(this.cards[1].isSameRank(this.cards[3])) {
+				rv = this.cards[1].getRankValue();
+			}else {
+				rv = this.cards[2].getRankValue();
+			}//end of branch if 
+			
+		}else if(this.isATwoPair()) {
+			PlayingCard firstSet = null;
+			PlayingCard secondSet = null;
+			if((this.cards[0].isSameRank(this.cards[1])) && this.cards[2].isSameRank(this.cards[3])) {
+				firstSet = this.cards[0];
+				secondSet = this.cards[2];
+			}else if((this.cards[0].isSameRank(this.cards[1])) && this.cards[3].isSameRank(this.cards[4])) {
+				firstSet = this.cards[0];
+				secondSet = this.cards[3];
+			}else {
+				firstSet = this.cards[1];
+				secondSet = this.cards[3];
+			}//end bracket of branch if
+			
+			if(firstSet.getRankValue() > secondSet.getRankValue()) {
+				rv = firstSet.getRankValue();
+			}else {
+				rv = secondSet.getRankValue();
+			}//end bracket of if/else
+			
+		}else if(this.isAPair()) {
+			if(this.cards[0].isSameRank(this.cards[1])){
+				rv = this.cards[0].getRankValue();
+			}else if(this.cards[1].isSameRank(this.cards[2])) {
+				rv = this.cards[1].getRankValue();
+			}else if(this.cards[2].isSameRank(this.cards[3])) {
+				rv = this.cards[2].getRankValue();
+			}else if(this.cards[3].isSameRank(this.cards[4])){
+				rv = this.cards[3].getRankValue();
+			}//end bracket of if statement
+			return rv;
+		}else {
+			rv = this.cards[0].getRankValue();
+		}
+		return rv;
+	
+	}//end bracket of getHand rank method
+}//Ending bracket of Hand class

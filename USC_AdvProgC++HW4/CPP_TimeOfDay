@@ -1,0 +1,158 @@
+#include "timeofday.h"
+#include<iostream>
+using std::cout;
+using std::endl;
+using std::cin;
+
+//==================================================================================Constructors========================================================================================================
+//Constructor for timeofday class, taking in an integer value for the hour, minute, and second and creates a timeofday object with the values
+//given if valid, will otherwise set the values to 0 if they are invalid.
+TimeOfDay::TimeOfDay(int hour, int minute, int second ){
+    if(hour < 0 || hour > 23) {hour = 0;}//Validates the hour is between 0 and 23 and sets to 0 otherwise.
+    if(minute < 0 || minute > 59) {minute = 0;}//Validates the minute is between 0 and 59 and sets to 0 otherwise.
+    if(second < 0 || second > 59) {second = 0;}//Validates the second is between 0 and 59 and sets to 0 otherwise.
+    SetHour(hour); //sets the valid hour variable
+    SetMinute(minute);//sets the valid minute variable.
+    SetSecond(second);//sets the valid second variable.
+}//End bracket of constructor.
+
+
+//===================================================================================Mutators===========================================================================================================
+//SetHour mutator method that checks to see if isMilTime_ is true/false and determines if
+//the hour argument is a valid value for hour. If so, sets the hour_ variable to the hour
+//argument. If invalid, leaves to default initialization.
+void TimeOfDay::SetHour(int hour){
+    if(hour < 24 && hour >= 0){//Checks if hour is between 0 and 23 and leaves it unchanged if not.
+    hour_ = hour;
+    }
+}//end bracket of SetHour Method.
+
+//SetMinute method that checks to see if the minute argument is a valid
+// value for minutes and assigned the minute_ variable if it is.  Leaves
+// at standard initialized value if it isn't.
+void TimeOfDay::SetMinute(int minute){
+    if(minute < 60 && minute >= 0){//Checks if minute is between 0 and 59 and leaves unchanged if not.
+        minute_ = minute;
+    }//End bracket of if
+}//End bracket of SetMinute method.
+
+void TimeOfDay::SetSecond(int second){
+    if(second < 60 && second >= 0){//Checks if second is between 0 and 59 and leaves unchanged if not.
+        second_ = second;
+    }//End bracket of if
+}//End bracket of SetSecond method.
+
+//Print method design to format the time based on whether it is in military time
+//or if printing seconds is desired. 
+void TimeOfDay::Print(bool isMilTime, bool hasSeconds) const{
+        if(isMilTime == true){//Checks if desired output is in military time.
+            if(hasSeconds == true){//Checks if seconds is also a desired output.
+                if(hour_ < 10){//Checks if hours is single digit and prepends a 0.
+                    cout << "0";
+                }//End Bracket of If hour < 10
+                cout << hour_ << ":";//Prints hour with colon.
+                if(minute_ < 10){//Checks if minute is single digit and prepends a 0 .
+                    cout << "0";
+                }//End bracket of if min < 10
+                cout << minute_ << ":";//Prints out minutes with colon.
+                if(second_ < 10){//Checks if seconds is single digit and prepends a 0 
+                    cout << "0";
+                }//end bracket of if second < 10
+                cout << second_ << endl;//Prints seconds with end of line.
+            }else{//Alternative outcome when seconds are not desired.
+                if(hour_ < 10){//Checks if hour is single digit and prepends a 0
+                    cout << "0";
+                }//End bracket of if hour < 10
+                cout << hour_ << ":";//Prints hour with colon.
+                if(minute_ < 10){//Checks if minute is single digit and prepends a 0.
+                    cout << "0";//
+                }//End bracket of if minute < 10
+                cout << minute_ << endl;//Prints minute.
+                }//End bracket of if second < 10
+        }else{//Alternative to output being military time. Prepares output for a.m./p.m. format.
+            if(hasSeconds == true){//Checks if seconds is a desired component to the output.
+                if(hour_ > 12){//Checks if the hour is above 12 (p.m.)
+                    if((hour_ - 12) < 10){//Checks if hour - 12 is single digit and prepends a 0.
+                        cout << "0";
+                    }//End bracket of if h - 12 < 10
+                    cout << hour_ - 12;//Prints hour-12.
+                }else{//Alternative to if the hour is above 12. (a.m.)
+                    if(hour_ < 10 && hour_ != 0){//Checks if hour is below 10 and not 0 and prepends 0 for single digits.
+                        cout << "0";
+                    }//End bracket of if h<10 & !0
+                    if(hour_ == 0){//Checks if hour is 0 and properly formats it to 12 (a.m.)
+                        cout << "12";
+                    }else{
+                    cout << hour_;//Outputs the hour_ otherwise.
+                    }//End bracket of If/Else Statement
+                }//End bracket of If /Else
+                cout << ":";
+                if(minute_ < 10){//Checks if minutes is single digit and prepends a 0.
+                    cout << "0";
+                }//End bracket of if h < 10
+                cout << minute_ << ":";//Outputs minutes.
+                if(second_ < 10){//Checks to see if seconds is single digit and prepends a 0.
+                    cout << "0";
+                }//End bracket of If M < 10
+                cout << second_ ;//Outputs seconds.
+                if(hour_ > 11){//Checks to see if hours is greater than 11 to append p.m.
+                    cout << " p.m." << endl;
+                }else{//Otherwise prints a.m.
+                    cout << " a.m." << endl;
+                }//End bracket of if h > 11 / else statement
+
+            }else{//Alternative to if a.m./p.m. has seconds as a desired output.
+                if(hour_ > 12){//Checks if hour is greater than 12 
+                    if((hour_ -12) < 10){//Checks is hour-12 is single digit and prepends a 0.
+                        cout << "0";
+                    }//End bracket of if H-12 < 10
+                    cout << hour_ - 12;//Outputs hour-12.
+                }else{//Alternative to hour > 12. 
+                    if(hour_ < 10 && hour_ != 0){//Checks if hour is single digit and prepends a 0.
+                        cout << "0";
+                    }//End bracket of If/Else
+                    if(hour_ == 0){//Converts hour to 12 if it is exactly 0.
+                        cout << "12";
+                    }else{
+                    cout << hour_;//Outputs hour.
+                    }//End bracket of if/else
+                }//End bracket of if H > 12/ Else
+                cout << ":";
+                if(minute_ < 10){//Checks if minute is single digit and prepends 0
+                    cout << "0";
+                }//End bracket of If M < 10
+                cout << minute_ ;//Outputs 0.
+
+                if(hour_ > 11){//Checks if hour is greater than 11 and outputs p.m. if yes.
+                    cout << " p.m." << endl;
+                }else{//Alternative, if hour is less than 11 it outputs a.m.
+                    cout << " a.m." << endl;
+                }//End bracket of If H > 11/Else
+
+            }//End bracket of If HasSeconds/Else
+        }//End bracket of If IsMilTime/Else
+        
+    }//End bracket of Print method
+
+//Overloaded < operator to compare TimeOfDay objects.   
+bool TimeOfDay::operator<(const TimeOfDay& other) const{
+    if(hour_ != other.hour_){//Checks if hours are not equal and returns the comparison of them.
+        return hour_ < other.hour_;
+    }//End bracket of if
+    if(minute_ != other.minute_){//Checks if minutes are not equal and returns the comparison of them.
+        return minute_ < other.minute_;
+    }//end bracket of if
+    if(second_ != other.second_){//Checks if seconds are not equal and returns the comparison of them.
+        return second_ < other.second_;
+    }//end bracket of if
+    return false;
+}//End bracket of operator< overload.
+
+bool TimeOfDay::operator==(const TimeOfDay& other) const{
+    if((hour_ == other.hour_ ) && (minute_ == other.minute_) 
+        && (second_ == other.second_)){//Checks if all time values are equal to each other.
+            return true;//Returns true if yes.
+        }//end bracket of if
+        return false;//Returns false if no.
+    }//End bracket of operator == overload.
+

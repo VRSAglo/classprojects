@@ -1,0 +1,39 @@
+package Project07;
+
+public class BSTDriver {
+
+	public static void main(String[] args) {
+		
+		BSTNode<Integer> nodeOne = new BSTNode<Integer>();
+		
+		BSTNode<Integer> nodeThree = new BSTNode<Integer>(3);
+		
+		BSTNode<Integer> nodeTwo = new BSTNode<Integer>(2, nodeOne, nodeThree);
+	
+		BSTNode<Integer> nodeEquals = new BSTNode<Integer>(1);
+		nodeOne.setData(1);
+		nodeOne.setRight(nodeTwo);
+		nodeTwo.setLeft(nodeOne);
+		
+		
+		System.out.println(nodeOne.equals(nodeTwo));
+		System.out.println(nodeOne.equals(nodeEquals));
+		
+		System.out.println(nodeOne.toString());
+		//System.out.println(nodeOne.getLeft().toString());
+		System.out.println(nodeOne.getRight().toString());
+		
+		System.out.println(nodeTwo.toString());
+		System.out.println(nodeTwo.getLeft().toString());
+		System.out.println(nodeTwo.getRight().toString());
+		
+		System.out.println(nodeOne.compareTo(nodeTwo));
+		System.out.println(nodeTwo.compareTo(nodeOne));
+		
+		
+		
+		
+		
+	}
+	
+}//end bracket of BSTDriver

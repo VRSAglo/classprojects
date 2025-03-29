@@ -1,0 +1,427 @@
+package edu.mtc.egr283.Project08;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+//Adam Glover
+//Project 08
+//Professor Sims
+//Completed 4-23-2023
+//Due 4-27-2023
+
+/**
+ * Main method for the RecipeBox class.  Allows users to add, remove, and edit recipes and 
+ * their ingredients / instructions.
+ * @author Adam Glover
+ *
+ */
+public class RecipeBoxDriver {
+
+		private static RecipeBox rb;
+		
+		/**
+		 * Main method for the RecipeBox class, initializes objects and closes them.
+		 * @param args
+		 */
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		rb = new RecipeBox();
+		
+		systemNavigation(input);
+		
+		input.close();
+		System.exit(0);
+	}//end bracket of main method
+	
+	/**
+	 * Method to navigate through the main menu and allow for easy 
+	 * recursive call back to navigate through the options.
+	 * @param keys The Scanner for user input.
+	 */
+	public static void systemNavigation(Scanner keys) {
+		int userInput;
+		System.out.println("Welcome to the Recipe box. \n"
+				+ "Please select an option. (Only enter a number)");
+		System.out.println("1. Add a recipe at the head of the list. \n"
+				+ "2. Add a recipe at a specific location. \n" 
+				+ "3. Add a recipe at the end of the list. \n"
+				+ "4. Delete a recipe. \n" 
+				+ "5. Edit a recipe. \n"
+				+ "6. Display Recipe List. \n"
+				+ "7. Display the Ingredients List of a Recipe. \n"
+				+ "8. Display the Instructions List ofa Recipe. \n"
+				+ "9. Exit.");
+		System.out.print("Please select an option:");
+		userInput = userMenuSelection(keys);
+		if(userInput == 0 || userInput > 9) {
+			System.out.println("Invalid selection for this menu, please try again");
+			userInput = userMenuSelection(keys);
+		}//end bracket of if
+		switch(userInput) {
+		//add recipe at head
+		case 1:
+			addRecipe(keys);
+			break;
+			//add recipe at position
+		case 2:
+			addRecipe(keys);
+			break;
+			//add recipe at tail
+		case 3: 
+			addRecipe(keys);
+			break;
+			//remove recipe
+		case 4:
+			System.out.println("Enter the name of the recipe you would like to remove from the list:");
+			String removeRecipe = keys.next();
+			Recipe search = new Recipe(removeRecipe);
+			if(rb.search(removeRecipe)) {
+				
+				System.out.println("Is [" + rb.get(rb.find(search)).getName() + "] the recipe you want to remove?");
+				System.out.println("Enter 1 for Yes and 2 For No");
+				userInput = userMenuSelection(keys);
+				if(userInput == 1) {
+					System.out.println("Removing Recipe");
+					rb.removeRecipe(rb.get(rb.find(search)));
+				}else if(userInput == 2) {
+					System.out.println("Returning to main menu");
+					systemNavigation(keys);
+				}else {
+					System.out.println("Incorrect input, returning to main menu");
+					systemNavigation(keys);
+				}//end bracket of if else
+				System.out.println("Would you like to continue?"
+						+ "1 For yes or 2 for No");
+				userInput = userMenuSelection(keys);
+				if(userInput == 1) {
+					System.out.println("Returning to main menu");
+					systemNavigation(keys);
+				}else {
+					System.out.println("Thank you for using the RecipeBox");
+					System.exit(0);
+				}//end bracket of second if/else
+			}else {
+				System.out.println("Recipe is not in the list. Returning to main menu.");
+				systemNavigation(keys);
+			}//end bracket of outer if/else
+			break;
+			//Edit recipe
+		case 5:
+			editRecipe(keys);
+			break;
+			//Display recipe list
+		case 6:
+			System.out.println("Displaying recipe list:");
+			for(int i = 0; i < rb.size(); ++i) {
+				System.out.println((i+1) + ": " + rb.get(i).getName());
+			}//end bracket of for loop
+			continueSelection(keys);
+			break;
+			//Display ingredient list
+		case 7:
+			System.out.println("Which recipe would you like to see the ingredients for?");
+			String name = keys.next();
+			search = new Recipe(name);
+			if(rb.search(name)) {
+				int size = rb.get(rb.find(search)).getIngredients().size();
+				for(int i = 0; i < size; ++i) {
+				System.out.println( rb.get(rb.find(search)).getIngredients().get(i).toString());
+				}//end bracket of for loop
+			}//end bracket of if
+			continueSelection(keys);
+			break;
+			//Display instruction list
+		case 8:
+			System.out.println("Which recipe would you like to see the instructions for?");
+			name = keys.next();
+			search = new Recipe(name);
+			if(rb.search(name)) {
+				int size = rb.get(rb.find(search)).getInstructions().size();
+				for(int i = 0; i < size; ++i) {
+				System.out.println(rb.get(rb.find(search)).getInstructions().get(i).toString());
+				}//endb racket of for
+			}//end bracket of if
+			continueSelection(keys);
+			break;
+			//Exit program
+		case 9:
+			continueSelection(keys);
+			break;
+		default:
+			System.out.println("You have made an invalid selection");
+		}//end switch
+		
+		
+	}
+	/**
+	 * Method to request if the user would like to continue, made to simplify code.
+	 * @param keys Scanner object for user input
+	 */
+	public static void continueSelection(Scanner keys) {
+		int userInput = 0;
+		System.out.println("Would you like to continue?");
+		System.out.println("Enter 1 for Yes and 2 for No");
+		userInput = userMenuSelection(keys);
+		if(userInput == 1) {
+			System.out.println("Returning to main menu");
+			systemNavigation(keys);
+		}else {
+			System.out.println("Thank you for using the RecipeBox");
+			System.exit(0);
+		}//end bracket of if/else
+	}//end bracket of continueSelection method
+	/**
+	 * Method to take in user input and validate input data, includes
+	 * try catch to verify integer input.
+	 * @param keys Scanner for user input
+	 * @return Integer value that is the validated user input.
+	 */
+	public static int userMenuSelection(Scanner keys) {
+		int userInput = -1;
+		try {
+			userInput = keys.nextInt();
+		}catch (InputMismatchException ime){
+			System.out.println("Please enter only a number (IE. 1, 4, 13)");
+			userInput = -1;
+			userInput = keys.nextInt();
+		}//end bracket of try catch
+		return userInput;
+	}//end bracket of userMenuSelection method
+	
+	/**
+	 * Method to add Recipes to the RecipeBox list.
+	 * Includes add at head/ tail/ and position methods.
+	 * @param keys Scanner object for user input.
+	 */
+	public static void addRecipe(Scanner keys) {
+		String recipeName;
+		System.out.println("Enter the name of the recipe you wish to add.");
+		recipeName = keys.next();
+		if(rb.search(recipeName)) {
+			System.out.println("This recipe is already in the list. Returning to main menu.");
+			systemNavigation(keys);
+		}else {
+		System.out.println("Where would you like to add the recipe? \n"
+				+ "1. At the head. \n"
+				+ "2. At the tail. \n"
+				+ "3. At a specific location.");
+			int userInput = userMenuSelection(keys);
+			Recipe add = new Recipe(recipeName);
+			switch(userInput) {
+			case 1:
+				System.out.println("Adding new blank recipe at the head.");
+				rb.addAtHead(add);
+				System.out.println("Navigating to Recipe editer.");
+				editRecipe(keys);
+				break;
+			case 2:
+				System.out.println("Adding new blank recipe at the tail.");
+				rb.addAtTail(add);
+				System.out.println("Navigating to Recipe editer.");
+				editRecipe(keys);
+				break;
+			case 3:
+				System.out.println("At what position would you like to add the recipe?");
+				userInput = userMenuSelection(keys);
+				System.out.println("(Please enter a value from 1 to " + (rb.size()-1));
+				if(userInput == 0 || userInput > (rb.size()-1)) {
+					System.out.println("Invalid input, please try again");
+					userInput = userMenuSelection(keys);
+				}//end bracket of if
+				rb.addAtPosition(add, userInput);
+				System.out.println("Navigating to Recipe editer.");
+				editRecipe(keys);
+				break;
+			}//end bracket of switch
+		}//end bracket of if else
+	}//end bracket of add a recipe
+	
+	/**
+	 * Method to edit the ingredients and instructions of a Recipe
+	 * @param keys Scanner object for user Input
+	 */
+	public static void editRecipe(Scanner keys) {
+		System.out.println("Recipe editer menu: \n"
+				+ "1. Add an ingredient to the list. \n"
+				+ "2. Delete an ingredient. \n"
+				+ "3. Display the ingredients list of a recipe. \n"
+				+ "4. Add an instruction to the list. \n"
+				+ "5. Delete an instruction. \n"
+				+ "6. Display the instructions list of a recipe. \n"
+				+ "7. Go back to main menu.");
+		int userInput = userMenuSelection(keys);
+		switch(userInput) {
+		//Add ingredient at head/tail/ or position
+		case 1:
+			System.out.println("Enter the recipe you wish to add an ingredient to");
+			String recipeName = keys.next();
+			Recipe search = new Recipe(recipeName);
+			if(rb.search(recipeName)) {
+				System.out.println("Enter the ingredient you wish to add");
+				Ingredient addIng = new Ingredient(keys.next());
+				System.out.println("Enter the Unit of measurement for the ingredient");
+				Unit addUnit = new Unit(keys.next());
+				System.out.println("Enter the amount of the ingredient you wish to add(IE: 1, 1.5)");
+				double quantity = keys.nextDouble();
+				System.out.println("Where do you want to add the ingredient?");
+				System.out.println("Enter 1 for the Head, 2 for the Tail, and 3 for a specific position");
+				userInput = keys.nextInt();
+				RecipeIngredient addRI = new RecipeIngredient(quantity, addIng, addUnit);
+				if(userInput == 1) {
+					System.out.println("Adding ingredient at the head");
+					rb.get(rb.find(search)).addIngredientAtHead(addRI);
+					continueSelection(keys);
+				}else if(userInput == 2) {
+					System.out.println("Adding ingredient at the tail");
+					rb.get(rb.find(search)).addIngredientAtPosition(addRI, rb.get(rb.find(search)).getIngredients().size());
+					continueSelection(keys);
+				}else if(userInput == 3) {
+					System.out.println("Enter the position you would like to add the ingredient to");
+					userInput = userMenuSelection(keys);
+					System.out.println("Adding ingredient to position: " + userInput);
+					rb.get(rb.find(search)).addIngredientAtPosition(addRI, userInput);
+					continueSelection(keys);
+				}else {
+					continueSelection(keys);
+				}//end bracket of branch if
+				}else {
+				System.out.println("Recipe not located, please try again");
+				editRecipe(keys);
+			}//end bracket of if/else
+			break;
+			//Remove ingredient
+		case 2:
+			System.out.println("Enter the recipe you would like to remove an ingredient from");
+			recipeName = keys.next();
+			
+			search = new Recipe(recipeName);
+			
+			if(rb.search(recipeName)){
+				System.out.println("Enter the Ingredient you would like to remove from " +
+					rb.get(rb.find(search)).getName());
+				Ingredient removeIng = new Ingredient(keys.next());
+				int position = 0;
+				for(int i = 0; i < rb.get(rb.find(search)).getIngredients().size(); ++i) {
+					if(rb.get(rb.find(search)).getIngredients().get(i).getIngredient().equals(removeIng)){
+						position = i;
+					}//end bracket of if
+				}//end bracket of for
+			if(rb.get(rb.find(search)).getIngredients().get(position) != null) {
+					System.out.println("Removing ingredient");
+					rb.get(rb.find(search)).removeIngredient(rb.get(rb.find(search)).getIngredients().get(position).getIngredient());
+				
+					continueSelection(keys);
+			}else {
+					System.out.println("The ingredient is not in the list");
+					continueSelection(keys);
+				}//end bracket of if else
+			}else {
+				System.out.println("The recipe is not in the list");
+				continueSelection(keys);
+			}
+			break;
+			//Display ingredient list
+		case 3:
+			System.out.print("Enter the recipe you would like to display the ingredients for");
+			recipeName = keys.next();
+			search = new Recipe(recipeName);
+			int size = rb.get(rb.find(search)).getIngredients().size();
+			for(int i = 0; i < size; ++i) {
+				if(rb.get(rb.find(search)).getIngredients().get(i) != null) {
+				rb.get(rb.find(search)).getIngredients().get(i).toString();
+				}//end bracket of if
+			}//end bracket of for loop
+			continueSelection(keys);
+			break;
+			//Add instruction at head/tail/position
+		case 4:
+			System.out.println("Enter the recipe you would like to add an instruction to");
+			recipeName = keys.next();
+			search = new Recipe(recipeName);
+			System.out.println("Enter the instruction you would like to add (user _ instead of spaces)");
+			String instruction = "";
+		
+			instruction = keys.next();
+		
+			System.out.println("Where would you like to enter the instruction? \n"
+					+ "Enter 1 for At the head, 2 for the tail, and 3 for a specific position");
+			userInput = keys.nextInt();
+			Instruction addInst = new Instruction(instruction.replace('_', ' '));
+	
+			if(rb.get(rb.find(search)).searchInstruction(addInst)) {
+				System.out.println("Instruction already in list, returning to edit menu");
+				editRecipe(keys);
+				
+			}else {
+				switch(userInput) {
+				case 1:
+					System.out.println("Adding instruction at the head");
+					rb.get(rb.find(search)).addInstructionAtHead(addInst);
+					continueSelection(keys);
+					break;
+				case 2:
+					System.out.println("Adding instruction at the tail");
+					rb.get(rb.find(search)).addInstructionAtPosition(addInst, 
+							rb.get(rb.find(search)).getInstructions().size());
+					continueSelection(keys);
+					break;
+				case 3:
+					System.out.println("At what position would you like to add the instruction?");
+					userInput = userMenuSelection(keys);
+					System.out.println("Adding instruction at position " + userInput);
+					rb.get(rb.find(search)).addInstructionAtPosition(addInst, userInput);
+					continueSelection(keys);
+					break;
+				default:
+					System.out.println("You have entered an invalid selection, returning to edit menu");
+					editRecipe(keys);
+				}//end bracket of switch
+			}//end bracket of if/else
+			break;
+			//Remove instruction
+		case 5:
+			System.out.println("Enter the recipe you would like to remove an instruction from");
+			recipeName = keys.next();
+			search = new Recipe(recipeName);
+			System.out.println("Enter the instruction you would like to remove in (Use _ instead of spaces) " +
+			rb.get(rb.find(search)).getName());
+			instruction = keys.next();
+			Instruction removeInst = new Instruction(instruction.replace('_',' '));
+			if(rb.search(recipeName)) {
+			if(rb.get(rb.find(search)).searchInstruction(removeInst)) {
+				System.out.println("Removing instruction");
+				rb.get(rb.find(search)).removeInstruction(removeInst);
+				continueSelection(keys);
+			}else {
+				System.out.println("Instruction not found in the list");
+				continueSelection(keys);
+				}//end bracket of if else
+			}else {
+				System.out.println("Recipe could not be found");
+				continueSelection(keys);
+			}//end bracket of if/else
+			break;
+			//Display instructions
+		case 6:
+			System.out.println("Select a recipe you would like to display the instructions for");
+			recipeName = keys.next();
+			search = new Recipe(recipeName);
+			size = rb.get(rb.find(search)).getInstructions().size();
+			for(int i = 0; i < size; ++i) {
+				if(rb.get(rb.find(search)).getInstructions().get(i).getInstruction() != null) {
+				rb.get(rb.find(search)).getInstructions().get(i).toString();
+				}//end if
+			}//end bracket of for loop
+			continueSelection(keys);
+			break;
+			//Return to main menu
+		case 7:
+			System.out.println("Returning to main menu");
+			systemNavigation(keys);
+			break;
+			default:
+				System.out.println("You have made an invalid selection, please try again");
+				editRecipe(keys);
+		}//end bracket of switch
+		
+	}//end bracket of editRecipe method
+}//end bracket of RecipeBoxDriver method

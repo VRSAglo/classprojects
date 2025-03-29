@@ -1,0 +1,125 @@
+package Project07;
+
+//Adam Glover
+//Project 07
+//Professor Sims
+//Completed: 4-9-2023
+//Due: 4-13-2023
+//This program constructs and performs operations on a binary search tree
+//All existing testing data left in.  Private methods made public for testing, then converted back.
+//BSTNode testing on seperate driver test.
+
+public class BinarySearchTreeDriver {
+
+	public static void main(String[] args) {
+		//Integer test with rooted constructor.
+		BSTNode<Integer> root = new BSTNode<Integer>(10);
+		BinarySearchTree<Integer> bst = new BinarySearchTree<Integer>(root);
+		
+		System.out.println("Get root: " + bst.getRoot().getData());
+	//Manually assigned nodes to test accessors and mutators
+		BSTNode<Integer> rootLeft = new BSTNode<Integer>(5);
+		BSTNode<Integer> rootRight = new BSTNode<Integer>(15);
+		root.setLeft(rootLeft);
+		root.setRight(rootRight);
+		System.out.println("Root left: " + root.getLeft().toString());
+		System.out.println("Root right: " + root.getRight().toString());
+		
+		
+		BSTNode<Integer> layer2left = new BSTNode<Integer>(3);
+		BSTNode<Integer> layer2right = new BSTNode<Integer>(8);
+		
+		rootLeft.setLeft(layer2left);
+		rootLeft.setRight(layer2right);
+		
+		System.out.println("Layer 2 left: " + root.getLeft().getLeft());
+		System.out.println("Layer 2 right: " + root.getLeft().getRight());
+		
+		System.out.println("layer2left = layer2left " + rootLeft.getLeft().equals(layer2left));
+		System.out.println(bst.search(8));
+		//Add method testing to verify proper operation
+		bst.addNode(4);
+		
+		System.out.println("Check the value in layer2left's right child node: " + layer2left.getRight());
+			
+		bst.addNode(1);
+	//Completed constructor of integer tree.
+		System.out.println("Check the value in layer2left's left child node: " + layer2left.getLeft());
+		bst.addNode(13);
+		bst.addNode(18);
+		bst.addNode(11);
+		bst.addNode(14);
+		bst.addNode(16);
+		bst.addNode(19);
+		bst.addNode(6);
+		bst.addNode(9);
+		//Easy to read tree print out, also validates each left and right reference to the tree properly assigned.
+		System.out.println("Check the contents of the tree from the root ");
+		System.out.println("\t      " + root.toString());
+		System.out.println("       " + root.getLeft().toString() + "       |       " + root.getRight().toString() + "  ");
+		
+		System.out.print("    " + root.getLeft().getLeft().toString() + "  |  " + root.getLeft().getRight().toString() + "       ");
+			System.out.println(root.getRight().getLeft().toString() + "   |   " + root.getRight().getRight());
+			
+		System.out.print("  " +root.getLeft().getLeft().getLeft().toString() + " | " + root.getLeft().getLeft().getRight().toString() + " ");
+		System.out.print(root.getLeft().getRight().getLeft().toString() + " | " + root.getLeft().getRight().getRight().toString() + "   ");
+	
+		System.out.print(root.getRight().getLeft().getLeft().toString() + " | " + root.getRight().getLeft().getRight().toString() + "  ");
+		System.out.println(root.getRight().getRight().getLeft().toString() + " | " + root.getRight().getRight().getRight().toString() + "\n");
+	
+		System.out.println("Search for the value 16 in the tree : " + bst.search(16));
+
+		//Order traversal tests.
+		System.out.println("Check the inorder Traversal: " + bst.inorderTraversal(root));
+		System.out.println("Check the preorder Traversal: " + bst.preorderTraversal(root));
+		System.out.println("Check the postorder Traversal: " + bst.postorderTraversal(root));
+		System.out.println("Check level traversal: " + bst.levelorderTraversal(root));
+		System.out.println("Root is " + bst.getRoot());
+		
+		System.out.println();
+		//removal tests.
+		bst.removeNode(5);
+		System.out.println();
+		bst.removeNode(8);
+		//Level order traversal tests after removal
+		System.out.println("Removed node level traversal: " + bst.levelorderTraversal(root));
+		//Easy to read tree print out with removals.  Left data to be nulled so tree could display it's location.
+		System.out.println("Check the contents of the tree from the root ");
+		System.out.println("\t      " + root.toString());
+		System.out.println("       " + root.getLeft().toString() + "       |       " + root.getRight().toString() + "  ");
+		
+		System.out.print("    " + root.getLeft().getLeft().toString() + "  |  " + root.getLeft().getRight().toString() + "       ");
+			System.out.println(root.getRight().getLeft().toString() + "   |   " + root.getRight().getRight());
+			
+		System.out.print("  " +root.getLeft().getLeft().getLeft().toString() + " | " + root.getLeft().getLeft().getRight().toString() + " ");
+		System.out.print(root.getLeft().getRight().getLeft().toString() + " | " + root.getLeft().getRight().getRight().toString() + "   ");
+	
+		System.out.print(root.getRight().getLeft().getLeft().toString() + " | " + root.getRight().getLeft().getRight().toString() + "  ");
+		System.out.println(root.getRight().getRight().getLeft().toString() + " | " +  root.getRight().getRight().getRight().toString() + "\n");
+		
+		//Default non-rooted constructor creation test with character data type
+		BinarySearchTree<Character> newBST = new BinarySearchTree<Character>();
+		//Testing and verifying properly adding new node as root
+		newBST.addNode('G');
+		System.out.println(newBST.getRoot());
+		//Add to fill out tree and check references
+		newBST.addNode('D');
+		newBST.addNode('I');
+		System.out.println(newBST.getRoot());
+		System.out.println(newBST.getRoot().getLeft() + " | " + newBST.getRoot().getRight());
+		newBST.addNode('A');
+		newBST.addNode('E');
+		newBST.addNode('H');
+		newBST.addNode('J');
+		System.out.println("      " +newBST.getRoot());
+		System.out.println("    " + newBST.getRoot().getLeft() + " | " + newBST.getRoot().getRight());
+		System.out.println(newBST.getRoot().getLeft().getLeft() + " | " + newBST.getRoot().getLeft().getRight() + "    " + newBST.getRoot().getRight().getLeft() + " | " + newBST.getRoot().getRight().getRight());
+	//Testing removal of items in tree.
+		newBST.removeNode('J');
+		System.out.println("      " +newBST.getRoot());
+		System.out.println("    " + newBST.getRoot().getLeft() + " | " + newBST.getRoot().getRight());
+		System.out.println(newBST.getRoot().getLeft().getLeft() + " | " + newBST.getRoot().getLeft().getRight() + "    " + newBST.getRoot().getRight().getLeft() + " | " + newBST.getRoot().getRight().getRight());
+	
+	}//end bracket of main method
+	
+}//end bracket of BinarySearchTreeDriver

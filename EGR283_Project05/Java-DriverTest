@@ -1,0 +1,11 @@
+package Project05;
+
+public class DriverTest {
+	public static void main(String[] args) {
+		String input = "((3 + 2) * 4) / (5 - 1)";
+		String eval;
+		eval = ArithmeticEvaluator.postFix(input);
+		System.out.println(eval);
+		System.out.println(ArithmeticEvaluator.evaluate(eval));
+	}
+}

@@ -1,0 +1,150 @@
+package TrafficLight;
+//Adam Glover
+//Project 06 Traffic Sim
+//Professor Sims
+//Completed: 3-25-23
+//Due: 3-30-23
+//This program runs a simulation of a traffic intersection to determine congestion
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+/** Simulation
+ * Run a  simulation
+ */
+public class Simulation {
+	
+    /**
+     * Create a TrafficSystem, steps it and calls the print methods
+     */
+    public static void main(String [] args)
+    {
+        TrafficSystem tf = null;
+        Scanner keys = new Scanner(System.in);
+        
+        tf = startScreen(tf, keys);
+        //...
+
+        while (tf.getTime() < tf.getRunTime())
+        {
+            try {
+                // If the printouts are done each timestep, a pause is needed
+                Thread.sleep(100);
+            }
+            catch (InterruptedException e)
+            {
+            }
+            tf.step();
+            tf.print();
+        }//end bracket of while loop
+        closeScreen(tf);
+        keys.close();
+        System.exit(0);
+        ///...
+    }//end bracket of main method
+    
+    /**
+     * Produces welcome message and guides user through inputing the necessary variables to instantiate
+     * a TrafficSystem tailored to their needs.
+     * @param t The Traffic System to be adjusted
+     * @param input Scanner object for data entry
+     * @return The newly created TrafficSystem to be simulated.
+     */
+    private static TrafficSystem startScreen(TrafficSystem t, Scanner input) {
+    	int lightPeriod;
+    	int l1greenperiod;
+    	int l2greenperiod;
+    	int westtranslength;
+    	int southtranslength;
+    	int incominglanelength;
+    	int runTime;
+    	int arrival;
+    	int direction;
+    	System.out.println("Welcome to the Traffic Simulator.");
+    	System.out.println("How long would you like the light cycles to be?");
+    	System.out.print("(This is the start of one green light to the start of the next green light):");
+    	try {
+    		lightPeriod = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		lightPeriod = input.nextInt();
+    	}//end try catch
+    	System.out.println("How long would you like the West bound light to be green? (Enter a whole number)");
+    	try {
+    		l1greenperiod = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		l1greenperiod = input.nextInt();
+    	}//end try/catch
+    	System.out.println("How long would you like the South bound light to be green? (Enter a whole number)");
+    	try {
+    		l2greenperiod = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		l2greenperiod = input.nextInt();
+    	}//end bracket of try catch
+    	System.out.println("How long would you like the West bound transition lane to be? (Enter a whole number)");
+    	try {
+    		westtranslength = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		westtranslength = input.nextInt();
+    	}//end bracket of try/catch
+    	System.out.println("How long would you like the South bound transition lane to be? (Enter a whole number)");
+    	try {
+    		southtranslength = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		southtranslength = input.nextInt();
+    	}//end bracket of try catch 
+    	System.out.println("How long would you like the incoming lane to be?");
+    	System.out.println("(The lane that feeds into the west and south bound transition lanes, enter a whole number)");
+    	try {
+    		incominglanelength = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		incominglanelength = input.nextInt();
+    	}//end bracket of try catch block
+    	
+    	System.out.println("How long would you like the simulation to run?");
+    	System.out.println("(This is the total number of time steps the program will cycle through, enter a whole number)");
+    	try {
+    		runTime = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		runTime = input.nextInt();
+    	}//end bracket of try/catch
+    	System.out.println("What would you like to set the probability of arrival?");
+    	System.out.println("(Use a whole number representation of a percentage. IE 60% = 60)");
+    	try {
+    		arrival = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		arrival = input.nextInt();
+    	}//end try catch
+    	System.out.println("What would you like to set the probability of direction?");
+    	System.out.println("(Use a whole number representation of a percentage. IE 50% = 50)");
+    	try {
+    		direction = input.nextInt();
+    	}catch(InputMismatchException ime) {
+    		System.out.println("Please enter only a whole number. (1-100)");
+    		direction = input.nextInt();
+    	}//end bracket of try catch
+    	System.out.println("Information gathered.  Please wait while simulation is being constructed.");
+    	t = new TrafficSystem(lightPeriod, l1greenperiod, l2greenperiod, westtranslength, 
+    			southtranslength, incominglanelength, runTime, arrival, direction);
+    	return t;
+    	
+    }//end starScreen method
+    
+    /**
+     * Method to output final statements and print out statistics.
+     * @param t The TrafficSystem who's statistics will be presented.
+     */
+    private static void closeScreen(TrafficSystem t) {
+    	System.out.println("The simulation has completed.");
+    	System.out.println("Your data is: ");
+    	t.printStatistics();
+    }
+ 
+}//end simulation class

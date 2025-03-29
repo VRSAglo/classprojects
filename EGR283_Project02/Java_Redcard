@@ -1,0 +1,68 @@
+package Project02;
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+/**
+ * This class defines the properties of the Red card 
+ * with the <code>Red</code> enum object.
+ * 
+ * 
+ * @author Adam Glover
+ *@version 1.0.0 Copyright 2023-1-21 All Rights Reserved
+ */
+public class Redcard {
+
+//--------------------------------------Fields----------------------------------------
+		/**
+		 * Datatype <cod>Red</code>0 used for <code>Redcard</code>
+		 */
+		public Red redcard;
+		
+// ----------------------------------Constructors-------------------------------------
+		/**
+		 * Redcard constructor to be used with the <code>RedDeck</code> class
+		 * @param newRed A new <code>Red</code> card constructed using the <code>Red</code> enum properties.
+		 */
+		public Redcard(Red newRed) {
+			this.redcard = newRed;
+		}//end bracket of constructor
+
+//--------------------------------------Methods---------------------------------------
+		/**
+		 * getAffect method designed to return the integer value in the <code>Red</code>
+		 * objects <code>space</code> field.
+		 * @return int space from <code>Red</code> enumeration object.
+		 */
+		public int getAffect() {
+			return this.redcard.getSpace();
+		}//end bracket of getAffect method
+		/**
+		 * Standard toString override to return flavorText from <code>Red</code>
+		 */
+		@Override
+		public String toString() {
+			StringBuffer sb = new StringBuffer();
+			sb.append(this.redcard.getText());
+			return sb.toString();
+		}//End bracket of toString override
+		
+		/**
+		 * Standard equals method to compare whether multiple instances of <code>Redcard</code>
+		 * are the same.
+		 */
+		@Override
+		public boolean equals(Object otherCard) {
+			boolean rv = false;
+			if(otherCard instanceof Redcard) {
+				Redcard pc = (Redcard) otherCard;
+				if(this.getAffect() == pc.getAffect()) {
+					rv = true;
+				}//Ending bracket of inner if statement
+			}//Ending bracket of outer if statement
+			return rv;
+		}//end bracket of equals override
+		
+}//End bracket of Redcard class

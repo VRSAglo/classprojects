@@ -1,0 +1,45 @@
+package edu.mtc.egr283.Project01;
+
+public class HandDriver {
+
+	public static void main(String[] args) {
+	
+	
+		Hand h = new Hand();
+		PlayingCard[] cards = new PlayingCard[5];
+		cards[0] = new PlayingCard(Suit.CLUBS, Rank.DUECE);
+		cards[1] = new PlayingCard(Suit.CLUBS, Rank.TREY);
+		cards[2] = new PlayingCard(Suit.HEARTS, Rank.FOUR);
+		cards[3] = new PlayingCard(Suit.CLUBS, Rank.FIVE);
+		cards[4] = new PlayingCard(Suit.CLUBS, Rank.SIX);
+		
+		for(int i = 0; i < 5; ++i) {
+			h.addACard(cards[i]);
+		}
+		
+
+		
+		System.out.println(h.toString());
+		System.out.println(h.toStringSymbol());
+		
+		h.sort();
+		System.out.println("After Sorting:");
+		System.out.println(h.toString());
+		System.out.println(h.toStringSymbol());
+	
+		System.out.println(cards[0].getRankValue());
+		System.out.println(cards[1].getRankValue());
+		System.out.println(cards[2].getRankValue());
+		System.out.println(cards[3].getRankValue());
+		System.out.println(cards[4].getRankValue());
+		System.out.println("Is a straight: " + h.isAStraight());
+		System.out.println("Is a pair: " + h.isAPair());
+		System.out.println("is a two pair: " + h.isATwoPair());
+		System.out.println("Is a three of a kind : " + h.isThreeOfKind());
+		System.out.println("Is a straight flush: " + h.isStraightFlush());
+		System.out.println("Is a Royal Flush: " + h.isRoyalFlush());
+		System.out.println("Is a full house: " + h.isAFullHouse());
+
+	}//ending bracket of main method
+	
+}//ending bracket of Driver class

@@ -1,0 +1,126 @@
+package edu.mtc.egr283.Project01;
+//Adam Glover
+//EGR283 Project 01
+//Professor Sims
+//This project plays a round of poker 
+//Current Date: 1/15/2023
+//Due Date: 1/19/2023
+
+public class Player {
+	//Data
+	private String name;
+	private Hand hand;
+	private int wins;
+	private int loses;
+
+	
+	//Constructor
+	public Player(String newName) {
+		this(newName, Hand.DEFAULT_VALUE);
+	}//ending bracket of simplified Player constructor
+	
+	public Player(String newName, int numberOfCardsInHand) {
+		this.setName(newName);
+		this.setHand(new Hand(numberOfCardsInHand, HandRank.HIGHCARD));
+		this.setWins(0);
+		this.setLoses(0);
+	
+	}//Ending bracket of Player constructor
+	
+	
+	//Methods
+	
+	public void addACard(PlayingCard newCard) {
+		this.getHand().addACard(newCard);
+	}//Ending bracket of addACard method
+	
+	public String displayHand() {
+		return this.getHand().toString();
+	}//ending bracket of displayHand method
+	
+	public String displayHandSymbol() {
+		return this.getHand().toStringSymbol();
+	}//ending bracket of displayHandSymbol method
+	
+	public String getName() {
+		return this.name;
+	}//ending bracket of getName method
+	
+	private void setName(String newName) {
+		this.name = newName;
+	}//ending bracket of setName method
+	
+	private Hand getHand() {
+		return this.hand;
+	}//ending bracket of getHand method
+	
+	private void setHand(Hand newHand) {
+		this.hand = newHand;
+	}//ending bracket of setHand
+	
+	public void sortHand() {
+		this.getHand().sort();
+	}//end bracket of sort hand method
+	
+	public void resetHand() {
+		this.hand = new Hand();
+	}//end bracket of resetHand method
+	
+	public HandRank getHandRank() {
+		return this.hand.getHandRank();
+	}//end bracket of getHandRank
+	
+	public String getBestHand() {
+		this.hand.sort();
+		return this.hand.getBestHand().toString();
+	}//end bracket of bestHand method
+	
+	public String toStringHandRank() {
+		return this.getHandRank().getRank();
+	}//end bracket of toStringHandrank
+	
+	public int getWins() {
+		return this.wins;
+	}//end bracket of getWins
+	
+	private void setWins(int newWins) {
+		this.wins = newWins;
+	}//end bracket of setWins method
+	
+	public void incrementWins() {
+		this.setWins(this.getWins() + 1);
+	}//ending bracket of incrementWins method
+	
+	
+	public int getLoses() {
+		return this.loses;
+	}//ending bracket of get losses method
+	
+	private void setLoses(int newLoses) {
+		this.loses = newLoses;
+	}//ending bracket of setLoses method
+	
+	public void incrementLoses() {
+		this.setLoses(this.getLoses() + 1);
+	}//ending bracket of incrementLoses method
+	
+	public int getHandRankValue() {
+		return this.hand.getBestHandRankValue();
+	}//end bracket of getHandRankValue method
+	
+	public int getHandRankCardRank() {
+		return this.hand.getHandRankCardRank();
+	}//end bracket of getHandRankCardRank method
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append(this.name + " has a " + this.hand.toString());
+		
+		return sb.toString();
+	}//end bracket of toString override
+
+
+	
+}//Ending bracket of Player class

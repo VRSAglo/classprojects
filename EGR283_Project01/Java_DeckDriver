@@ -1,0 +1,16 @@
+package edu.mtc.egr283.Project01;
+
+public class DeckDriver {
+
+	public static void main(String[] args) {
+		
+		Deck d = new Deck();
+		d.displayDeck();
+		
+		do {
+			System.out.print("Card #" + d.getNumberOfCardsRemaining());
+			System.out.println(": " + d.deal().toString());
+		} while(d.getNumberOfCardsRemaining() > 0 );
+	}//ending bracket of main method
+	
+}//ending bracket of DeckDriver class

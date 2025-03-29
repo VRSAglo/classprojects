@@ -1,0 +1,157 @@
+import java.io.*;
+import java.net.*;
+
+import javax.swing.event.TreeWillExpandListener;
+
+
+public class TwoWayMesgClient {
+   //Data
+    private static String localHost;
+    private static int portNumber;
+    private static String clientName;
+
+    public static Socket clientSocket;
+
+    public static PrintWriter toServerWriter;
+    public static BufferedReader fromServerWriter;
+    public static BufferedReader keyboardInput;
+    public static boolean isOnline = true;
+
+    //Main method
+    public static void main(String args[]){
+        if(args.length != 3){
+            System.out.println("USage: java twoWayMesgClient.java <localHost> <portNumber> <clientName> ");
+            System.exit(1);
+        }//endb racket of if args 
+
+        TwoWayMesgClient.setHost(args[0]);
+        TwoWayMesgClient.setPort(Integer.parseInt(args[1]));
+        TwoWayMesgClient.setName(args[2]);
+
+        Setup(getHost(), getPort(), getName());
+
+        ClientThread clientThread = new ClientThread();
+        ServerThread serverThread = new ServerThread();
+
+        clientThread.start();
+        serverThread.start();
+
+        try{
+            clientThread.join();
+            serverThread.join();
+        }catch(Exception e){
+            System.out.println(e);
+        }//end bracket try catch
+         
+       
+
+    }//end bracket of main method
+//Methods
+
+public static void Setup(String argsHost, int argsPort, String argsName){
+    try{
+        clientSocket = new Socket(getHost(), getPort());
+        System.out.println("Connected to server at ('" + getHost() + "', '" + getPort() + "', with client '" + getName() + "')");
+
+        toServerWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+        keyboardInput = new BufferedReader(new InputStreamReader(System.in));
+        fromServerWriter = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    }catch(Exception e){
+        System.out.println(e);
+    }//end bracket of try catch
+
+}//end bracket of Setup method.
+
+public static void closeResources(){
+    try{
+        isOnline = false;
+        clientSocket.close();
+        fromServerWriter.close();
+        toServerWriter.close();
+        keyboardInput.close();
+        
+        System.exit(0);
+   
+    }catch(Exception e){
+        System.out.println(e);
+    }//end bracket of try catch
+}//end bracket of closeResources method.
+
+
+
+//Setters
+//set the port number with encapsulation.
+private static void setPort(int newPort){
+    portNumber = newPort;
+}//end bracket of setPort method
+
+//set the name with encapsulation.
+private static void setName(String newName){
+    clientName = newName;
+}//end bracket of setName method
+
+//set host with encapsulation.
+private static void setHost(String newHost){
+    localHost = newHost;
+}//end bracket of setHost method.
+
+//Getters
+//Get port
+public static int getPort(){
+    return portNumber;
+}//end bracket of getPort method
+
+//Get Name
+public static String getName(){
+    return clientName;
+}//end bracket of getName method
+
+//get Host
+public static String getHost(){
+    return localHost;
+}//end bracket of getHost method.
+
+
+}//end bracket of TwoWayMesgClient class.
+
+
+//Threads
+
+//Setup and handle client operations.
+class ClientThread extends Thread{
+    @Override
+    public void run(){
+        while(TwoWayMesgClient.isOnline){
+        try{
+            String line = TwoWayMesgClient.keyboardInput.readLine();
+                if(line.equals("Exit")){
+                    System.out.println("Closing connection");
+                    TwoWayMesgClient.closeResources();
+                    
+                }//end if
+                    TwoWayMesgClient.toServerWriter.println(TwoWayMesgClient.getName() + ": " + line);
+            }catch(Exception e){
+                System.out.println(e);
+            }//end try catch block
+        }//end while loop
+    }//end run
+}//end ClientThread class
+
+//Setup and handle server operations
+class ServerThread extends Thread{
+    @Override
+    public void run(){
+        while(true){
+            try{
+                String message = TwoWayMesgClient.fromServerWriter.readLine();
+                if(message.equals("Exit")){
+                    System.out.println("Closing connection.");
+                    TwoWayMesgClient.closeResources();
+                }//end if
+                System.out.println(message);
+            }catch(Exception e){
+                System.out.println(e);
+            }//end try catch
+        }//end while loop
+    }//end bracket of run
+}//end bracket of ServerThread class

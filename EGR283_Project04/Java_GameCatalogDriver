@@ -1,0 +1,204 @@
+//Adam Glover
+//EGR283-Project 4
+//Professor Sims
+//Date Completed: 2-26-23
+//Date Due: 3-2-23
+//Program the catalogues a users game collection, allows them to add
+//or remove games from that collection, and prints it to a document to be saved.
+
+package edu.mtc.egr283.Project04;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+/**
+ * GameCatalogueDriver class containing the main method to run the
+ * program, intended to be used with the GameCatalogue class for
+ * organizing a users game collection.
+ * @author Adam Glover
+ * @version 1.0 All Rights Reserved.  CopyRight 2-26-23
+ *
+ */
+public class GameCatalogueDriver {
+	private static GameCatalogue<Game> games;
+	private static PrintWriter outFile;
+	private static Scanner inFile;
+	private static Scanner keys;
+	private static String inFileSource;
+	private static String outFileSource;
+	private static StringBuffer sb;
+	
+	/**
+	 * Main method, opens and closes resources and calls
+	 * necessary methods.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		keys = new Scanner(System.in);
+		sb = new StringBuffer();
+		outFileSource = "gamecatalogue.txt";
+		inFileSource = "gamesinfile.txt";
+		games = new GameCatalogue<Game>();
+		try {
+			System.out.print("Please enter the name of the file you wish to read (end with .txt):");
+			inFileSource = keys.next();
+			inFile = new Scanner(new File(inFileSource));
+			outFile = new PrintWriter(new File(outFileSource));
+		}catch(FileNotFoundException fnfe) {
+			System.out.println("Error: File now found. ");
+			System.out.println(fnfe.getMessage());
+			System.out.println(" in " + System.getProperty("user.dir"));
+			System.out.flush();
+			System.exit(1);
+		}//end try catch
+		systemGuide();
+		
+		inFile.close();
+		outFile.close();
+		keys.close();
+	}//end bracket of main.
+	
+	/**
+	 * Method who guides the user through the necessary components
+	 * of the program. Contains addGame and removeGame method
+	 */
+	public static void systemGuide() {
+		char userInput;
+		games.readFile(inFile);
+		System.out.println("Welcome to the Family Game Catalogue.");
+		System.out.println("Would you like to read your current file?(Yes/No)");
+		userInput = keys.next().charAt(0);
+		if(userInput == 'Y' || userInput == 'y') {
+			games.readFile(inFile);
+			System.out.println(games.toString());
+		}//end bracket of if statement
+		System.out.println("Would you like to add or remove any games? (Add/Remove):");
+		userInput = keys.next().charAt(0);
+
+		if(userInput == 'A' || userInput == 'a') {
+		addGame();
+		}else if( userInput == 'R' || userInput == 'r') {
+		removeGame();
+		}//end bracket of if else if add/remove
+		System.out.println("Would you like to see your newly updated data? (Yes/No):");
+		userInput = keys.next().charAt(0);
+	
+		if(userInput == 'Y' || userInput == 'y') {
+		System.out.print(games.toString());
+		}//end if
+		System.out.println("Would you like to print out your data to a file? (Yes/No):");
+		userInput = keys.next().charAt(0);
+
+		if(userInput == 'Y' || userInput == 'y') {
+			outFile.print(games.toString());
+			sb.append(games.toString());
+			sb.append("\nThe file data has been printed to the file " + outFileSource + ".");
+			
+		}//end of if want to print
+		System.out.println("If there was anything you missed, would you like to go back to the beginning?");
+		userInput = keys.next().charAt(0);
+		if(userInput == 'Y' || userInput == 'y') {
+			systemGuide();
+		}//end bracket of return to beginning
+		System.out.println("Thank you for using the Family Games Catalogue, have a nice day.");
+	}//end bracket of systemguide method
+	
+	/**
+	 * Method to guide a user through adding a new game to their catalogue.
+	 */
+	public static void addGame() {
+		char userInput;
+		String newName;
+		int newMinAge;
+		int newMaxAge;
+		int newMinPlay;
+		int newMaxPlay;
+		int newMinTime;
+		int newMaxTime;
+		System.out.println("What is the name of the game you wish to add?(Use _ instead of spaces):");
+		newName = keys.next();
+		System.out.println("What is the minimum age requirement for the game?");
+		try {
+		newMinAge = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please enter only a number. (IE: 1, 3, 23)");
+			newMinAge = Integer.parseInt(keys.next());
+		}//end try catch
+		System.out.println("What is the maximum age requirement for the game?");
+		try {
+			newMaxAge = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please enter only a number. (IE: 1, 3, 23)");
+			newMaxAge = Integer.parseInt(keys.next());
+		}
+		System.out.println("What is the minimum players for the game?");
+		try {
+		newMinPlay = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please enter only a number. (IE: 1, 3, 23)");
+			newMinPlay = Integer.parseInt(keys.next());
+		}//end try catch
+		System.out.println("What is the maximum player for the game?");
+		try {
+			newMaxPlay = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please enter only a number. (IE: 1, 3, 23)");
+			newMaxPlay = Integer.parseInt(keys.next());
+		}
+		System.out.println("What is the minimum play time for the game? (in minutes)");
+		try {
+		newMinTime = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please enter only a number (in minutes). (IE: 1, 3, 23)");
+			newMinTime = Integer.parseInt(keys.next());
+		}//end try catch
+		System.out.println("What is the maximum play time for the game? (in minutes)");
+		try {
+			newMaxTime = Integer.parseInt(keys.next());
+		}catch(NumberFormatException nfe) {
+			System.out.println("Please enter only a number (in minutes). (IE: 1, 3, 23)");
+			newMaxTime = Integer.parseInt(keys.next());
+		}
+		Game newGame = new Game(newName, newMinAge, newMaxAge, newMinPlay, newMaxPlay, newMinTime, newMaxTime);
+		games.addGame(newGame);
+		
+		System.out.println("Would you like to add another game? (Yes/No)");
+		userInput = keys.next().charAt(0);
+
+		if(userInput == 'Y' || userInput == 'y') {
+			addGame();
+		}//end bracket of if add another
+		System.out.println("You have finished adding games.");
+
+	}//end bracket of add game method
+	
+	/**
+	 * Method to guide a user through removing a game from their catalogue.
+	 */
+	public static void removeGame() {
+		char userInput;
+		String removeGame;
+		System.out.println("Please enter the name of the game you wish to remove (include _ for spaces):");
+		removeGame = keys.next();
+		System.out.println("Is this the game you wish to remove? (Yes/No)");
+		System.out.println(games.findGame(removeGame).toString());
+		userInput = keys.next().charAt(0);
+
+		if(userInput == 'Y' || userInput == 'y') {
+		games.removeGame(removeGame);
+		}else {
+			System.out.println("Please reenter the name");
+			removeGame = keys.next();
+			games.removeGame(removeGame);
+		}//end else
+		System.out.println("The game has been removed.");
+		System.out.println("Would you like to remove another game?(Yes/No)");
+		userInput = keys.next().charAt(0);
+
+		if(userInput == 'Y' || userInput == 'y') {
+			removeGame();
+		}//end bracket of if remove another game	
+		System.out.println("You have finished removing games.");
+	}//end bracket of remove game method
+}//end bracket of GameCatalogueDriver class

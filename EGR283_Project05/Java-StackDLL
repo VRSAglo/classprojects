@@ -1,0 +1,98 @@
+//Adam Glover
+//Project 05
+//Professor Sims - EGR 283
+//Date Completed: 3-11-2023
+//Date Due: 3-16-2023
+package Project05;
+
+import java.util.Stack;
+/**
+ * This class defines the methods and properties
+ * of a Double linked list used as a Stack
+ * @author Adam Glover
+ *
+ * @param <T> The generic data to be used with the stack
+ */
+public class StackDLL<T> extends Stack<T>{
+	/**
+	 * Serial version ID implemented when Stack is extended
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Constants for use with the toString method including [, ] and a ", ".
+	 */
+	public static final String LEFT_S_BRACKET = "[";
+	public static final String COMMA_SPACE = ", ";
+	public static final String RIGHT_S_BRACKET = "]";
+	
+	private DLL<T> stackDLL;
+	
+	/**
+	 * Default constructor for the stack.
+	 */
+	public StackDLL() {
+		this.stackDLL = new DLL<T>();
+	}//end bracket of default constructor
+	
+	/**
+	 * Method to determine whether the stack is empty or not.
+	 */
+	public boolean isEmpty() {
+		boolean rv = false;
+		if (this.size() == 0) {
+			rv = true;
+		}//end if
+		return rv;
+	}//end bracket of isEmpty
+	
+	/**
+	 * Method to look at but not dispense the item at the head of the stack.
+	 */
+	public T peek() {
+		return this.stackDLL.getHead().getNext().getNodeData();
+	}//end bracket of peek method
+	
+	/**
+	 * Method to dispense and remove the item at the top of the stack for
+	 * use.
+	 */
+	public T pop() {
+		return this.stackDLL.remove(0);
+	}//end bracket of pop method
+	
+	/**
+	 * Method to add an item to the top of the stack.
+	 */
+	public T push(T item) {
+		this.stackDLL.addAtHead(item);
+		return this.stackDLL.getHead().getNext().getNodeData();
+	}//end bracket of push method
+	
+	/**
+	 * Method to identify the size of the Stack, used with isEmpty method.
+	 */
+	public int size() {
+		return this.stackDLL.size();
+	}//end bracket of size method
+	
+
+	/**
+	 * Standard toString override, outputing the values in the stack 
+	 * in a user friendly fashion IE. [Item 1, Item 2, Item 3]
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append(StackDLL.LEFT_S_BRACKET);
+		for(int i = 0; i < this.size() - 1; ++i) {
+			sb.append(this.stackDLL.get(i).toString());
+			sb.append(StackDLL.COMMA_SPACE);
+		}//end bracket of for loop
+		sb.append(this.stackDLL.get(this.size()-1));
+		sb.append(StackDLL.RIGHT_S_BRACKET);
+		return sb.toString();
+	}//end bracket of toString method
+	
+}//end bracket of StackDLL class 

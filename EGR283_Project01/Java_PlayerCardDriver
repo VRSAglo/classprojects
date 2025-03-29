@@ -1,0 +1,28 @@
+package edu.mtc.egr283.Project01;
+
+
+public class PlayingCardDriver {
+
+	public static void main(String[] args) {
+
+		PlayingCard pc1 = new PlayingCard(Suit.CLUBS, Rank.SEVEN);
+		PlayingCard pc2 = new PlayingCard(Suit.SPADES, Rank.SEVEN);
+		PlayingCard pc3 = new PlayingCard(Suit.SPADES, Rank.FIVE);
+		PlayingCard pc4 = new PlayingCard(Suit.CLUBS, Rank.SEVEN);
+		
+		System.out.println(pc1.toString() + " " + pc1.toStringSymbol());
+		
+		System.out.println("7C - 7S: Same Suit - " + pc1.isSameSuit(pc2));
+		System.out.println("5S - 7S: Same Suit - " + pc3.isSameSuit(pc2));
+		System.out.println("7C - 7S: Same Rank - " + pc1.isSameRank(pc2));
+		System.out.println("5S - 7S: Same Rank - " + pc3.isSameRank(pc2));
+		
+		System.out.println("7c - 7c : Is equals:" + pc1.equals(pc4));
+		System.out.println("7C - 7S : is Equals:" + pc1.equals(pc2));
+		
+		System.out.println("7C: Rank value: " + pc1.getRankValue());
+		System.out.println("5S: Rank Value: " + pc3.getRankValue());
+		
+	}//ending bracket of main method
+	
+}//ending bracket of playercarddriver class

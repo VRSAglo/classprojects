@@ -1,0 +1,106 @@
+package Project05;
+
+/**
+ * This is the Double LInked List node class.
+ * This class had three fields , one for referencing
+ * the previous node, one for data payload,
+ * and one for referencing the next node.
+ * @author Adam Glover
+ * @version 1.0 
+ * @param <E> the data payload class.
+ */
+public class DLLNode<E> {
+
+	private DLLNode<E> prev;
+	private E nodeData;
+	private DLLNode<E> next;
+	
+	/**
+	 * Default constructor to create a double linked list
+	 * with no data.
+	 */
+	public DLLNode() {
+		this(null);
+	}//End bracket of default constructor.
+	
+	/**
+	 * Constructor to create a double linked list
+	 * node only containing the node data.
+	 * @param newNodeData The node data to store.
+	 */
+	public DLLNode(E newNodeData) {
+		this(null,newNodeData,null);
+	}//end bracket of Data Constructor
+	
+	/**
+	 * Constructor.
+	 * This constructor takes in three parameters 
+	 * One for the reference to the previous node.
+	 * One for the node data.
+	 * One for the reference to the next node.
+	 * @param newPrev Reference to the previous node.
+	 * @param newNodeData The node data to be stored.
+	 * @param newNext Reference to the next node.
+	 */
+	public DLLNode(DLLNode<E> newPrev, E newNodeData, DLLNode<E> newNext){
+		this.setPrev(newPrev);
+		this.setNodeData(newNodeData);
+		this.setNext(newNext);
+	}//end bracket of constructor
+	
+	/**
+	 * Accessor method to retrieve the reference
+	 * to the previous node.
+	 * @return Reference to the previous node.
+	 */
+	public DLLNode<E> getPrev(){
+		return this.prev;
+	}//end bracket of getPrev method
+	
+	/**
+	 * Mutator method to store the reference 
+	 * to the previous node.
+	 * @param newPrev reference to be stored.
+	 */
+	public void setPrev(DLLNode<E> newPrev) {
+		this.prev = newPrev;
+	}//end bracket of setPrev method
+	
+	/**
+	 * Accessor method to retrieve the node data
+	 * @return the stored node data.
+	 */
+	public E getNodeData() {
+		return this.nodeData;
+	}//end bracket of getNodeData method.
+	
+	/**
+	 * Mutator method to store the node data.
+	 * @param newNodeData Node data to be stored.
+	 */
+	public void setNodeData(E newNodeData) {
+		this.nodeData = newNodeData;
+	}//end bracket of setNodeData method.
+	
+	
+	/**
+	 * Accessor method to retrieve the reference
+	 * to the next node.
+	 * @return Reference to the next node.
+	 */
+	public DLLNode<E> getNext() {
+		return this.next;
+	}//end bracket of getNext method
+	
+	/**
+	 * Mutator method to store the reference
+	 * to the next node.
+	 * @param newNext Reference to be stored.
+	 */
+	public void setNext(DLLNode<E> newNext) {
+		this.next = newNext;
+	}//ending bracket of setNext method.
+	
+	
+	
+}//End bracket of DLLNode class

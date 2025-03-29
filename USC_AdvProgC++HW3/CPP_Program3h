@@ -1,0 +1,26 @@
+#ifndef PROGRAM3FUNCTIONS_H
+#define PROGRAM3FUNCTIONS_H
+#include <fstream>
+
+
+void getFileCharData(std::ifstream &file, char * alphabetArr, int * countArr, int * indexArr ,const int size);
+
+void sortCharacters(char * charArr, int * asciArr, int * indexArr, const int &size);
+
+int getHighestCharIndex(char * alphabetArr, int * countArr,int * indexArr, const int &size);
+
+int getLowestNumOfChars(int * charCountArr, const int &size);
+
+void printHighestFreq(char * alphabetArr, int * countArr,int * indexArr, const int &size, int &index);
+
+void printLowestChars(int * charIntArr, char * charArr, const int &size, int &lowest);
+
+void sortByValue(int * intArr, char * charArr, int * indexArr, const int &size);
+
+void printFull(int * intArr, char * charArr, const int& size);
+
+void printHistogram(int * intArr, char * charArr, int * indexArr, const int&size, int& highestIndex);
+
+void sortAlphabetically(int * intArr, char * charArr, int * indexArr, const int&size);
+
+#endif

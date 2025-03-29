@@ -1,0 +1,68 @@
+package edu.mtc.egr283.Project08;
+//Adam Glover
+//Project 08
+//Professor Sims
+//Completed 4-23-2023
+//Due 4-27-2023
+
+/**
+ * This class serves as the Instruction data structure holding the instructions 
+ * of a recipe.
+ * @author Adam Glover
+ *
+ */
+public class Instruction {
+    private String instruction;
+    /**
+     * Default constructor for the instruction class
+     */
+    public Instruction() {
+    	this(null);
+    }//end bracket of default constructor
+    /**
+     * Single parameter constructor for the instruction class
+     * @param newInstruction The new Instruction to be stored 
+     */
+    public Instruction(String newInstruction) {
+    	this.setInstruction(newInstruction);
+    }//end bracket of single parameter constructor
+    
+    /**
+     * Accessor method for accessing the instruction variable
+     * @return A string that is the instruction
+     */
+    public String getInstruction() {
+    	return this.instruction;
+    }//end bracket of getInstruction method
+    
+    /**
+     * Mutator method for assigning the instruction variable
+     * @param newInstruction The new instruction to be stored
+     */
+    private void setInstruction(String newInstruction) {
+    	this.instruction = newInstruction;
+    }//end bracket setInstruction method
+    
+    /**
+     * Method to determine if one instruction is equal to another
+     * @param checkInstruction The other instruction to compare against
+     * @return A true if the instructions match, false if they do not.
+     */
+    public boolean equals(String checkInstruction) {
+    	boolean rv = false;
+    	if(this.getInstruction().equalsIgnoreCase(checkInstruction)) {
+    		rv = true;
+    	}//end bracket of if
+    	return rv;
+    }//end bracket of equals method
+    
+    /**
+     * ToString override to print out the instruction
+     */
+    @Override
+    public String toString() {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append(this.getInstruction());
+    	return sb.toString();
+    }//end bracket of toString override
+}//end bracket of instruction class

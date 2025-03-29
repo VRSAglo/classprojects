@@ -1,0 +1,95 @@
+//package edu.mtc.egr283.Project03;
+//
+//import java.io.File;
+//import java.io.FileNotFoundException;
+//import java.io.PrintWriter;
+//import java.util.Scanner;
+//
+//
+//public class ColonyDriver {
+//
+//	public static void main(String[] args){
+//		Colony seals = new Colony();
+//		PrintWriter outFile = null;
+//		String outFileName = "testseals.txt";
+//		try {
+//		outFile = new PrintWriter(new File(outFileName));
+//		}catch(FileNotFoundException fnfe) {
+//			System.out.println("Error");
+//			System.exit(0);
+//		}
+//		
+//		ElephantSeal Jack = new ElephantSeal("Jack", 50, 500);
+//		ElephantSeal Zena = new ElephantSeal("Zena", 45, 450);
+//		ElephantSeal Adam = new ElephantSeal("Adam", 35, 350);
+//		
+//		seals.addSeal(Jack);
+//		seals.addSeal(Zena);
+//		seals.addSeal(Adam);
+//		seals.addSealData("Bob", 20, 200);
+//		seals.addSealData("John", 10, 100);
+//		seals.addSealData("Rob", 30, 300);
+//		seals.addSealData("Rich", 40, 400);
+//		
+//		System.out.println(Zena.compareTo(Adam));
+//		
+//	//	System.out.println(seals.getAverageAge() + " :Average Age");
+//	//	System.out.println(seals.getAverageWeight() + " :Average Weight");
+//	//	System.out.println(seals.getOldestSeal() + " :Oldest");
+//	//	System.out.println(seals.getYoungestSeal() + " :Youngest");
+//	//	System.out.println(seals.getSmallestSeal() + " :Smallest");
+//	//	System.out.println(seals.getLargestSeal() + " :Largest");
+//		System.out.println(seals.toString());
+//		
+//		System.out.println();
+//		//System.out.println(seals.findSealName("John").toString());
+//		System.out.println(seals.getSize());
+//		System.out.println();
+//		System.out.println(seals.toString());
+//		
+//		System.out.println(seals.getElephantSeal(0).toString());
+//		System.out.println(seals.getIndexValue(0));
+//		System.out.println(seals.getElephantSeal(1).toString());
+//		System.out.println(seals.getIndexValue(1));
+//		System.out.println(seals.getElephantSeal(2).toString());
+//		System.out.println(seals.getIndexValue(2));
+//		System.out.println(seals.getElephantSeal(3).toString());
+//		System.out.println(seals.getIndexValue(3));
+//		System.out.println(seals.getElephantSeal(4).toString());
+//		System.out.println(seals.getIndexValue(4));
+//		System.out.println(seals.getElephantSeal(5).toString());
+//		System.out.println(seals.getIndexValue(5));
+//		System.out.println(seals.getElephantSeal(6).toString());
+//		System.out.println(seals.getIndexValue(6));
+//		
+//		System.out.println();
+//		System.out.println(seals.getElephantSeal(0));
+//		System.out.println(seals.getElephantSeal(1));
+//		System.out.println();
+//		
+//		System.out.println(seals.getSize());
+//		seals.deleteSealName("Jack");
+//		System.out.println(seals.getSize());
+//	System.out.println(seals.getElephantSeal(0));
+//	System.out.println(seals.getElephantSeal(1));
+//System.out.println();
+//	System.out.println(seals.getElephantSeal(0).toString());
+//	System.out.println(seals.getIndexValue(0));
+//	System.out.println(seals.getElephantSeal(1).toString());
+//	System.out.println(seals.getIndexValue(1));
+//	System.out.println(seals.getElephantSeal(2).toString());
+//	System.out.println(seals.getIndexValue(2));
+//	System.out.println(seals.getElephantSeal(3).toString());
+//	System.out.println(seals.getIndexValue(3));
+//	System.out.println(seals.getElephantSeal(4).toString());
+//	System.out.println(seals.getIndexValue(4));
+//	System.out.println(seals.getElephantSeal(5).toString());
+//	System.out.println(seals.getIndexValue(5));
+//
+//System.out.println(seals.toString());
+//		
+//	outFile.print(Jack.toStringFile());
+//		outFile.close();
+//	}
+//	
+//}

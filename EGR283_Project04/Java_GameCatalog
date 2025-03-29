@@ -1,0 +1,185 @@
+//Adam Glover
+//EGR283-Project 4
+//Professor Sims
+//Date Completed: 2-26-23
+//Date Due: 3-2-23
+//Program the catalogues a users game collection, allows them to add
+//or remove games from that collection, and prints it to a document to be saved.
+
+package edu.mtc.egr283.Project04;
+
+import java.util.Scanner;
+
+/**
+ * This class defines a Single Linked List of the GameCatalogue
+ * type intended to be used with the Game class.
+ * @author Adam Glover
+ * @version 1.0 All Rights Reserved. CopyRight 2-26-23
+ * @param <G>
+ */
+public class GameCatalogue<G> {
+
+	private SLL<Integer> index;
+	private SLL<Game> games;
+	
+	/**
+	 * Constructor to create and initialize the GameCatalogue
+	 * With an Index list and a Games list
+	 */
+	public GameCatalogue() {
+		index = new SLL<Integer>();
+		games = new SLL<Game>();
+	}//end bracket of constructor
+	
+
+	
+	/**
+	 * Method to add a new Game to the list by Game object 
+	 * @param newGame The Game Object to be added
+	 */
+	public void addGame(Game newGame) {
+		games.add(newGame, games.size());
+		index.add(this.getGame(newGame), this.getGame(newGame));
+	}//end bracket of addGame method
+	
+	/**
+	 * Method to find a game by Game Object and return its index in the list
+	 * @param search Game object to be located
+	 * @return Integer value of the Game Objects index in the list.
+	 */
+	public int getGame(Game search) {
+		int index = 0;
+		Game cursor = this.games.get(0);
+		while(!cursor.compareName(search.getName())) {
+			if(cursor.compareName(search.getName())) {
+				break;
+			}//end bracket of if
+			++index;
+			cursor = this.games.get(index);
+		
+	}//end bracket of while loop
+	return index;
+	}//end bracket of getGame method
+	
+	/**
+	 * Method to get the over all size of the
+	 * GameCatalogue list.
+	 * @return The size of the list.
+	 */
+	public int getSize() {
+		return games.size();
+	}//end bracket of getSize method
+	
+	/**
+	 * Method to locate a game by the Game objects name variable.
+	 * @param search The Name of the game to be found.
+	 * @return The Game object who's name variable matches search.
+	 */
+	public Game findGame(String search) {
+		int index = 0;
+
+		Game cursor = this.games.get(0);
+		
+		while(!cursor.compareName(search)) {
+			if(cursor.compareName(search)) {
+				break;
+			}//end bracket of if
+			++index;
+			cursor = this.games.get(index);
+		}//end bracket of while loop
+		
+		return cursor;
+	}//end bracket of findGame method
+	
+	/**
+	 * Method to read a file and create a Game object whos
+	 * variables will be populated via the readGame method in Game and add
+	 * it to the GameCatalogue list.
+	 * @param inFile the File to be read.
+	 */
+	public void readFile(Scanner inFile) {
+		Game temp = null;
+		while(inFile.hasNext()) {
+			temp = new Game();
+			this.games.add(temp.readGame(inFile), this.games.size());
+			this.index.add(this.games.size()-1, this.games.size()-1);
+	
+		}//end bracket of while loop
+	}//end bracket of readFile method
+	
+	/**
+	 * Method to remove a game by it's name variable 
+	 * from the GameCatalogue list.
+	 * @param game The name of a game that matches a Game objects name variable.
+	 */
+	public void removeGame(String game) {
+		this.findGame(game).setIsInlist(false);
+//		this.index.remove(this.getGame(this.findGame(game)));
+//		this.games.remove(this.getGame(this.findGame(game)));
+		
+	}//end bracket of remove game method
+	
+	/**
+	 * Method to bubble sort the list so the list
+	 * will be organized alphabetically.
+	 */
+	public void sortCatalogue() {
+		for(int i = 0; i < this.getSize(); i++) {
+			for(int j = 0; j < this.getSize() - i - 1; j++) {
+                if(this.games.get(this.index.get(j)).getIsInList() && this.games.get(this.index.get(j)).compareTo(this.games.get(this.index.get(j + 1))) > 0) {
+           
+                		int temp = this.index.get(j);
+                		this.index.setData(this.index.get(j + 1), j);
+                		this.index.setData(temp, j + 1);
+                	
+				}//end bracket of if statement
+			}//end bracket of inner for
+		}//end bracket of outer for
+	}//end bracket of sortCatalogue method
+	
+	/**
+	 * Standard toString override to print the list out in a
+	 * user friendly, formatted, manner.
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("******************************************************************\n");
+		sb.append("Unsorted Game Catalogue \n");
+		sb.append("******************************************************************\n\n");
+		sb.append("   Name			   Ages		    Players	   Playtime \n");
+		sb.append("		         (Min-Max)	   (Min-Max)	   (Min-Max) \n");
+		for(int i = 0; i < this.getSize(); ++i) {
+			try {
+			if(this.games.get(i).getIsInList()) {
+			sb.append(this.index.get(i) + ": ");
+			sb.append(this.games.get(i).toString());
+			}
+			}catch(NullPointerException npe) {
+				continue;
+			}
+		}
+		this.sortCatalogue();
+		sb.append("\n\n");
+		sb.append("******************************************************************\n");
+		sb.append("Sorted Game Catalogue \n");
+		sb.append("******************************************************************\n\n");
+		sb.append("   Name			  Ages		    Players	   Playtime \n");
+		sb.append("		        (Min-Max)	   (Min-Max)	   (Min-Max) \n");
+		
+			
+		
+		for(int i = 0; i < this.getSize(); ++i) {
+			try {
+				if(this.games.get(this.index.get(i)).getIsInList()) {
+			sb.append(this.index.get(i) + ": ");
+			sb.append(this.games.get(this.index.get(i)).toString());
+				}
+			}catch(NullPointerException npe) {
+				continue;
+			}
+		}//end bracket of for loop
+		return sb.toString();
+	}//end bracket of to string method
+	
+}//end bracket of GameCatalogue class

@@ -1,0 +1,78 @@
+package Project02;
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+import java.util.Random;
+
+
+/**
+ * This class creates the <code>RedDeck</code> from the <code>Redcard</code> objects using the <code>Red</code> enum object.
+ * @author Adam Glover
+ *@version 1.0  Copyright (C) 1-31-2023 All Rights Reserved.
+ */
+public class RedDeck {
+//--------------------------------------Fields----------------------------------------
+	/**
+	 * Datatype fors the <code>RedDeck</code> object, random number generator <code>numGen</code>,
+	 * <code>cardsRemaining</code> for number of cards remaining in the deck, <code>DECK_SIZE</code> constant
+	 * for total number of cards in the deck, and <code>Redcard</code> array to hold the red cards in the deck.
+	 */
+		private static Random numGen;
+		public static int cardsRemaining;
+		public static int DECK_SIZE = 9;
+		private static Redcard[] cards;
+// ----------------------------------Constructors-------------------------------------
+		/**
+		 * Constructor for <code>RedDeck</code> to build the Red deck 
+		 */
+		public RedDeck() {
+			RedDeck.numGen = new Random();
+			RedDeck.cardsRemaining = RedDeck.DECK_SIZE;
+			RedDeck.cards = new Redcard[YellowDeck.DECK_SIZE];
+			
+			int index = 0;
+			for(Red s : Red.values()) {
+				RedDeck.cards[index] = new Redcard(s);
+				++index;
+			}//end bracket of for each loop
+		}//Ending bracket of RedDeck constructor
+
+//--------------------------------------Methods---------------------------------------
+		/**
+	 * Method to get the number of cards remaining in the <code>RedDeck</code>.
+	 * @return An Integer that is the number of cards remaining in the <code>RedDeck</code>..
+	 */
+		public int getCardsRemaining() {
+			return RedDeck.cardsRemaining;
+		}//end bracket of getCardsRemaining
+		
+		/**
+		 * Method to deal a single <code>Redcard</code>.
+		 * @return A single <code>Redcard</code> from the <code>RedDeck</code>.
+		 */
+		public Redcard deal() {
+			 Redcard rv = null;
+			 int index = -1;
+			 do {
+				 index = RedDeck.numGen.nextInt(RedDeck.DECK_SIZE);
+				 rv = RedDeck.cards[index];
+			 } while(rv == null);
+			 RedDeck.cardsRemaining -= 1;
+			 RedDeck.cards[index] = null;
+			 
+			 return rv;
+		}//end bracket of deal method
+		
+		/**
+		 * Method to output the card values in the <code>RedDeck</code>.
+		 */
+		 public void displayDeck() {
+			 for(Redcard pc : RedDeck.cards) {
+				 System.out.println(pc.getAffect() + " : " + pc.toString());
+			 }//ending bracket of for each loop
+		 }//Ending bracket of displayDeck method
+
+}

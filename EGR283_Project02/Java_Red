@@ -1,0 +1,62 @@
+package Project02;
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+/**
+ * This enumeration object contains the properties of 
+ * a red card in the game Uncle Wiggily.
+ * @author Adam Glover
+ * @version 1.0.0 Copyright 2023-1-21 All Rights Reserved
+ */
+public enum Red {
+ONE		(-2, "We Really hope you won't feel blue. But Uncle Wiggily must go back two."),
+TWO		(-3, "Uncle Wiggily must jump back three.  It's not the best place for him to be."),
+THREE	(-4, "Uncle Wiggily must hop back four.  Hope this won't happen anymore."),
+FOUR	(-5, "Uncle Wiggily must go back five.  Nobody knows when he will arrive."),
+FIVE	(8,  "Hurry! Hurry! Don't be Late!  Move Uncle Wiggily ahead by eight."),
+SIX		(9,  "Uncle Wiggily hops ahead by nine.  He thinks this game is really fine."),
+SEVEN	(10, "Hope you get this card again!  Uncle Wiggily goes ahead by ten."),
+EIGHT	(13, "A card this good is not often seen.  Move Uncle Wiggily ahead by thirteen!"),
+NINE	(15, "Uncle Wiggily hops ahead fifteen.  You're one of the best he's ever seen!");
+//--------------------------------------Fields----------------------------------------
+	/**
+	 * Data types int for <code>space</code> and String for <code>flavorText</code>.
+	 * To be used with the <code>Yellow</code> enumeration object.
+	 */
+	public int space;
+	public String flavorText;
+	
+// ----------------------------------Constructors-------------------------------------
+	/**
+	 * Constructs a <code>Red</code> object for the Red card with values for <code>space</code> 
+	 * that indicates space movement and <code>flavorText</code> for the Rhyme.
+	 * @param newSpace The space that indicates the number of spaces to move forward or back
+	 * depending on number.
+	 * @param newText The rhyming text that outputs when the card is drawn.
+	 * 
+	 */
+	private Red(int newSpace, String newText) {
+		this.space = newSpace;
+		this.flavorText = newText;
+	}//end bracket of Red constructor
+	
+//--------------------------------------Methods---------------------------------------
+	/**
+	 * Returns the integer value stored in <code>space</code>
+	 * @return An integer stored in <code>space</code>
+	 */
+	public int getSpace() {
+		return this.space;
+	}//end bracket of getSpace method
+	
+	/**
+	 * Return the String value stored in <code>flavorText</code>
+	 * @return A String stored in <code>flavorText</code>
+	 */
+	public String getText() {
+		return this.flavorText;
+	}//end bracket of getText method
+}//Ending bracket of Red class

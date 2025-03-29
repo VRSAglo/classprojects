@@ -1,0 +1,310 @@
+package TrafficLight;
+//Adam Glover
+//Project 06 Traffic Sim
+//Professor Sims
+//Completed: 3-25-23
+//Due: 3-30-23
+//This program runs a simulation of a traffic intersection to determine congestion
+
+import java.util.Random;
+
+/** TrafficSystem *
+ * Defines the lanes and signals that is to be studied. Collects statistics
+ *
+ * Model for traffic simulation
+ * ============================
+ *
+ *  The following classes are used:
+ *
+ *     Vehicle Represents a vehicle
+ *             Time of arrival and destination are set when create.
+ *
+ *     Light   Represents the light signals
+ *             See below
+ *
+ *     Lane    Represents a piece of a road
+ *             A lane is represented by an array where each element
+ *             either is empty or contain a reference to a
+ *             vehicle-object.
+ *
+ *     TrafficSystem
+ *             Defines the components, ie the lanes  and signals that
+ *             build the system. See below
+ *
+ *     Simulation
+ *            main-method the controls the simulation
+ *
+ *
+ *  The situation that is to be simulated looks schematically like
+ *
+ *          C           X                               E
+ *   W    s1<----r1-----<---------r0---------------------
+ *   S    s2<----r2-----<
+ *
+ *  A lane (a piece of a road) r0 split into two files r1 and r2 at X.
+ *  The signal s1 controls the lane r1 and the signal s2 the lane r2.
+ *
+ *  Vehicles are create at E. The probability that a vehicle arrives to E
+ *  at a certain time is called "the intensity of arrival".
+ *
+ *  At a time step the vehicles move one step forward  (if possible).
+ *  At C, the vehicles are removed from the system if the resp signal is green.
+ *  At X, vehicles are move from r0 to either r1 or r2 depending of its
+ *  destination (if there are space for them).
+ *
+ *
+*/ public class TrafficSystem
+{
+    // Attributes that describe the elements of the system
+    private Lane r0;
+    private Lane r1;
+    private Lane r2;
+    private Light s0;
+    private Light s1;
+
+    // Various attributes for simulation parameters (intensity of arrivals
+    // destinations...)
+    // Various attributes for collection of statistics
+    private int time = 0;
+    public int probOfArrival;
+    public int probOfDirection;
+    Random numGen;
+    public char direction;
+    private int s0vehicles;
+    private int s1vehicles;
+    private int s0totalBornTime;
+    private int s1totalBornTime;
+ 
+    private int r1backupAmount;
+    private int r0backupAmount;
+    private int r0longest;
+    private int r1longest;
+    private int runTime;
+    
+    /**
+     * Constructor for a TrafficSystem object.
+     * @param period The users desired time steps for a green light cycle (period).
+     * @param green1 The users desired time steps for West bound green lights
+     * @param green2 The users desired time steps for South bound green lights
+     * @param r0length The users desired length for the west bound transition lane (West bound lane after X)
+     * @param r1length The users desired length for the south bound transition lane (South bound lane after X)
+     * @param r2length The users desired length for incoming traffic lane that sorts into west/south (Lane before X) 
+     * @param newRun The users desired run time for the program (Overall number of time steps)
+     * @param newArrival The users desired arrival probability.  Whole number representation of a percentage.
+     * @param newDirection The users desired direction probability.  Whole number representation of a percentage.
+     */
+    public TrafficSystem(int period, int green1, int green2, int r0length, int r1length,
+    		int r2length, int newRun, int newArrival, int newDirection)
+    {
+    	numGen = new Random();
+   
+    	r0 = new Lane(r0length, "R0");
+    	r1 = new Lane(r1length, "R1");
+    	r2 = new Lane(r2length, "R2");
+    	s0 = new Light(period, green1);
+    	s1 = new Light(period, (green2));
+    	this.setRunTime(newRun);
+    	this.setProbOfArrival(newArrival);
+    	this.setProbOfDirection(newDirection);
+    }//end bracket of constructor
+    /**
+     * Defines how vehicles should mod in the system.
+     * Steps the system one time step using the step methods in the
+     * components
+     * Creates vehicles, add and remove into the different lanes.
+    */
+    public void step()
+    {
+    	//System.out.println("================ Begin Loop: " + index + "===================");
+    	int seconds;
+    	seconds = (int)  (System.currentTimeMillis() /1000) % 10 ;
+    	   		time = time + ((seconds % 1) + 1); 
+    	   	//	System.out.println("Global time:" + time);
+    		s0.step(time);
+    		s1.step(time);
+
+    
+    		//Probability check for arrival
+    		boolean willArrive;
+    		int nextArrive = numGen.nextInt(101);
+    	//	System.out.println("Random Probability Value: " + nextArrive);
+    		if(nextArrive <= (probOfArrival)) {
+    			willArrive = true;
+    		}else {
+    			willArrive = false;
+    		}//end bracket of if else
+    		
+
+    		//Empties the first space in R0
+    		if(s0.isGreen() && r0.getFirst() != null) {
+				int r0localBornTime = this.getTime() - r0.getFirst().getBornTime();
+    			s0totalBornTime += r0localBornTime;
+    			if(r0localBornTime > r0longest) {
+    				r0longest = r0localBornTime;
+    			}//end bracket of if
+	
+				r0.removeFirst();
+				++s0vehicles;
+				r0.step();
+			}else {
+				r0.step();
+			}//end bracket of else
+    		
+    		//Empties the first space in R1
+			if(s1.isGreen() && r1.getFirst() != null) {
+				int r1localBornTime = this.getTime() - r1.getFirst().getBornTime();
+				s1totalBornTime += r1localBornTime;
+				if(r1localBornTime > r1longest) {
+					r1longest = r1localBornTime;
+				}//end bracket of if
+			
+				r1.removeFirst();
+				++s1vehicles;
+				r1.step();
+			}else {
+				r1.step();
+			}//end bracket of else
+			
+			//Moves the first in R2 to the last space of either R1, or R0
+    		if(r2.getFirst() != null) {
+    			
+    			switch(r2.getFirst().getDestination()) {
+    			case 'W':
+    				if(r0.lastFree()){
+    					r0.putLast(r2.removeFirst());
+    				}else {
+    					r0backupAmount += 1;
+    				}//end if else
+    				break;
+    			case 'S':
+    				if(r1.lastFree()) {
+    					r1.putLast(r2.removeFirst());
+    				}else {
+    					r1backupAmount += 1;
+    				}//end bracket of if else
+    				break;
+    			}//end bracket of switch
+    			r2.step();
+    		}else {
+    			r2.step();
+    		}//end bracket of if else
+    		
+    		//If probability check successful, create vehicle
+    		if(willArrive) {
+    			int dirCheck = numGen.nextInt(101);
+    		//	System.out.println("Direction Check: " + dirCheck);
+    			char direction;
+    			if(dirCheck > probOfDirection) {
+    				direction = 'W';
+    			}else {
+    				direction = 'S';
+    			}//end bracket if if/else direction check
+    	//		System.out.println("Direction = " + direction);
+    			Vehicle addCar = new Vehicle(this.time, direction);
+    			if(r2.lastFree()) {
+    				r2.putLast(addCar);
+    		//		System.out.println("Vehicle in r0:" + addCar.toString());
+    			}//end bracket of if last free
+    		}//end bracket of if WIllArive
+    		
+    		//print();
+    		try {
+				Thread.sleep(500);
+			//	System.out.println(time);
+			}catch(InterruptedException e) {
+				System.out.println("The operation was interrupted");
+			}
+    	//	System.out.println("================ End Loop: " + index + "=====================");
+    }
+    
+    /**
+     * Accessor method for retrieving the runTime (Total number of time steps)
+     * @return Integer value for the total number of Time steps 
+     */
+    public int getRunTime() {
+    	return this.runTime;
+    }//end bracket of get RunTime method
+    
+    /**
+     * Mutator method for setting the runTime (Total number of time steps)
+     * @param newRun The desired integer value for the total number of time steps.
+     */
+    private void setRunTime(int newRun) {
+    	this.runTime = newRun;
+    }//end bracket of setRun time
+    
+    /**
+     * Accessor method for retrieving an integer value of the probability of arrival.
+     * Represented as a whole number value of a percentage. (IE 50% = 50)
+     * @return An integer who represents the probability of arrival
+     */
+    public int getProbOfArrival() {
+    	return this.probOfArrival;
+    }//end bracket of getProbOfArrival method
+    
+    /**
+     * Mutator method for setting the integer value of the probability of arrival.
+     * Represented as a whole number value of a percentage. (IE 50% = 50).
+     * @param newProbOfArrival The integer who represents the new probability of arrival
+     */
+    private void setProbOfArrival(int newProbOfArrival) {
+    	this.probOfArrival = newProbOfArrival;
+    }//end bracket of setProbOfArrival method
+    
+    /**
+     * Accessor method for retrieving an integer value of the probability of direction.
+     * Represented as a whole number value of a percentage. (IE 50% = 50)
+     * @return An integer who represents the probability of direction.
+     */
+    public int getProbOfDirection() {
+    	return this.probOfDirection;
+    }//end bracket of getProbOfDirection method
+    
+    /**
+     * Mutator method for retrieving an integer value of the probability of direction.
+     * Represented as a whole number value of a percentage. (IE 50% = 50)
+     * @param newDirection The integer who represents the new probability of direction.
+     */
+    private void setProbOfDirection(int newDirection) {
+    	this.probOfDirection = newDirection;
+    }//end bracket of setProbOfDirection method
+
+    /**
+     * Access method for retrieving the current time steps.
+     * @return The current number of time steps that has run
+     */
+    public int getTime() {
+    	return this.time;
+    }//end bracket of getTime method
+    /**
+     * Print the collected statistics sofar
+    */
+    public void printStatistics()
+    {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append("Total time measured : " + this.getTime() + "\n");
+    	sb.append("West bound average traffic passage is " + s0totalBornTime/s0vehicles + " time steps. \n");
+    	sb.append("West bound traffic blocked lane transition for " + r0backupAmount + " time steps out of " + this.getTime() + ".\n");
+    	sb.append("The longest passage time for West bound traffic is " + r0longest + " time steps.\n");
+    	
+    	sb.append("South bound average traffic passage is " + s1totalBornTime/s1vehicles + " time steps. \n");
+    	sb.append("South bound traffic blocked lane transition for " + r1backupAmount + " time steps out of " + this.getTime() + ".\n");
+    	sb.append("The longest passage time for South bound traffic is " + r1longest + " time steps.\n");
+    	
+    	
+    	System.out.println(sb.toString());
+    }//end bracket of printStatistics method
+
+    /**
+     * Prints a graphical representation of the current traffic situation
+     * using the toString-methods in the components.
+     */
+    public void print()
+    {
+    	System.out.print("W " + s0.toString() +  r0.toString());
+    	
+    	System.out.println(r2.toString() );
+    	System.out.println("S " + s1.toString() + r1.toString());
+    	
+    }//end bracket of print method
+}//end bracket of trafficsystem class

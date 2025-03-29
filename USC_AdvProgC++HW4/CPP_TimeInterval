@@ -1,0 +1,117 @@
+#include "timeinterval.h"
+#include <iostream>
+#include <string>
+
+using std::string;
+using std::endl;
+using std::cout;
+//============================================Constructors=====================================
+//Constructor for TimeInterval class, taking in two TimeOfDay objects as long as they are valid.
+//If the ending TimeOfDay is less than the Starting TimeOfDay, sets both to the start.
+//Default constructor for creating both start_ and end_ TimeOfDay objects at 00:00:00
+TimeInterval::TimeInterval() 
+    : start_(), end_() {};
+
+//Constructor for creating a TimeInterval with specific start and end times as long as the
+//end time comes later then the start time.
+TimeInterval::TimeInterval(const TimeOfDay& start,const TimeOfDay& end){
+    end_ = end; //sets the end_ variable to the end argument.
+  if(end < start){//Checks if end is less than start.
+    end_ = start;//Sets end_ variable to start argument if true.
+  }//End bracket of if end<start
+  start_ = start;//Sets start_ variable to start argument.
+}//end bracket of 2 parameter TimeInterval constructor.
+
+//Constructor for creating a TimeInterval where the start time is defined and an interval
+//given in valid units of hours, minutes, or seconds. 
+TimeInterval::TimeInterval(const TimeOfDay& start, int interval, string units){
+    start_ = start;//Sets the start_ variable to start argument.
+    SetEndTime(interval, units);//calls SetEntTime method to handle interval logic.
+}
+
+//==================================================Mutators====================================
+//Method to set the start time to a new start time given that it is less than the initial 
+// start time.
+void TimeInterval::SetStartTime(const TimeOfDay& newStart){
+    if(newStart < start_){//Checks if newStart argument is less than initial start_ variable.
+        start_ = newStart;//Assigned start_ variable to newStart argument if true.
+    }//End bracket of if
+}//end bracket of SetStartTime method
+
+//Method to set the end time to a new end time given that it is not less than the initial
+//start time.
+void TimeInterval::SetEndTime(const TimeOfDay& newEnd){
+    if(start_ == newEnd || start_ < newEnd){
+            end_ = newEnd;
+    }//End bracket of if not start < newEnd
+}//End bracket of new end.
+
+//Method to set the end time based on incrementing the start time by length and the units of 
+// hours, minutes, and seconds. Sets to start time if invalid units are given.
+void TimeInterval::SetEndTime(int length, string units){
+    TimeOfDay newEnd = start_;//Initializes newEnd to start_ value for manipulation.
+    //Temporary variables for mathmatical calculations.
+    int newHours;
+    int newMinutes;
+    int newSeconds;
+    //Checks if all arguments are valid before calculation.
+    if(length >= 0 && (units == "hours" || units == "minutes" || units == "seconds")){
+        if(units == "seconds"){//Checks if units is in seconds.
+            int hoursInSec = start_.GetHour() * 3600; //Reduces hours down to seconds.
+            int minuteInSec = start_.GetMinute() * 60; //Reduces minutes down to seconds.
+            newSeconds = start_.GetSecond() + hoursInSec + minuteInSec + length; //Performs calculation for new seconds total.
+        }else
+        if(units == "minutes"){//Checks if units is in minutes.
+            int hoursInSec = start_.GetHour() * 3600; //Reduces hours to seconds.
+            int minuteInSec = start_.GetMinute() * 60; //Reduces minutes to seconds.
+            newSeconds = start_.GetSecond() + hoursInSec + minuteInSec + (length*60); //Performs calculation for new seconds total.
+        }else
+        if(units == "hours"){//checks if units is in hours.
+            int hoursInSec = start_.GetHour() * 3600; //Reduces hours to seconds.
+            int minuteInSec = start_.GetMinute() * 60; //Reduces minutes to seconds.
+            newSeconds = start_.GetSecond() + hoursInSec + minuteInSec + (length*3600); //Performs calculation for new seconds total.
+        }
+            newHours = newSeconds / 3600;//Recalculates total seconds to hours.
+            newMinutes = (newSeconds % 3600) / 60;//Recalculates total seconds - hours to minutes.
+            newSeconds = (newSeconds % 3600) % 60;//Recalculates total seconds - hours - minutes to seconds.
+            newEnd.SetHour(newHours);//Assigns newEnd hour value to new value.
+            newEnd.SetMinute(newMinutes);//Assigns newEnd minute value to new value.
+            newEnd.SetSecond(newSeconds);//Assigns newEnd second value to new value.
+            end_ = newEnd;//Assigns end_ variable to newEnd TimeOfDay.
+    }//End bracket of if/Else
+}//End bracket of SetEndTime 3 param method.
+
+//Method to Print the output formatted to the appropriate requested format,
+//Where isMilTime being true prints the output in military time and
+//hasSeconds prints the output with the seconds value.
+void TimeInterval::Print(bool isMilTime, bool hasSeconds){
+    if(isMilTime){//Checks if military time is desired.
+        if(hasSeconds){//Checks if seconds is desired.
+        //Prints start_ and end_ variables with desired output parameters.
+            cout << "Start time: ";
+            start_.Print(true, true);
+            cout << "End time: ";
+            end_.Print(true, true);
+        }else{//Alternative: When seconds are not desired.
+        //Prints start_ and end_ variables with desired output parameters.
+            cout << "Start time: ";
+            start_.Print(true, false);
+            cout << "End time: ";
+            end_.Print(true, false);
+        }//End bracket of if/else hasSeconds.
+    }else{//Alternative: When military time is not desired.
+        if(hasSeconds){//Checks if seconds is desired.
+        //Prints start_ and end_ variables with desired output parameters.
+            cout << "Start time: ";
+            start_.Print(false, true);
+            cout << "End time: ";
+            end_.Print(false, true);
+        }else{//Alternative:When seconds are not desired.
+        //Prints start_ and end_ variables with desired output parameters.
+            cout << "Start time: ";
+            start_.Print(false, false);
+            cout << "End time: ";
+            end_.Print(false, false);
+        }//End bracket of inner if/else hasSeconds.
+    }//End bracket of If/Else isMilTime
+}//End bracket of Print method.

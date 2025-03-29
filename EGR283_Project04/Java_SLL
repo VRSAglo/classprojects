@@ -1,0 +1,168 @@
+package edu.mtc.egr283.Project04;
+
+public class SLL<E> {
+
+	private int length;
+	private SLLNode<E> head;
+	private SLLNode<E> tail;
+	
+	private static final String COLON_SPACE = ": ";
+	private static final String NEW_LINE = "\n";
+	
+	/**
+	 * Constructor.
+	 * It initializes the size or length to zero
+	 * and creates the head and tail nodes of the list.
+	 */
+	public SLL() {
+		this.length = 0;
+		this.tail = new SLLNode<E>();
+		this.head = new SLLNode<E>(null, this.tail);
+	}//end bracket of constructor
+	
+	/**
+	 * Accessor Method for the length/size of the list.
+	 * @return the length of the list
+	 */
+	public int size() {
+		return this.length;
+	}//end bracket of size
+		
+	/**
+	 * Access method to retrieve the data stored 
+	 * at the given position.
+	 * @param position index of data to retrieve
+	 * @return the data from the position requested.
+	 */
+	public E get(int position) {
+		return this.getDataAtPosition(position);
+	}//end bracket of get
+	
+	/**
+	 * Method to add a node containing the given data 
+	 * to the list at the given position.
+	 * @param newNodeData data to be stored
+	 * @param position index to store the node
+	 */
+	public void add(E newNodeData, int position) {
+		SLLNode<E> cursor = this.head;
+		if(position > 0) {
+			cursor = this.find(position - 1);
+		}//end bracket of if
+		this.addAfter(cursor, new SLLNode<E>(newNodeData, null));
+	}//end bracket of add method
+	
+	/**
+	 * Method to add a node at the beginning of the list
+	 * containing the given data.
+	 * @param newNodeData data to be stored.
+	 */
+	public void addAtHead(E newNodeData) {
+		this.add(newNodeData, 0);
+	}//end bracket of addAtHead method
+	
+	/**
+	 * Method to modify data at a given position
+	 * @param newNodeData New Data to be stored
+	 * @param position Position to store the data
+	 */
+	public void setData(E newNodeData, int position) {
+		(this.find(position)).setNodeData(newNodeData);
+	}//end bracket of setData
+	
+	/**
+	 * Method to remove data from the list at the
+	 * given position.
+	 * @param position to remove the data from
+	 * @return the data that was removed from the list.
+	 */
+	public E remove(int position) {
+		SLLNode<E> cursor = this.head;
+		if(position > 0) {
+			cursor = this.find(position-1);
+		}//end bracket of if
+		
+		SLLNode<E> targetNode = cursor.getNextNode();
+		cursor.setNextNode(targetNode.getNextNode());
+		--this.length;
+		E rv = targetNode.getNodeData();
+		
+		targetNode.setNextNode(null);
+		targetNode.setNodeData(null);
+		
+		return rv;
+	}//end bracket of remove method
+	
+	/**
+	 * Method to remove the data from the list by the
+	 * given data.
+	 * @param targetData Data to be removed from the list.
+	 * @return the data that has been removed.
+	 */
+	public E remove(E targetData) {
+		return this.remove(this.findIndex(targetData));
+	}//end bracket of remove 
+	
+	@Override
+	/**
+	 * Returns the list via an index:data paring 
+	 * with a new line seperating each pairing.
+	 * @return the string representation of the list.
+	 */
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		
+		
+		SLLNode<E> cursor = this.head.getNextNode();
+		int index =0;
+		while(cursor != this.tail) {
+			
+			sb.append(index);
+			sb.append(SLL.COLON_SPACE);
+			sb.append(cursor.getNodeData().toString());
+			sb.append(SLL.NEW_LINE);
+			
+			cursor = cursor.getNextNode();
+			++index;
+			
+		}//end bracket of while loop
+		return sb.toString();
+	}//end bracket of toString
+	
+	
+	private void addAfter(SLLNode<E> currentNode, SLLNode<E> newNode) {
+		newNode.setNextNode(currentNode.getNextNode());
+		currentNode.setNextNode(newNode);
+		++this.length;
+	}//end bracket of addAfter node
+	
+	private int findIndex(E targetData) {
+		int rv = 0;
+		SLLNode<E> cursor = this.head.getNextNode();
+		while((cursor != this.tail) && (!cursor.getNodeData().equals(targetData))) {
+			cursor = cursor.getNextNode();
+			++rv;if(rv == this.size()) {
+				rv = -1;
+			}//end bracket of if statement
+		}//end bracket of while loop
+		return rv;
+	}//end bracket of findIndex method
+	
+	public E getDataAtPosition(int position) {
+		return (this.find(position)).getNodeData();
+	}//ending bracket of getDataAtPosition Method
+	
+
+	private  SLLNode<E> find(int position){
+		SLLNode<E> cursor = this.head.getNextNode();
+		int index = 0;
+		
+		while((index != position) && (cursor != this.tail)) {
+			++index;
+			cursor = cursor.getNextNode();
+		}//end bracket of while loop
+		
+		return cursor;
+	}//end bracket of find method
+	
+}//end bracket of SLL

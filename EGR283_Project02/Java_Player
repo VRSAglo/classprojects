@@ -1,0 +1,176 @@
+package Project02;
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+/**
+ * The class defines the properties for a <code>Player</code> for the Uncle Wiggily game.
+ * @author Adam Glover
+ *@version 1.0.0 Copyright (C) 1-31-2023 All Rights Reserved.
+ */
+public class Player {
+//--------------------------------------Fields----------------------------------------
+	/**
+	 * Datatypes for <code>Player</code> including the <code>currentSpace</code>: the current space of the player.
+	 * </code>name</code>: the name of the player, <code>pieceColor</code>: the players piece color, 
+	 * <code>waitTime</code>: the turns a player must wait, <code>numberOfWins</code>: The number of rounds the player 
+	 * has won for the tournament. <code>COLORS</code>: the constant for the colors available to be chosen for the piece.
+	 */
+	public int currentSpace;
+	public String name;
+	public String pieceColor;
+	private int waitTime;
+	private int numberOfWins;
+	
+	public static String[] COLORS = {"Red", "Green", "Blue", "Yellow"};
+	
+// ----------------------------------Constructors-------------------------------------
+	
+	/**
+	 * Constructor for the <code>Player</code> object.
+	 * @param newName A String for the players name.
+	 * @param newColor A color for the players chosen piece color.
+	 */
+	public Player(String newName, String newColor) {
+		this.setName(newName);
+		this.setColor(newColor);
+		this.setCurrentSpace(0);
+		this.setWaitTurn(0);
+		this.setNumberOfWins(0);
+	}//end bracket of Player constructor
+//--------------------------------------Methods---------------------------------------
+	private void setName(String newName) {
+		this.name = newName;
+	}//end bracket of setName method
+	
+	/**
+	 * Method to return the name of the <code>Player</code>.
+	 * @return A String that is the <code>Player</code> name.
+	 */
+	public String getName() {
+		return this.name;
+	}//end bracket of getName method
+	
+	/**
+	 * Private method to set the current space of a <code>Player</code>
+	 * during initialization.
+	 * @param newSpace Integer that represents the space to be set.
+	 */
+	private void setCurrentSpace(int newSpace) {
+		this.currentSpace = newSpace;
+	}//end bracket of setCurrentSpace method
+	
+	/**
+	 * Method to return the space the <code>Player</code> is currently on.
+	 * @return An integer for the <code>Player</code> current space.
+	 */
+	public int getCurrentSpace() {
+		return this.currentSpace;
+	}//end bracket of getCurrentSpace method
+	
+	/**
+	 * Method to determine if a <code>Player</code> is able to take their turn and
+	 * does not have a <code>waitTurn</code> value greater than 0.
+	 * @return A true/false if a players <code>WaitTurn</code> is greater than 0.
+	 */
+	public boolean hasTurn() {
+		boolean rv = true;
+		if(this.getWaitTurn() > 0) {
+			rv = false;
+		}//end bracket of if
+		return rv;
+	}//end bracket of hasTurn
+	
+	/**
+	 * Method to return the amount of turns a <code>Player</code> must wait
+	 * @return An Integer that is the number of turns a <code>Player</code> must wait.
+	 */
+	public int getWaitTurn() {
+		return this.waitTime;
+	}//end bracket of getWaitTurn method
+	
+	/**
+	 * Method to set the amount of turns a <code>Player</code> must wait.
+	 * @param newWait An Integer for the number of turns a <code>Player</code> must wait.
+	 */
+	public void setWaitTurn(int newWait) {
+		this.waitTime = newWait;
+	}//end bracket of waitTime method
+	
+	/**
+	 * Method to get the color of a <code>Player</code> piece.
+	 * @return A String that is a <code>Player</code> piece color.
+	 */
+	public String getColor() {
+		return this.pieceColor;
+	}//end bracket of getColor method
+	
+	/**
+	 * Private method to set the color of the piece a <code>Player</code> wants.  It allows
+	 * the first player to select from any of the four colors, and then removes that option 
+	 * for subsequent <code>Player</code> selections.
+	 * @param newColor String that represents the color a <code>Player</code> selects.
+	 */
+	private void setColor(String newColor) {
+		for(int i = 0; i < Player.COLORS.length; ++i) {
+			if(newColor.contains(Player.COLORS[i])) {
+				this.pieceColor = newColor;
+				Player.COLORS[i] = "Taken";
+			}//end bracket of if
+		}//end bracket of for loop
+	}//end bracket of setColor method
+	
+	/**
+	 * Private method that sets the <code>Player</code> initial value.
+	 * @param newNumberOfWins Integer that represents the number of wins a player starts with.
+	 */
+	private void setNumberOfWins(int newNumberOfWins) {
+		this.numberOfWins = newNumberOfWins;
+	}//end bracket of SetNumberOfWins method
+	
+	/**
+	 * Method to return a <code>Player</code> number of round wins for the tournament.
+	 * @return An integer that is the number of rounds a <code>Player</code> has won.
+	 */
+	public int getNumberOfWins() {
+		return this.numberOfWins;
+	}//end bracket of getNumberOfWins method
+	
+	/**
+	 * Method to increment the number of wins for a <code>Player</code> 
+	 */
+	public void incrementNumberOfWins() {
+		this.numberOfWins += 1;
+	}//end bracket of incrementNUmberOfWins method
+	
+	/**
+	 * Method to set a static value for the <code>Player</code> space.
+	 * Used for when a <code>boardspace</code> penalizes a <code>Player</code> and 
+	 * forces them to move to a specific place.
+	 * @param newSpace An integer to represent the space to be moved to.
+	 */
+	public void updateSpace(int newSpace) {
+		this.setCurrentSpace(newSpace);
+	}//end bracket of updateSpace
+	
+	/**
+	 * Method to increase a <code>Player</code> space under normal circumstances.
+	 * @param newSpace An integer (positive or negative) that will move the players space.
+	 */
+	public void incrementSpace(int newSpace) {
+		this.setCurrentSpace(this.getCurrentSpace() + newSpace);
+	}//end bracket of incrementSpace method
+	
+	/**
+	 * Standard toString override that outputs the <code>Player</code> name, piece color, and current space.
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(this.getName() + " has the " + this.getColor() + " piece and is on space number " + this.getCurrentSpace());
+		return sb.toString();
+	}//end bracket of toString override
+	
+}

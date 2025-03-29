@@ -1,0 +1,282 @@
+package edu.mtc.egr283.Project03;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * A colony class that takes ElephantSeal objects and places them into
+ * a ElephantSeal array list as well as assigning their initial
+ * ArrayList index values to an index to be used with sorting.
+ * @author Adam Glover
+ * @Version 1.00 Copyright (c) 2-12-2023 All Rights Reserved.
+ *
+ */
+public class Colony {
+
+
+	
+//Fields
+	/**
+	 * ArrayList variables needed to store ElephantSeals and
+	 * a Arraylist index for sorting ElephantSeals.
+	 */
+	private ArrayList<Integer> index;
+	private ArrayList<ElephantSeal> seals;
+	
+
+	
+//Constructor
+	/**
+	 * Standard constructor for initializing the ArrayList
+	 * for ElephantSeals and Index
+	 */
+	public Colony() {
+		this.seals = new ArrayList<ElephantSeal>();
+		this.index = new ArrayList<Integer>();
+	}//end bracket of colony constructor
+	
+	
+//Methods
+	/**
+	 * A method for adding an ElephantSeal by object type. 
+	 * A previously constructor ElephantSeal added into the ArrayList 
+	 * for ElephantSeals and the Index.
+	 * @param newSeal A previously created ElephantSeal object.
+	 */
+	public void addSeal(ElephantSeal newSeal) {
+		this.seals.add(newSeal);
+		this.index.add(seals.size()-1);
+	}//end bracket of addSeal method
+	
+	/**
+	 * Method for adding an ElephantSeal to the ArrayList and 
+	 * Index by it's data (Name, Age, Weight).  Used for direct input.
+	 * @param newName to be assigned to the name variable of an ElephantSeal
+	 * @param newAge to be assigned to the age variable of an ElephantSeal
+	 * @param newWeight to be assigned to the weight variable of an ElephantSeal
+	 */
+	public void addSealData(String newName, int newAge, double newWeight) {
+		this.addSeal(new ElephantSeal(newName, newAge, newWeight));
+	}//end bracket of addSealData method
+	
+	/**
+	 * Method to delete an ElephantSeal from the ArrayList for ElephantSeals
+	 * and the Index. Also swaps any deleted values with the value behind it to
+	 * keep all data linear.
+	 * @param searchName Name to be searched for identifying ElephantSeal to be deleted.
+	 */
+	public void deleteSealName(String searchName) {	
+		ElephantSeal temp = null;
+		int sub = 0;
+		for(int i = 0; i < this.seals.size(); ++i) {
+			if(this.seals.get(i).getName().equalsIgnoreCase(searchName)) {
+				sub = i;
+				break;
+			}//end bracket of if 
+		}//end bracket of for swamp
+		for(int i = 0; i < this.seals.size()-1; ++i) {
+			if(seals.get(i).equals(seals.get(sub))) {
+				temp = seals.get(i+1);
+				this.seals.set(i, temp);
+				this.seals.set((i+1), seals.get(sub));	
+			}//end bracket of if statement
+		}//end bracket of for loop
+		this.seals.remove(this.seals.size()-1);
+		this.index.remove(this.index.size()-1);
+			
+	}//end bracket of deleteSealName
+	
+	/**
+	 * Method to locate an ElephantSeal object based on the name
+	 * stored in the name variable of an ElephantSeal.
+	 * @param searchName The name of an ElephantSeal to be found
+	 * @return An ElephantSeal object with the found name.
+	 */
+	public ElephantSeal findSealName(String searchName) {
+		ElephantSeal search = null;
+		for(int i = 0; i < this.seals.size(); ++i) {
+			if(seals.get(this.index.get(i)).getName().equals(searchName)) {
+			search =this.seals.get(this.index.get(i));
+			break;
+			}//End bracket of If
+		}//end bracket of For
+		return search;
+	}//end bracket of find Seal name
+	
+	/**
+	 * Method to identify an ElephantSeal by the index value 
+	 * stored for the ElephantSeal
+	 * @param searchIndex integer value for index of ElephantSeal
+	 * @return an ElephantSeal located by the index value.
+	 */
+	public ElephantSeal findSealIndex(int searchIndex) {
+		return this.seals.get(searchIndex);
+	}//end bracket of findSealIndex
+	
+	/**
+	 * Method to evaluate the average age of an ElephantSeal
+	 * Colony.
+	 * @return an integer value that is the average of the Colonies age.
+	 */
+	public int getAverageAge() {
+		int sum = 0;
+		for(int i = 0; i < this.seals.size(); ++i){
+			sum = sum + this.seals.get(this.index.get(i)).getAge();
+		}//end bracket of for
+		return sum / this.seals.size();
+	}//end bracket of getAverageAge method
+	
+	/**
+	 * Method to evaluate the average weight of an ElephantSeal
+	 * Colony.
+	 * @return A decimal value that is the average of the Colonies weight
+	 */
+	public double getAverageWeight() {
+		double sum = 0;
+		for(int i = 0; i < this.seals.size(); ++i) {
+			sum = sum +this.seals.get(this.index.get(i)).getWeight();
+		}//end bracket of for
+		return sum / this.seals.size();
+	}//end bracket of getAverageWeight method
+	
+	/**
+	 * Method to return the Youngest member of the ElephantSeal
+	 * Colony based on the value stored in the age variable.
+	 * @return An ElephantSeal who's age variable is the lowest value.
+	 */
+	public ElephantSeal getYoungestSeal() {
+		ElephantSeal youngest = this.seals.get(0);
+		for(int i = 1; i < this.seals.size(); ++i) {
+			if(seals.get(this.index.get(i)).getAge() < youngest.getAge()) {
+				youngest = this.seals.get(i);
+			}//end bracket of if
+		}//end bracket of for
+		return youngest;
+	}//end bracket of youngestSeal method
+	
+	/**
+	 * Method to return the Oldest member of the ElephantSeal
+	 * Colony based on the value stored in the age variable.
+	 * @return An ElephantSeal who's age variable is the highest value.
+	 */
+	public ElephantSeal getOldestSeal() {
+		ElephantSeal oldest = this.seals.get(0);
+		for(int i = 1; i < this.seals.size(); ++i) {
+			if(this.seals.get(this.index.get(i)).getAge() > oldest.getAge()) {
+				oldest = this.seals.get(this.index.get(i));
+			}//end bracket of if
+		}//end bracket of for loop
+		return oldest;
+	}//end bracket of getOldestSeal
+	
+	/**
+	 * Method to return the largest member of the ElephantSeal
+	 * Colony based on the value stored in the weight variable.
+	 * @return An ElephantSeal who's weight variable is the highest value.
+	 */
+	public ElephantSeal getLargestSeal() {
+		ElephantSeal largest = this.seals.get(0);
+		for(int i = 1; i < this.seals.size(); ++i) {
+			if(this.seals.get(i).getWeight() > largest.getWeight()) {
+				largest = this.seals.get(i);
+			}//end bracket of if
+		}//end bracket of for
+		return largest;
+	}//end bracket of getLargestSeal
+	
+	/**
+	 * Method to return the smallest member of the ElephantSeal
+	 * Colony based on the value stored in the weight variable.
+	 * @return An ElephantSeal who's weight variable is the smallest value.
+	 */
+	public ElephantSeal getSmallestSeal() {
+		ElephantSeal smallest = this.seals.get(0);
+		for(int i = 1; i < this.seals.size(); ++i) {
+			if(this.seals.get(this.index.get(i)).getWeight() < smallest.getWeight()) {
+				smallest = this.seals.get(i);
+			}//end bracket of if
+		}//end bracket of for
+		return smallest;
+	}//end bracket of getSmallestSeal method
+	
+	/**
+	 * Method to sort the names of elephants seals based on the
+	 * compareTo method who evaluates which name is largest/smaller.
+	 */
+	public void sortNames() {
+		int tempIndex;
+		for(int length = this.getSize(); length > 1; --length) {
+			for(int i = 0; i < length -1; ++i) {
+			if(this.seals.get(this.index.get(i)).compareTo(this.seals.get(this.index.get(i+1))) > 0) {
+				tempIndex = this.index.get(i);
+				this.index.set(i, this.index.get(i+1));
+				this.index.set(i+1, tempIndex);
+				}//end if
+			}
+		}//end for
+	}//end sort names
+	
+	/**
+	 * Method to return the size of the ArrayList for ElephantSeals.
+	 * @return The Size of the Colony via ArrayList entries.
+	 */
+	public int getSize() {
+		if(this.seals.size() != this.index.size()) {
+			System.out.println("Error: Unequal list sizes, Colony: " + this.seals.size() + ", index: " + this.index.size());
+		System.exit(1);
+		}
+		return this.seals.size();
+	}//end bracket of getColonySize method
+	
+	/**
+	 * Method to read the inFile and generate new
+	 * ElephantSeal objects to be placed in the Colony.
+	 * @param inFile File to be Read with ElephantSeal data.
+	 */
+	public void readFile(Scanner inFile) {
+		int counter = 0;
+		ElephantSeal temp = null;
+		while(inFile.hasNext()) {
+			temp = new ElephantSeal();
+			seals.add(temp.readRecord(inFile));
+			index.add(counter);
+			++counter;
+		}//end bracket of while loop
+	}//end bracket of readFile method
+	
+	/**
+	 * Method to return a single ElephantSeal from the
+	 * ArrayList.
+	 * @param indexOfRecord Index value to locate ElephantSeal in ArrayList.
+	 * @return An ElephantSeal located by the Index value.
+	 */
+	public ElephantSeal getElephantSeal(int indexOfRecord) {
+		return this.seals.get(this.index.get(indexOfRecord));
+	}//end bracket of ElephantSeal
+	
+	/**
+	 * Standard toString override to output the Colony data
+	 * in a user friendly way.
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < this.seals.size(); ++i) {
+			sb.append("Index " + this.index.get(i) + ": " + this.seals.get(this.index.get(i)).toString() + "\n");
+		}
+		return sb.toString();
+	}//End bracket of ToString override
+	/**
+	 * Method to output the Colony data to a file in 
+	 * a user Friendly way.
+	 * @return A Formatted String to be used with writing to a file.
+	 */
+	public String toStringFile() {
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < this.seals.size(); ++i) {
+			sb.append(this.seals.get(this.index.get(i)).toStringFile());
+		}//end bracket of for
+		System.out.println(sb.toString());
+		return sb.toString();
+	}//end bracket of ToStringFile method
+}//end bracket of Colony class

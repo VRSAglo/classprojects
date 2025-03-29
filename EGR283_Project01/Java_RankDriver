@@ -1,0 +1,11 @@
+package edu.mtc.egr283.Project01;
+
+public class RankDriver {
+
+	public static void main(String[] args) {
+		for(Rank s : Rank.values()) {
+			System.out.println(s.getName() + " : " + s.getSymbol());
+		}//end bracket of for each loop
+	}//ending bracket of main method
+}//Ending bracket of RankDriver class
+

@@ -1,0 +1,277 @@
+//Adam Glover
+//EGR283-Project 4
+//Professor Sims
+//Date Completed: 2-26-23
+//Date Due: 3-2-23
+//Program the catalogues a users game collection, allows them to add
+//or remove games from that collection, and prints it to a document to be saved.
+
+package edu.mtc.egr283.Project04;
+
+import java.util.Scanner;
+
+import edu.mtc.egr283.Project01.PlayingCard;
+/**
+ * This class defines the characters of a Game to
+ * be stored as a SLLNode in the GameCatalogue class
+ * @author Adam Glover
+ * @version 1.0 All Rights Reserve. CopyRight 2-26-2023
+ */
+public class Game implements Comparable<Game> {
+	
+	private String name;
+	private int minAge;
+	private int maxAge;
+	private int minPlayers;
+	private int maxPlayers;
+	private int minPlayTime;
+	private int maxPlayTime;
+	private boolean isInList;
+	
+	/**
+	 * Default constructor with name set to null
+	 * and other variables such as min and max age,
+	 * min and max players, and min and max play time
+	 * set to -1.
+	 */
+	public Game() {
+		this.setname(null);
+		this.setMinAge(-1);
+		this.setMaxAge(-1);
+		this.setMinPlayers(-1);
+		this.setMaxPlayers(-1);
+		this.setMinPlayTime(-1);
+		this.setMaxPlayTime(-1);
+		this.setIsInlist(true);
+		
+	}//end bracket of defualt constructor
+	
+	/**
+	 * Data constructor with values for Game to be created.
+	 * @param newName Name of the Game
+	 * @param minAge Minimum age for the game.
+	 * @param maxAge Maximum age for the game.
+	 * @param minPlayers Minimum players for the game.
+	 * @param maxPlayers Maximum players for the game.
+	 * @param minTime Minimum play time for the game.
+	 * @param maxTime Maximum play time for the game.
+	 */
+	public Game(String newName, int minAge, int maxAge, int minPlayers, int maxPlayers,
+			int minTime, int maxTime) {
+		this.setname(newName);
+		this.setMinAge(minAge);
+		this.setMaxAge(maxAge);
+		this.setMinPlayers(minPlayers);
+		this.setMaxPlayers(maxPlayers);
+		this.setMinPlayTime(minTime);
+		this.setMaxPlayTime(maxTime);
+		this.setIsInlist(true);
+	}//end bracket of data constructor
+	
+	/**
+	 * Accessor method for getting the Name of a game
+	 * @return The name of the game.
+	 */
+	public String getName() {
+		return this.name;
+	}//end bracket of getName method
+	
+	/**
+	 * Accessor method for getting the minimum age of the game.
+	 * @return Minimum age for the game.
+	 */
+	public int getMinAge() {
+		return this.minAge;
+	}//end bracket of getMinAge method
+	
+	/**
+	 * Accessor method for getting the maximum age of the game.
+	 * @return Maximum age of the game.
+	 */
+	public int getMaxAge() {
+		return this.maxAge;
+	}//end bracket of getMaxAge method
+	
+	/**
+	 * Accessor method for getting the minimum players of the game.
+	 * @return Minimum players for the game.
+	 */
+	public int getMinPlayers() {
+		return this.minPlayers;
+	}//end bracket of getMinplayers method
+	
+	/**
+	 * Accessor method for getting the maximum players of the game.
+	 * @return Maximum players of the game.
+	 */
+	public int getMaxPlayers() {
+		return this.maxPlayers;
+	}//end bracket of getMaxPlayers method
+	
+	/**
+	 * Accessor Method for getting the minimum play time of the game.
+	 * @return Minimum play time of the game.
+	 */
+	public int getMinPlayTime() {
+		return this.minPlayTime;
+	}//end bracket of getMinPlayTime method
+	
+	/**
+	 * Accessor method for getting the maximum play time of the game.
+	 * @return Maximum play time of the game.
+	 */
+	public int getMaxPlayTime() {
+		return this.maxPlayTime;
+	}//end bracket of getMaxPlayTime method
+	
+	/**
+	 * Method to get the boolean value for if a
+	 * item is to be listed
+	 * @return Boolean for is in list
+	 */
+	public boolean getIsInList() {
+		return this.isInList;
+	}//End bracket of is in list method
+	
+	
+	/**
+	 * Mutator method for setting the name of the game.
+	 * @param newName The name for the game to be set to.
+	 */
+	public void setname(String newName) {
+		this.name = newName;
+	}//end bracket of setName method
+	
+	/**
+	 * Mutator method for setting the minimum age of the game.
+	 * @param newAge The minimum age to be set.
+	 */
+	public void setMinAge(int newAge) {
+		this.minAge = newAge;
+	}//end bracket of setMinAge method
+	
+	/**
+	 * Mutator method for setting the maximum age of the game.
+	 * @param newAge The maximum age to be set.
+	 */
+	public void setMaxAge(int newAge) {
+		this.maxAge = newAge;
+	}//end bracket of setMaxAge method
+	
+	/**
+	 * Mutator method for setting the minimum players of the game.
+	 * @param newPlayers The minimum age to be set.
+	 */
+	public void setMinPlayers(int newPlayers) {
+		this.minPlayers = newPlayers;
+	}//end bracket of setMinplayers method
+	
+	/**
+	 * Mutator method for setting the maximum players of the game.
+	 * @param newPlayers The maximum age to be set.
+	 */
+	public void setMaxPlayers(int newPlayers) {
+		this.maxPlayers = newPlayers;
+	}//end bracket of setMaxPlayers method
+	
+	/**
+	 * Mutator method for setting the minimum play time of a game.
+	 * @param newTime The minimum play time to be set.
+	 */
+	public void setMinPlayTime(int newTime) {
+		this.minPlayTime = newTime;
+	}//end bracket of setMinPlayTime method.
+	
+	/**
+	 * Mutator method for setting the maximum play time of a game.
+	 * @param newTime The maximum play time to be set.
+	 */
+	public void setMaxPlayTime(int newTime) {
+		this.maxPlayTime = newTime;
+	}//end bracket of setMaxPlayTime method
+	
+	/**
+	 * Mutator to set the status of whether a Game
+	 * object is in the list
+	 * @param newStatus The new value to set
+	 */
+	public void setIsInlist(boolean newStatus) {
+		this.isInList = newStatus;
+	}//end bracket of setisinlist method
+	
+	/**
+	 * Method to compare if the name of one game is the same as another
+	 * @param newName The name to compare against
+	 * @return True of False depending on if the names are the same.
+	 */
+	public boolean compareName(String newName) {
+		boolean rv = false;
+		if(this.getName().equals(newName)) {
+			rv = true;
+		}//end bracket of if name equals
+		return rv;
+	}//end bracket of compareName method
+	
+	/**
+	 * Method to compare if two Game objects are the same
+	 * and output a 1 if it is greater and a -1 if it is not.
+	 * @param otherGame Game to be compared
+	 * @return An integer value of + or - 1 if this.game is greater or less than othergame.
+	 */
+	public int compareTo(Game otherGame) {
+		int rv = 0;
+		if(this.getName().compareTo(otherGame.getName()) < 0) {
+			rv = -1;
+		}else if(this.getName().compareTo(otherGame.getName()) > 0) {
+			rv = +1;
+		}//end bracket of if
+		return rv;
+	}//end bracket of compareTo method
+	
+	/**
+	 * Method for reading a file and creating a game object on file data.
+	 * @param inFile File with game data to be read.
+	 * @return A Game object with its datafields equal to the data in inFile.
+	 */
+	public Game readGame(Scanner inFile) {
+		if(inFile.hasNext()) {
+			this.setname(inFile.next());
+			this.setMinAge(Integer.parseInt(inFile.next()));
+			this.setMaxAge(Integer.parseInt(inFile.next()));
+			this.setMinPlayers(Integer.parseInt(inFile.next()));
+			this.setMaxPlayers(Integer.parseInt(inFile.next()));
+			this.setMinPlayTime(Integer.parseInt(inFile.next()));
+			this.setMaxPlayTime(Integer.parseInt(inFile.next()));
+		}//end bracket of If infile has next line
+	return this;
+	}//end bracket of readGame method
+	
+	/**
+	 * Standard override to output a string in a user
+	 * friendly manner.
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(String.format("%-23s %-2d %-14d %-2d %-12d %-2d %-2d %n", 
+				this.getName(), this.getMinAge(), this.getMaxAge(), 
+				this.getMinPlayers(), this.getMaxPlayers(), this.getMinPlayTime(),
+				this.getMaxPlayTime()));
+		return sb.toString();
+	}//end bracket of toString override.
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean rv = false;
+		if(obj instanceof Game) {
+			Game pc = (Game) obj;
+			if(this.compareName(pc.getName())) {
+				rv = true;
+			}//Ending bracket of inner if statement
+		}//Ending bracket of outer if statement
+		return rv;
+	}//Ending bracket of equals override
+	
+	
+}//end bracket of Game class

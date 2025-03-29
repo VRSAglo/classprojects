@@ -1,0 +1,30 @@
+package edu.mtc.egr283.Project01;
+//Adam Glover
+//EGR283 Project 01
+//Professor Sims
+//This project plays a round of poker 
+//Current Date: 1/15/2023
+//Due Date: 1/19/2023
+
+public enum HandRank {
+	
+	HIGHCARD("High Card"),           ONEPAIR("One Pair")           ,  TWOPAIR("Two Pair")               , 
+	THREEOFAKIND("Three of a kind"), STRAIGHT("A Straight")   	   ,  FLUSH("A Flush")			        , 
+	FULLHOUSE("A Full House" )     , FOUROFAKIND("Four of a Kind") ,  STRAIGHTFLUSH("A Straight Flush") , 
+	ROYALFLUSH("A Royal Flush");
+	
+	
+	
+		
+	private String rank;
+
+	private HandRank(String newRank) {
+		this.rank = newRank;
+	}//End bracket of constructor
+	
+	public String getRank() {
+		return this.rank;
+	}//end bracket of getRank method
+	
+	
+}//end bracket of HandRank enum

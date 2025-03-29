@@ -1,0 +1,33 @@
+package edu.mtc.egr283.Project01;
+
+public class PlayerDriver {
+
+	public static void main(String[] args) {
+		Player player1 = new Player("test");
+		Player player2 = new Player("test2");
+		
+		Deck deck = new Deck();
+		for(int i = 0; i < Hand.DEFAULT_VALUE; ++i) {
+			player1.addACard(deck.deal());
+			player2.addACard(deck.deal());
+		}
+		player1.sortHand();
+		player2.sortHand();
+		System.out.println("player 1: " + player1.displayHandSymbol());
+		System.out.println("player 2: " + player2.displayHandSymbol());
+		 
+	
+		System.out.println("player 1: " + player1.toStringHandRank());
+		System.out.println("player 2: " + player2.toStringHandRank());
+		
+		System.out.println("player 1: " + player1.getHandRankValue());
+		System.out.println("player 2: " + player2.getHandRankValue());
+		
+		System.out.println("Player 1: " + player1.getHandRankCardRank());
+		System.out.println("player 2: " + player2.getHandRankCardRank());
+	
+	
+		
+		
+	}
+}

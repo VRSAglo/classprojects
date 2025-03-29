@@ -1,0 +1,66 @@
+package edu.mtc.egr283.Project04;
+
+
+/**
+ * This class is the Single Linked List basic node.
+ * It has two fields, one to hold the data, and
+ * one to reference the next node in the list.
+ * @author Adam Glover
+ *
+ * @param <T> Generic Class Parameter
+ */
+public class SLLNode<T> {
+	
+	private T nodeData;
+	private SLLNode<T> nextNode;
+	
+	public SLLNode() {
+		this(null, null);
+	}//ending bracket of default constructor.
+	/**
+	 * Constructor of the Single Link List Node
+	 * This creates a SLLNode using the node data
+	 * and the SLLNode as the next node.
+	 * @param newNodeData
+	 * @param newNextNode
+	 */
+	public SLLNode(T newNodeData, SLLNode<T> newNextNode) {
+		this.setNodeData(newNodeData);
+		this.setNextNode(newNextNode);
+	}//end bracket of constructor
+	
+	
+	/**
+	 * Accessor method for the node data.
+	 * @return the node data.
+	 */
+	public T getNodeData() {
+		return this.nodeData;
+	}//end bracket of getNodeData method
+	
+	/**
+	 * Mutator method for the node data
+	 * @param newNodeData the node data to be stored.
+	 */
+	public void setNodeData(T newNodeData) {
+		this.nodeData = newNodeData;
+	}//end bracket of setNodeData method.
+	
+	/**
+	 * Accessor Method for the next node.
+	 * @return the reference to the next node.
+	 */
+	public SLLNode<T> getNextNode(){
+		return this.nextNode;
+	}//ending bracket of getNextNode method
+	
+	/**
+	 * Mutator method for next node 
+	 * @param newNextNode the reference to the next node to be stored
+	 */
+	public void setNextNode(SLLNode<T> newNextNode) {
+		this.nextNode = newNextNode;
+	}//end bracket of method setNextNode
+	
+	
+}//end bracket of SLLNode class

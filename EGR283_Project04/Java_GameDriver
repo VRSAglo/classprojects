@@ -1,0 +1,60 @@
+package edu.mtc.egr283.Project04;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.File;
+
+public class GameDriver {
+
+	public static void main(String[] args) {
+			GameCatalogue<Game> games = new GameCatalogue<Game>();
+			
+			Game uncleJack = new Game("Uncle_Jack", 4, 4, 3, 3, 4, 4);
+			games.addGame(uncleJack);
+			PrintWriter outFile = null;
+			String outFileName = "GameCatalogueTest.txt";
+			try {
+			outFile = new PrintWriter(new File(outFileName));
+			}catch(FileNotFoundException fnfe) {
+				System.out.println("Error");
+				System.exit(0);
+			}
+			//System.out.println(games.toString());
+			String inFileName = "gamesinfile.txt";
+			Scanner inFile = null;
+			try {
+				inFile = new Scanner(new File(inFileName));
+			}catch(FileNotFoundException fnfe) {
+				System.out.println("error");
+				System.exit(0);
+			}
+		
+			games.readFile(inFile);
+			
+			Game adam = new Game("Adam", 5, 5, 4, 4, 3, 3);
+			Game zena = new Game("Zena", 3, 3, 3, 3, 3, 3);
+			
+			games.addGame(adam);
+			games.addGame(zena);
+			System.out.println(games.toString());
+		
+		System.out.println("Find uncle jack: " +games.getGame(games.findGame("Uncle_Jack")));
+			System.out.println(games.findGame("Uncle_Jack").toString());
+			System.out.println("Size before remove: " +games.getSize());
+			games.removeGame("Uncle_Jack");
+			//System.out.println(games.findGame("Uncle_Jack").toString());
+			System.out.println("Size afte rremove: " + games.getSize());
+			System.out.println(games.findGame("Zena"));
+		System.out.println(games.findGame("Adam"));
+		System.out.println(games.findGame("Risk"));
+		System.out.println(games.findGame("Uncle_Wiggly"));
+		System.out.println(games.toString());
+			outFile.print(games.toString());
+			outFile.close();
+		games.removeGame("Risk");
+	System.out.println(games.toString());
+	games.removeGame("Uncle_Wiggly");
+	System.out.println(games.toString());
+	}
+	
+}

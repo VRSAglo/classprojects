@@ -1,0 +1,130 @@
+package TrafficLight;
+//Adam Glover
+//Project 06 Traffic Sim
+//Professor Sims
+//Completed: 3-25-23
+//Due: 3-30-23
+//This program runs a simulation of a traffic intersection to determine congestion
+
+/** Light
+ *  Represents a traffic signal
+ */
+public class Light {
+	
+    private int period;
+    private int green;
+    private int time;
+
+    /**
+     *  Constructs a  Light-object for p period and g green
+     */
+    public Light(int p, int g)
+    {
+    	this.setGreen(g);
+    	this.setPeriod(p);
+    	this.setTime(0);
+    }
+
+    /**
+     * Mutator method that sets the integer value of 
+     * a green light. (The number of time steps that a light
+     * is green)
+     * @param newGreen The new green length
+     */
+    private void setGreen(int newGreen) {
+    	this.green = newGreen;
+    }//end bracket of setGreen method
+    
+    /**
+     * Mutator method that sets the integer value of
+     * the time of a light.
+     * @param newTime The new time step of a light
+     */
+    private void setTime(int newTime) {
+    	this.time = newTime ;
+    }//end bracket of setTime method
+    
+    /**
+     * Mutator method that sets the integer value of
+     * the period of a light. (A period is the time for
+     * the start of one green light, to the beginning of the next)
+     * @param newPeriod The new value for the period of a light.
+     */
+    private void setPeriod(int newPeriod) {
+    	this.period = newPeriod;
+    }//end bracket of setPeriod
+    
+    /**
+     * Accessor method to retrieve the value of the length
+     * of a green light
+     * @return An integer that represents the length of time steps 
+     * that a light is green.
+     */
+    public int getGreen() {
+    	return this.green;
+    }//end bracket of getGreen method
+    
+    /**
+     * Accessor method to retrieve the value of the time steps
+     * of a light.
+     * @return An integer that represents the number of time steps of a light.
+     */
+    public int getTime() {
+    	return this.time;
+    }//end bracket of getTime method
+    
+    /**
+     * Accessor method to retrieve the number of time steps from 
+     * one green light to the next
+     * @return An integer that represents the period of a green light cycle.
+     */
+    public int getPeriod() {
+    	return this.period;
+    }//end bracket of getPeriod method
+    
+ 
+    /**
+     * Steps the clock of the signal
+     */
+    public void step(int seconds)
+    {
+    		
+    			this.setTime(seconds);
+    	//System.out.println("Light Time: " + seconds);
+ 
+	
+		//	System.out.println(green);
+		//	System.out.println(this.isGreen());	
+		
+    	
+    }//end bracket of step method
+
+    /**
+     * @return true if the signal is green otherwise false
+     */
+    public boolean isGreen()
+    {
+    	boolean rv = false;
+    	if((this.getTime() % this.getPeriod()) >= (this.getPeriod() - this.getGreen())) {
+    		rv = true;
+    	}//end bracket of if
+        return rv;
+    }//end bracket of isGreen method
+
+
+    
+    
+    /**
+     * @return A String-representation of the signal that shows its color
+     */
+    public String  toString()
+    {
+    	StringBuffer s = new StringBuffer();
+    	if(this.isGreen()) {
+    		s.append("G");
+    	}else
+    		s.append("R");
+        return s.toString();
+    }//end bracket of toString method
+    
+}//end bracket of light class

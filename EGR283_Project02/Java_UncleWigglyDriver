@@ -1,0 +1,36 @@
+package Project02;
+import java.util.Scanner;
+//Adam Glover
+//EGR 283 Project 02
+//Professor Sims
+//Completed: 1/31/2023
+//Due: 2/2/2023
+//This program plays a game called "Uncle Wiggily".
+/**
+ * This is the Main Driver class for the Uncle Wiggily Game.
+ * @author Adam Glover
+ *@version 1.0 Copyright (C) 1-31-2023 All Rights Reserved.
+ */
+public class UncleWiggilyDriver {
+
+	private static Scanner keys;
+	
+	
+	/**
+	 * Main Driver Method to Run Uncle Wiggily Game Class
+	 * , opens and closes Scanner object.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		keys = new Scanner(System.in);
+		
+		UncleWiggily.setupGame(keys);
+		
+		UncleWiggily.playGame(keys);
+		
+		keys.close();
+	}//end bracket of main method
+	
+
+	
+}//end bracket of UncleWiggilyDriver class

@@ -1,0 +1,142 @@
+package Project07;
+//Adam Glover
+//Project 07
+//Professor Sims
+//Completed: 4-9-2023
+//Due: 4-13-2023
+//This program constructs and performs operations on a binary search tree
+/**
+ * BSTNode for the Binary Search Tree that allows for data entry
+ * of any type.
+ * @author Adam Glover
+ *
+ * @param <T>The generic data to be stored in the Tree
+ */
+public class BSTNode<T extends Comparable<T>>{
+
+	//Fields
+	private BSTNode<T> left;
+	private BSTNode<T> right;
+	private T data;
+	
+	
+	//Constructor
+	/**
+	 * Default constructor calling it's subsequent constructor.
+	 */
+	public BSTNode() {
+		this(null);
+	}//end bracket of default constructor.
+	
+	/**
+	 * Single Parameter Constructor that calls it's subsequent constructor.
+	 * @param newData The data of any type to be stored in the Node.
+	 */
+	public BSTNode(T newData) {
+		this(newData, null, null);
+	}//end bracket of BSTNode data only constructor.
+	
+	/**
+	 * Primary multi-parameter constructor.
+	 * @param newData The data of any type to be stored in the node.
+	 * @param newLeft The reference to the nodes left child node.
+	 * @param newRight The reference to the nodes right child node.
+	 */
+	public BSTNode(T newData, BSTNode<T> newLeft, BSTNode<T> newRight){
+		this.setData(newData);
+		this.setLeft(newLeft);
+		this.setRight(newRight);
+	}//end bracket of constructor
+	
+	/**
+	 * Accessor method to obtain the reference for the nodes left child.
+	 * @return The left child of the calling node.
+	 */
+	public BSTNode<T> getLeft(){
+		return this.left;
+	}//end bracket of getLeft method
+	
+	/**
+	 * Accessor method to obtain the reference for the nodes right child.
+	 * @return The right child of the calling node.
+	 */
+	public BSTNode<T> getRight(){
+		return this.right;
+	}//end bracket of getRight method
+	
+	/**
+	 * Accessor method to obtain the data stored within the node.
+	 * @return The data of any type that is stored in the node.
+	 */
+	public T getData() {
+		return this.data;
+	}//end bracket of getData method
+	
+	/**
+	 * Mutator method to assign a nodes reference to it's left child.
+	 * @param newLeft The node that will become the calling nodes left child.
+	 */
+	public void setLeft(BSTNode<T> newLeft) {
+		this.left = newLeft;
+	}//end bracket of setLeft method
+	
+	/**
+	 * Mutator method to assign a nodes reference to it's right child.
+	 * @param newRight The node that will become the calling nodes right child.
+	 */
+	public void setRight(BSTNode<T> newRight) {
+		this.right = newRight;
+	}//end bracket of setRight method
+	
+	/**
+	 * Mutator method to assign the data of any type to be stored within the node.
+	 * @param newData The data of any type to be stored within the node.
+	 */
+	public void setData(T newData) {
+		this.data = newData;
+	}//end bracket of setData method
+
+	/**
+	 * Method to compare a calling node to another node to determine it's
+	 * orientation. Returning a negative value if it is greater, and a positive
+	 * value if it is lesser.
+	 * @param otherNode Another node to compare to
+	 * @return An integer value representing a node as greater/lesser.
+	 */
+	public int compareTo(BSTNode<T> otherNode) {
+		return this.getData().compareTo(otherNode.getData());
+	}//end bracket of compareTo method
+	
+	/**
+	 * Standard equals override.  Compared the node to any object.
+	 * Suppression warning used as data cannot be verified.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		boolean rv = false;
+	
+		if(obj instanceof BSTNode) {
+			@SuppressWarnings("unchecked")
+			BSTNode<T> node = (BSTNode<T>)obj;
+			
+			if(this.getData() ==  node.getData()) {
+				rv= true;
+			}//end bracket of inner if
+		}//end bracket of outer if
+		return rv;
+	}//end bracket of equals method
+	
+	/**
+	 * Standard toString overRide
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		if(this.getData() == null) {
+			sb.append("No data Available");
+		}else {
+		sb.append(this.getData().toString());
+		}//end bracket of if/else
+		return sb.toString();
+	}//end bracket of toString method
+}//end bracket of BSTNode class
