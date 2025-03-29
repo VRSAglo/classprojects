@@ -1,0 +1,41 @@
+package edu.mtc.egr281.Chaptor05;
+
+public class DiepPlayer {
+
+	//Fields
+	private String name;
+	private int score;
+	
+	//Constructors
+	public DiepPlayer(String newName) {
+		this.setName(newName);
+		this.setScore(0);
+	}//Ending bracket of Constructor Method
+	
+	//Methods
+	public String getName() {
+		return this.name;
+	}//Ending bracket for getName method
+	
+	private void setName(String newName) {
+		this.name = newName;
+	}//ending bracket of setName method
+	
+	public int getScore() {
+		return this.score;
+	}//Ending bracket of getScore method
+	
+	public void setScore(int newScore) {
+		this.score = newScore;
+	}//Ending bracket of setScore
+	
+	public void updateScore(int updateValue) {
+		this.setScore(updateValue + this.getScore());
+	}//Ending bracket of method updateScore
+	
+	public void incrementScore() {
+		this.setScore(this.getScore() + 1);
+	}//Ending bracket of method incrementScore
+	
+	
+}//Ending bracket of DiepPlayer class

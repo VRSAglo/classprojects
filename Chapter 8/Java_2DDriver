@@ -1,0 +1,21 @@
+package edu.mtc.egr281.Chapter08;
+
+public class Shape2DDriver {
+
+	public static void main(String[] args) {
+		
+		Shape2D s = new Shape2D();
+		System.out.println(s.getName());
+		
+		Shape2D s2 = new Shape2D("Second Shape");
+		System.out.println(s2.getName());
+		
+		Shape2D s3 = new Shape2D("Second Shape");
+		
+		System.out.println(s2.toString());
+		System.out.println("s2 == s3? " + s2.equals(s3));
+		System.out.println("s == s2? " + s2.equals(s));
+		
+	}
+	
+}//Ending bracket of driver

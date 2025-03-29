@@ -1,0 +1,80 @@
+package edu.mtc.egr281.chapter06;
+//Adam Glover
+//Project11
+//Professor Sims
+//EGR-281-V02
+//Date 11-2-2022
+//Due: 11-9-2022
+//This class defines the characterics for the Snails in the Snail Pace Game
+
+public class Snail {
+
+//Fields
+	public boolean hasFinished;
+	
+	private String color;
+	private int currentSpace;
+	public static String[][] currentSpaceArray = { {"|    Red ", "|    Red ", "|    Red ", "|    Red ", "|    Red ", "|    Red ", "|    Red ", "|    Red ",  "|    Red " },
+												   {"|   Blue ", "|   Blue ", "|   Blue ", "|   Blue ", "|   Blue ", "|   Blue ", "|   Blue ", "|   Blue ",  "|   Blue " },
+												   {"| Yellow ", "| Yellow ", "| Yellow ", "| Yellow ", "| Yellow ", "| Yellow ", "| Yellow ", "| Yellow ",  "| Yellow " },
+												   {"|  Green ", "|  Green ", "|  Green ", "|  Green ", "|  Green ", "|  Green ", "|  Green ", "|  Green ",  "|  Green " },
+												   {"| Orange ", "| Orange ", "| Orange ", "| Orange ", "| Orange ", "| Orange ", "| Orange ", "| Orange ",  "| Orange " },
+												   {"|   Pink ", "|   Pink ", "|   Pink ", "|   Pink ", "|   Pink ", "|   Pink ", "|   Pink ", "|   Pink ",  "|   Pink " }, };
+	
+//Constants
+	public static final String[] COLORS = {"   Red ", "  Blue ", " Yellow ", " Green ", "  Orange ", "  Pink "};
+	public static final int FINISHLINE = 8;
+//Constructor
+	public Snail (int color) {
+		this.setColor(Snail.COLORS[color]);
+		this.setCurrentSpace(0);
+	}//Ending bracket of Snail Constructor
+//Methods
+	
+	//Method for getting current space
+	public int getCurrentSpace() {
+		return this.currentSpace;
+	}//Ending bracket of getCurrentSpace method
+	
+	//method for initially setting the space
+	private void setCurrentSpace(int newSpace) {
+		this.currentSpace = newSpace;
+	}//Ending bracket of setCurrentSpace method
+	
+	//Method for getting the color of the object
+	public String getColor() {
+		return this.color;
+	}//Ending bracket of getColor method
+	
+	//method for settings the color of the object
+	private void setColor(String newColor) {
+		this.color = newColor;
+	}//Ending bracket of setColor method
+	
+	//Method for incrementing the space
+	public void incrementCurrentSpace() {
+		++this.currentSpace;
+	}//Ending bracket of incrementCurrentSpace
+	
+	//Method for updating the space
+	public void  UpdateRace(String roll1, String roll2) {
+		
+		boolean doubles = false;
+		
+		if(roll1.equalsIgnoreCase(roll2)) {
+			doubles = true;
+		}else {
+			doubles = false;
+		}//Ending bracket of if doubles statement
+		if(doubles == true && this.getColor().trim().contains(roll2)) {
+			if(this.getCurrentSpace() == 7) {
+				this.incrementCurrentSpace();
+			}else {
+			this.incrementCurrentSpace();
+			this.incrementCurrentSpace();
+			}
+		}else if( this.getColor().trim().contains(roll1) || this.getColor().trim().contains(roll2)) {
+			this.incrementCurrentSpace();
+		}//Ending bracket of else statement	
+	}//Ending bracket for updateRace method
+}//Ending bracket of Snail Class

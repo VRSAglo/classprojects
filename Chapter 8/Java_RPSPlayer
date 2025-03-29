@@ -1,0 +1,53 @@
+package edu.mtc.egr281.Chapter08;
+//Adam Glover
+//Project 13
+//Professor Sims
+//Date Completed: 11-16-2022
+//Date Due: 11-23-2022
+//Player parent class for Rock Paper Scissors
+
+public abstract class RPSPlayer {
+//Fields
+	
+	private String name;
+	private RPSOptions choice;
+	private int score;
+//Constructor
+	
+	public RPSPlayer(String newName) {
+		this.setName(newName);
+		this.setChoice(null);
+		this.setScore(0);
+	}//ending bracket of RPSPlayer constructor
+	
+//Methods
+	public String getName() {
+		return this.name;
+	}//Ending bracket of getName method
+	
+	private void setName(String newName) {
+		this.name = newName;
+	}//Ending bracket of setName method
+	
+	public RPSOptions getChoice() {
+		return this.choice;
+	}//Ending bracket of getChoice method
+	
+	protected void setChoice(RPSOptions newChoice) {
+		this.choice = newChoice;
+	}//Ending bracket of setChoice method
+	
+	public int getScore() {
+		return this.score;
+	}//End bracket of getScore method
+	
+	private void setScore(int newScore) {
+		this.score = newScore;
+	}//Ending bracket of setScore method
+	
+	public void updateScore() {
+		this.setScore(++score);
+	}//End bracket of update score
+	
+	public abstract void makeChoice();
+}

@@ -1,0 +1,65 @@
+package edu.mtc.egr281.chapter02;
+// Name
+// Project
+// Professor
+// Class Identifier
+// Due Date
+// Current Date
+// Description of Program
+
+import java.util.Scanner;
+
+public class Average3Numbers {
+// Constants declared outside of the main method
+// but inside of the class
+	
+	//constant for the number 3
+	public static final int THREE = 3;
+	
+	
+	public static void main(String [] args) {
+		
+	 //Ending brackets for main method
+	//Declaration for Scanner
+	Scanner inputStream;
+	
+	//Instantiation
+	inputStream = new Scanner(System.in);
+
+	//Prepare (store)
+	int firstNumber, secondNumber, thirdNumber;
+	int sumOfNumbers, average;
+	
+	//Input
+	//Get first number
+	System.out.print("Enter first number:");
+	firstNumber = inputStream.nextInt();
+	//Get Second number
+	System.out.print("Enter the Second number:");
+	secondNumber = inputStream.nextInt();
+	//Get third number
+	System.out.print("Enter the third number:");
+	thirdNumber = inputStream.nextInt();
+	
+	
+	//Process
+	
+	//Add all three numbers together
+	sumOfNumbers = firstNumber + secondNumber + thirdNumber;
+	
+	//Divide the sum of numbers by the constant
+	average = sumOfNumbers / THREE;
+	
+	//output the average
+	System.out.println("The Average is " + average);
+	
+	
+	
+	
+	//Close input stream
+	inputStream.close();
+	
+	} // Ending Brackets for Main method
+	
+	
+} //Ending bracket of Average3Numbers Class

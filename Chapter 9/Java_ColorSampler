@@ -1,0 +1,138 @@
+package edu.mtc.egr281.chapter09;
+//Adam Glover
+//Professor Sims EGR281
+//Project 15
+//Completed : 11/30/22
+//Due: 12/7/22
+//This program uses a GUI to output the color inputed by the user as a background color and issues an exception 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class ColorSampler extends JFrame implements ActionListener{
+//Constants
+	public static final Color[] COLORS = {Color.black, Color.BLACK,Color.blue,Color.BLUE,Color.cyan,Color.CYAN,Color.DARK_GRAY,
+			Color.darkGray,Color.gray,Color.GRAY,Color.green,Color.GREEN,Color.LIGHT_GRAY,Color.lightGray,Color.magenta,Color.MAGENTA,
+			Color.orange,Color.ORANGE,Color.pink,Color.PINK,Color.red,Color.RED,Color.white,Color.WHITE,Color.yellow,Color.YELLOW};
+	
+	private static final long serialVersionUID = 1L;
+//Fields
+	private Container contentPane;
+	private JTextField inputText;
+	private JLabel inputLabel;
+	private JButton enterButton;
+	private JLabel errorText;
+	
+	public ColorSampler() {
+		super();
+		this.setTitle("Color Sampler");
+		this.setSize(450,300);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.contentPane = this.getContentPane();
+		this.contentPane.setLayout(new FlowLayout());
+		this.contentPane.setBackground(Color.WHITE);
+		
+		this.enterButton = new JButton("Show Me the Color");
+		this.enterButton.addActionListener(this);
+		this.contentPane.add(this.enterButton);
+		
+		this.inputLabel = new JLabel("Enter a color to sample our color selection.");
+		this.add(this.inputLabel);
+		
+		this.inputText = new JTextField(25);
+		this.add(inputText);
+		this.inputText.setEditable(true);
+		
+		this.errorText = new JLabel("Unknown Color!");
+		this.add(errorText);
+		this.errorText.setVisible(false);
+		
+		
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		String actionCommand = e.getActionCommand();
+		if("Show Me the Color".equals(actionCommand)) {
+		
+			try {
+				this.errorText.setVisible(false);
+				Color newColor = getColor(inputText.getText());
+				
+				this.contentPane.setBackground(newColor);
+			}catch(UnknownColorException ecu) {
+					this.contentPane.setBackground(Color.WHITE);
+					this.inputText.setText(ecu.getMessage());
+					this.errorText.setVisible(true);
+				}
+		}
+		
+	}//End bracket of actionPerformed
+	
+	public static Color getColor(String newColor) throws UnknownColorException{
+		boolean IsUnknown = true;
+		Color rv = null;
+		switch(newColor.toUpperCase()) {
+			case "BLACK":
+				rv = Color.black;
+				break;
+			case "BLUE":
+				rv = Color.blue;
+				break;
+			case "CYAN":
+				rv = Color.cyan;
+				break;
+			case "DARK GRAY":
+				rv = Color.DARK_GRAY;
+				break;
+			case "GRAY":
+				rv = Color.GRAY;
+				break;
+			case "GREEN":
+				rv = Color.green;
+				break;
+			case "LIGHT GRAY":
+				rv = Color.LIGHT_GRAY;
+				break;
+			case "MAGENTA":
+				rv = Color.MAGENTA;
+				break;
+			case "ORANGE":
+				rv = Color.orange;
+				break;
+			case "PINK":
+				rv = Color.pink;
+				break;
+			case "WHITE":
+				rv = Color.white;
+				break;
+			case "RED":
+				rv = Color.red;
+				break;
+			case "YELLOW":
+				rv = Color.yellow;
+				break;
+		}//end switch statement bracket
+		
+		for(int i = 0; i < COLORS.length; ++i) {
+			if(COLORS[i].equals(rv)) {
+				IsUnknown = false;	
+			}//end bracket of if
+		}//end bracket of for loop
+		if(IsUnknown == true) {
+			throw new UnknownColorException("The color you selected is unavailable");
+		}//end bracket of if
+		
+		return rv;
+	}//end bracket of getColor method
+
+}//End bracket of ColorSampler Class

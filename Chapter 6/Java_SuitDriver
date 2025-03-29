@@ -1,0 +1,10 @@
+package edu.mtc.egr281.chapter06;
+
+public class SuitDriver {
+	
+	public static void main(String[] args) {
+		for(Suit s : Suit.values()) {
+			System.out.println(s.ordinal() + ":" + s.getSymbol() + " " + s.getName() );
+		}//Ending bracket of for loop
+	}//ending bracket for main method
+}//ending bracket for SuitDriver class

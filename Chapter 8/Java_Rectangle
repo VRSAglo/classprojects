@@ -1,0 +1,69 @@
+package edu.mtc.egr281.Chapter08;
+
+public class Rectangle extends Shape2D implements Measurable {
+	
+	public static final String DEFAULT_NAME = "Rectangle";
+	
+	private double length;
+	private double width;
+	
+	public Rectangle() {
+		this(Measurable.DEFAULT_VALUE, Measurable.DEFAULT_VALUE);
+	}//ending bracket of no args constructor
+	
+	public Rectangle(double newLength, double newWidth) {
+		this(Rectangle.DEFAULT_NAME, newLength, newWidth);
+	}//ending bracket of constructor
+	
+	
+	public Rectangle(String newName, double newLength, double newWidth) {
+		super(newName);
+		this.setLength(newLength);
+		this.setWidth(newWidth);
+	}//Ending bracket of constructor
+	
+	
+	public double getLength() {
+		return this.length;
+	}//end bracket of getLength method
+	
+	public void setLength(double newLength) {
+		this.length = newLength;
+	}//End bracket of setLength method
+	
+	public double getWidth() {
+		return this.width;
+	}//ending bracket of getWidth method
+	
+	public void setWidth(double newWidth) {
+		this.width = newWidth;
+	}//End bracket of setWidth method
+	
+	@Override
+	public double getArea() {
+		return this.getLength() * this.getWidth();
+	}//ending bracket of getArea
+	
+	@Override
+	public double getPerimeter() {
+		return 2 * (this.getLength() + this.getWidth());
+	}//Ending bracket of getPerimeter
+	
+	@Override
+	public String toString() {
+		return super.toString() + ", Length: [" + this.getLength() + "], Width: [" + this.getWidth() + "]";
+	}//Ending bracket of toString override
+	
+	public boolean equals(Object obj) {
+		boolean rv = false;
+
+		if (obj != null && (obj instanceof Rectangle)) {
+			Rectangle  r = (Rectangle) obj;
+			if(this.getLength() == r.getLength() && this.getWidth() == r.getWidth()){
+				rv = true;
+			}//End bracket of inner if
+		}//End bracket of outer if statement
+		return rv;
+	}//Ending bracket of equals method
+
+}//Ending bracket of rectangle class

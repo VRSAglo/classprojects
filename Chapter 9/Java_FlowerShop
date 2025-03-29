@@ -1,0 +1,67 @@
+package edu.mtc.egr281.chapter09;
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+
+public class FlowerShop {
+	
+	//Constants
+	public static final DecimalFormat dr = new DecimalFormat("$#,##.00");
+	public static final String[] flowers = {"petunia", "rose", "vuiket", "daisy"};
+	public static final double[] pricePerFlower = {1.5, 5.75, 2.25, 0.755};
+		
+	//Fields
+	
+	//Constructors
+	
+	//Methods
+	public static void main(String[] args) {
+		Scanner kb = new Scanner(System.in);
+		System.out.println("Welcome to the Flower Shop!");
+		System.out.println("We have petunia, rose, violet and daisy flower!");
+		String flower;
+		
+		try {
+			flower = getFlowerName(kb);
+		}catch(UnknownFlowerException ufe) {
+			flower = "rose";
+			System.out.println(ufe.getMessage());
+		}//End bracket of try-catch block
+
+		System.out.print("How many " + flower + "s did you want to buy? ");
+		int number = kb.nextInt();
+		double cost = 0.0;
+		
+		for(int i = 0; i < flowers.length; ++i) {
+			if(flowers[i].equalsIgnoreCase(flower)) {
+				cost = number + pricePerFlower[i];
+				break;
+			}//ending bracket of if 
+		}//Ending bracket of for loop
+		System.out.println("Your total cost is " + dr.format(cost));
+		
+		kb.close();
+	}//End bracket of method main
+	
+	
+	public static String getFlowerName(Scanner keyboard) throws UnknownFlowerException {
+		System.out.print("Which flower would you like to buy?" );
+		String name = keyboard.next();
+		
+		boolean isBadName = true;
+		for(int i = 0; i < flowers.length; ++i) {
+			if(flowers[i].equalsIgnoreCase(name)) {
+				isBadName = false;
+				break;
+			}//Ending bracket of if statement
+		}//ending bracket of for loop
+		
+		if(isBadName) {
+			throw new UnknownFlowerException("Unknown flower mane, defaulting name to rose");
+		}//end bracket of if statement
+		
+		
+		
+		return name;
+	}//Ending bracket of method getFlowerName
+}//End bracket of class FlowerShop

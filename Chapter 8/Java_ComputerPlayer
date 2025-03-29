@@ -1,0 +1,19 @@
+package edu.mtc.egr281.Chapter08;
+import java.util.Random;
+
+public class ComputerPlayer extends Player {
+//Fields
+	private Random numGen;
+	
+//Constructor
+	public ComputerPlayer(String newName) {
+		super(newName);
+		this.numGen = new Random();
+	}//ending bracket of Constructor
+//Methods
+	@Override
+	public void makeChoice() {
+		this.setChoice(this.numGen.nextInt(2) + 1);
+	}//Ending bracket of makeChoice method
+	
+}//ending bracket of ComputerPlayer class

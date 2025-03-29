@@ -1,0 +1,87 @@
+package edu.mtc.egr281.Chapter08;
+
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+public class TMRCalculator {
+	//Constants
+	public static final double RATE = 0.585;
+	private static final String CITYARRAY[] = { "Boston", "Chicago", "Dallas", "Reno", 
+			"Los Angelas", "Miami", "New Orleans", "Toronto", "Vancouver", "DC" };
+	//Mileage Array (10x10 2 dimensional)
+	private static final int[][] MILEARRAY = {
+/*Boston 0*/{   0, 1004,  1753,  2752,  3017,  1520,  1507,  609,  3155,  448},
+/*Chicago1*/{1004,    0,   921,  1780,  2048,  1397,   919,  515,  2176,  709},
+/*Dallas 2*/{1753,  921,     0,  1230,  1399,  1343,   517, 1435,  2234, 1307},
+/*Reno   3*/{2752, 1780,  1230,     0,   272,  2570,  1732, 2251,  1322, 2420},
+/*LA     4*/{3017, 2048,  1399,   272,     0,  2716,  1858, 2523,  1278, 2646},
+/*Miami  5*/{1520, 1397,  1343,  2570,  2716,     0,   860, 1494,  3447, 1057},
+/*NewOr  6*/{1507,  919,   517,  1732,  1858,   860,     0, 1307,  2734, 1099},
+/*Toront 7*/{ 609,  515,  1435,  2251,  2523,  1494,  1307,    0,  2820,  571},
+/*Vanco  8*/{3155, 2176,  2234,  1322,  1278,  3447,  2734, 2820,     0, 2887},
+/*DC     9*/{ 448,  709,  1307,  2420,  2646,  1057,  1099,  571,  2887,    0}};
+	//      |Bost, Chic,Dallas,  Reno,   LA ,  Miam, NewOr, Toro, Vanco,  DC |
+
+	
+	//Fields
+	public static DecimalFormat df; 
+	public static Scanner kb;
+	private static int totalDistance;
+	private static double reimbursement;
+	
+	//Methods
+	public static void main(String[] args) {
+		//Instantiation/ Initializations
+		df = new DecimalFormat("$#,##0.00");
+		kb = new Scanner(System.in);
+		totalDistance = 0;
+		reimbursement = 0.0;
+		
+		printCityList();
+		System.out.print("What City are you starting in?");
+		int startingCity = kb.nextInt();
+		System.out.println();
+		System.out.print("How many stops will you be taking on this trip?");
+		int numberOfStops = kb.nextInt();
+		System.out.println();
+		
+		int currentCity = startingCity;
+		int nextCity;
+		for(int i = 0; i < numberOfStops; ++i) {
+			printCityList();
+			System.out.print("You are now in " + CITYARRAY[currentCity]);
+			System.out.print(" , please enter the number of your next city (Stop #" + (i+1) + "): ");
+			nextCity = kb.nextInt();
+			
+			System.out.println("The distance from "+ CITYARRAY[currentCity] + " to \n"
+								+ CITYARRAY[nextCity] + " is " + MILEARRAY[currentCity][nextCity]);
+			totalDistance += MILEARRAY[currentCity][nextCity];
+			
+			currentCity = nextCity;
+		}//ending bracket of for loop
+		System.out.println("You have completed all your stops. Now the mileage back home is :");
+		System.out.println("The distance from " + CITYARRAY[currentCity] + " to \n"
+								+ CITYARRAY[startingCity] + " is " + MILEARRAY[startingCity][currentCity]);
+		
+			totalDistance += MILEARRAY[startingCity][currentCity];
+				
+			System.out.println("Your final total mileage is " + totalDistance + ".");
+			System.out.println("You will be reimbursed a total of " + df.format(totalDistance * RATE) + ".");
+		//Close Scanner
+		kb.close();
+	}//ending bracket of main method
+	
+	private static void printCityList() {
+		System.out.println("Please use the corresponding number of the city: " );
+	for(int i = 0; i < TMRCalculator.CITYARRAY.length; ++i) {
+		System.out.print(i + " for " + CITYARRAY[i] + "\t");
+		if(CITYARRAY[i].length() < 10) {
+			System.out.print("\t");
+		}//Ending bracket of if statement
+		if( i % 5 == 4) {
+			System.out.println();
+		}//ending bracket of if statement
+	}//ending bracket of for loop
+	System.out.println();
+	}//Ending bracket of printCityList method
+}//Ending bracket of TMRCalculator

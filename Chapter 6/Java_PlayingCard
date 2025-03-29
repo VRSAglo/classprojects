@@ -1,0 +1,52 @@
+package edu.mtc.egr281.chapter06;
+
+public class PlayingCard {
+	//Constants
+	
+	//Fields
+	private Suit suit;
+	private Rank rank;
+	
+	
+	//Constructor
+	public PlayingCard(Suit s, Rank r) {
+		this.setSuit(s);
+		this.setRank(r);
+		
+	}//ending bracket of constructor
+	
+	//Methods
+	public Suit getSuit() {
+		return this.suit;
+	}//Ending bracket of getSuit method.
+	
+	private void setSuit(Suit newSuit) {
+		this.suit = newSuit;
+	}//Ending bracket of setSuit method.
+	
+	public Rank getRank() {
+		return this.rank;
+	}//ending bracket of getRank method.
+	
+	private void setRank(Rank newRank) {
+		this.rank = newRank;
+	}//Ending bracket of setRank method.
+	
+	public String toString() {
+		return this.rank.getName() + " of " + this.suit.getName();
+	}//Ending bracket of toString method
+	
+	public String toStringSymbol() {
+		return this.rank.getSymbol() + "" + this.suit.getSymbol();
+	}//Ending bracket of toStringSymbol method
+	
+	public boolean equals(PlayingCard pc) {
+		boolean rv = false;
+		
+		if((this.getRank() == pc.getRank()) && (this.getSuit() == pc.getSuit())) {
+			rv = true;
+		}//ending bracket of if statement
+		
+		return rv;
+	}//Ending bracket of equals method
+}//Ending bracket of Playcard class

@@ -1,0 +1,15 @@
+package edu.mtc.egr281.chapter09;
+
+public class UnknownFlowerException extends Exception {
+
+	private static final long serialVersionUID = 1L;
+	
+	public UnknownFlowerException(String newMessage) {
+		super(newMessage);
+	}//end bracket of constructor
+	
+	public UnknownFlowerException() {
+		this("This is an unknown flower");
+	}//end bracket of default constructor
+	
+}//end bracket of class

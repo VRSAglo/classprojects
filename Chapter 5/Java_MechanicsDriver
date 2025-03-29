@@ -1,0 +1,68 @@
+package edu.mtc.egr281.Chaptor05;
+//Adam Glover
+//Professor Sims
+//Project10
+//Due Date: 11/2/2022
+//Current Date: 11/1/2022
+//This class contains the main method and game loop for the mechanics game.
+import java.util.Scanner;
+
+public class MechanicsDriver {
+	//Fields
+	private static Scanner keys;
+	private static MechanicsPlayer[] players;
+	private static MechanicsDie dice;
+	//Main method
+	public static void main(String[] args) {
+		//setup the game
+		keys = new Scanner(System.in);
+		setupTheGame();
+		
+		//play the game
+		playTheGame();
+		
+		//Close resource
+		keys.close();
+	
+	}//Ending main method
+	//Setup the game
+	private static void setupTheGame() {
+		dice = new MechanicsDie();
+		
+		System.out.println("Enter the number of players");
+		players = new MechanicsPlayer[keys.nextInt()];
+		for(int i = 0; i < players.length; ++i) {
+			System.out.print("Enter the name of player " + (i + 1) + " : ");
+			players[i] = new MechanicsPlayer(keys.next());
+		}//Ending bracket of for loop for players
+		
+	}//Ending bracket of setupTheGame method
+	//Play the game
+	private static void playTheGame() {
+		int index = -1;
+		MechanicsPlayer player;
+		//Loop until theres a winner (game loop)
+		do {
+			++index;
+			player = players[index % players.length];
+			String output;
+			dice.roll();
+			System.out.println("Player " + player.getName() + " rolls a " + dice.getValue());
+			output = player.updateScore(dice.getValue());
+			System.out.println(output);
+			
+			if(!output.contains(" dropped the wrench! Try again!")) {
+				--index;
+			}//ending bracket of If statement
+		
+			
+
+		}while(!player.hasAllPiece());
+		//Print out winner
+		System.out.println("Player " + player.getName() + " has acquired all the piece, \n"
+							+ player.getName() + " wins!");
+		
+	}//Ending bracket of playTheGame method
+	
+
+}//ending bracket of MechanicsDriver

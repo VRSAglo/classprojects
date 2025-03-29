@@ -1,0 +1,141 @@
+package edu.mtc.egr281.chapter06;
+//Adam Glover
+//Project11
+//Professor Sims
+//EGR-281-V02
+//Date 11-2-2022
+//Due: 11-9-2022
+//This program plays a game where you guess which snail will win the race
+
+import java.util.Scanner;
+
+
+public class SnailRace {
+//Fields
+	private static Snail[] snails;
+	private static ColoredDie die1;
+	private static ColoredDie die2;
+	private static Scanner keys;
+	private static String userFirstGuess;
+	private static String userLastGuess;
+
+	//Constants
+	public static final int FINISHLINE = 8;
+//Methods
+	//Main method
+	public static void main(String[] args) {
+		keys = new Scanner(System.in);
+		setUpGame();
+		playTheGame(keys);
+		
+		
+		keys.close();
+	}//Ending bracket of main method
+	
+	//Method for setting up the constructors
+	public static void setUpGame() {
+		keys = new Scanner(System.in);
+		die1 = new ColoredDie();
+		die2 = new ColoredDie();
+		snails = new Snail[Snail.COLORS.length];
+		for(int i = 0; i < Snail.COLORS.length; ++i) {
+			snails[i] = new Snail(i);
+			}//Ending bracket of for loop
+		
+	}//Ending bracket of setUpGame method
+	
+	//Method for playing the game.
+	public static void playTheGame(Scanner kb) {
+		System.out.println("Welcome to Snail Pace Race \n"
+						+ "Please enter which color snail you think will win: ");
+		userFirstGuess = kb.next();
+		
+		System.out.println("Please enter which color you think will be in last place: ");
+		userLastGuess = kb.next();
+		
+		System.out.println("Start of Snail Race");
+		System.out.println("___________________");
+	
+		for(int r = 0; r < Snail.currentSpaceArray.length; ++r) {
+			for(int c = 0; c < Snail.currentSpaceArray[r].length; ++c) {
+				if(c == 0) {
+					System.out.print(Snail.currentSpaceArray[r][c]);
+				}else {
+					System.out.print("|        ");
+				}//Ending bracket of if statement
+			}//Ending bracket of inner for loop
+			System.out.println();
+		}//Ending bracket of outer for loop
+		int index = 0;
+		boolean hasFinished = false;
+		String winningSnailColor = "";
+		String losingSnailColor = "";
+		int losingSnailSpace = 8;
+		int winningSnailSpace = 0;
+		do {
+			++index;
+			die1.roll();
+			die2.roll();
+			System.out.println("Roll #" + index + ": ");
+			System.out.println("A " + die1.getColor() + " and " + die2.getColor() + " was rolled");
+			System.out.println("______________________");
+			for(int i = 0; i < snails.length; ++i) {
+				snails[i].UpdateRace(die1.getColor(), die2.getColor());
+				
+				for(int c = 0; c < Snail.currentSpaceArray[i].length; ++c) {	
+					if(snails[i].getCurrentSpace() == c) {
+					System.out.print(Snail.currentSpaceArray[i][c]);
+						if(snails[i].getCurrentSpace() >= FINISHLINE) {
+							hasFinished = true;
+							winningSnailColor = snails[i].getColor();
+							winningSnailSpace = snails[i].getCurrentSpace();
+							break;
+						}//Ending bracket of if statement
+					}else {
+					System.out.print("|        ");
+					}//Ending bracket of else statement
+				}//Ending bracket of inner for loop
+				System.out.println();
+			}//Ending bracket of outer for loop
+		
+			
+		}while (!hasFinished) ;
+		
+		for(int i = 0; i < snails.length; ++i) {
+			if(snails[i].getCurrentSpace() < losingSnailSpace) {
+				losingSnailSpace = snails[i].getCurrentSpace();
+				losingSnailColor = snails[i].getColor();
+			}//ending bracket of if statement
+		}//Ending bracket of for statement
+		
+		//System.out.println(winningSnailColor);
+		//System.out.println(losingSnailColor);
+		for(int i = 0; i < snails.length; ++i) {
+			if(snails[i].getCurrentSpace() == losingSnailSpace) {
+				System.out.println("Last Place: " + snails[i].getColor());
+			}//End if statement
+		}//Ending for statement
+		for(int i = 0; i < snails.length; ++i) {
+			if(snails[i].getCurrentSpace() == winningSnailSpace) {
+				System.out.println("First Place: " + snails[i].getColor());
+			}//Ending bracket of if statement
+		}//Ending bracket of for statement
+
+		if(winningSnailColor.toLowerCase().contains(userFirstGuess.toLowerCase())) {
+			System.out.println("You chose a winner! Congratulations!");
+		}else {
+			System.out.println("Your snail didn't win, try again next time!");
+		}//Ending bracket of else statement
+
+		if(losingSnailColor.toLowerCase().contains(userLastGuess.toLowerCase())) {
+			if(winningSnailColor.toLowerCase().trim().contains(userFirstGuess.toLowerCase())){
+				System.out.println("You got them both right! Double Congratulations!");
+			}else {
+			System.out.println("You got the last place snail correct! 50-50, not to bad!");
+			}//ending bracket of else statement
+		}else {
+			System.out.println("You didn't guess the last place snail, bummer!");
+		}//Ending bracket of if statement
+		
+	}//Ending bracket of playTheGame method
+}//Ending bracket of SnailRace class

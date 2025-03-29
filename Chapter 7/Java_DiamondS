@@ -1,0 +1,41 @@
+package edu.mtc.egr281.chapter07;
+
+import java.util.Scanner;
+
+public class DiamondS {
+
+	public static void main(String[] args) {
+		
+		//Combined decleration and instantiation of keyboard
+		Scanner myKeyboard = new Scanner(System.in);
+		
+		// Prompt User for the variable N
+		System.out.print("Please enter the value for n: ");
+	
+				
+		//Note#1: n should be n - 1
+		int n = myKeyboard.nextInt() - 1;
+		//Note#2: our outer loop should be =n to +n
+			for(int row = -n; row <= +n; ++row) {
+			//Note#3: our leading spaces are equal to the 
+			// absolute value of the OUTER LOOP
+				for(int spaces = 0; spaces < Math.abs(row); ++spaces) {
+					System.out.print(" ");	
+				} //Ending bracket of Inner Spaces
+				
+			//Note#4: Asterisk-S blocks are 
+			//equal to n - the absolute value of the 
+			//OUTER LOOP index
+				for(int blocks = 0; blocks < (n-Math.abs(row)); ++blocks) {
+					System.out.print("*S");
+				}//Ending bracket of INNER blocks LOOP
+				System.out.println("*");
+			//Note#5: Ending asterisks combined with the new line
+		}//Ending bracket of outer loop
+		
+		//Close keyboard resource
+		myKeyboard.close();
+		
+	}//ending bracket of main method
+}//ending bracket of DiamondS class
+

@@ -1,0 +1,45 @@
+package edu.mtc.egr281.chapter06;
+import java.util.Scanner;
+
+public class ChutesAndLadders {
+
+	//Contents of the game
+	private static Scanner keyboard;
+	private static Spinner spinner;
+	private static Player[] players;
+	
+	public static void main(String[] args) {
+		
+		//Instantiate the game object
+		keyboard = new Scanner(System.in);
+		spinner = new Spinner();
+		
+		//Prompt the user for number of players
+		System.out.print("Enter number of players: ");
+		players = new Player[keyboard.nextInt()];
+		for(int i = 0; i < players.length; ++i) {
+			System.out.print("Enter the name of " + (i+1) + ": ");
+			players[i] = new Player(keyboard.next());
+		}//Ending bracket of for loop
+		
+		//Play the Game
+		int index = -1;
+		Player player;
+		do {
+			//Move to the next players turn
+			++index;
+			player = players[index % players.length];
+			//A single players turn
+			spinner.spin();
+			System.out.println(player.getName() + " spins a " + spinner.getValue());
+			System.out.println(player.updateCurrentSquareNumber(spinner.getValue()));
+			
+		}while(player.getCurrentSquareNumber() != 100);
+		
+		System.out.print(player.getName() + " is the WINNER");
+		
+		//Close the scanner object
+		keyboard.close();
+	}//ending bracket of main method
+	
+}//ending bracket of ChutesAndLadders Class

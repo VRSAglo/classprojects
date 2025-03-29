@@ -1,0 +1,90 @@
+package edu.mtc.egr281.chapter07;
+//Adam Glover
+//Project08
+//Professor Sims
+//EGR-281-V02
+//Date 10/12/2022
+//Due: 10/19/2022 
+//This program uses arrays to take in the names and scores of the players and outputs
+//them as a histogram (this one was fun)
+import java.util.Scanner;
+
+public class GloverProject08 {
+
+	public static void main(String[] args) {
+		//Declare and Instantiate Scanner for User Input
+		Scanner userInput = new Scanner(System.in);
+		//Welcome user and get User input for number of players on the team
+		int numberOfPlayers;
+			System.out.println("Welcome to the Score Tracker. \n" 
+						+ "How many player's are on your team?");
+			numberOfPlayers = userInput.nextInt() + 1;
+			
+		//Declare a variable for current name length for comparison
+		int currentArrayName = 0;
+	
+
+		//Declare and Instantiate Name String Array
+		String[] nameArray = new String[numberOfPlayers];
+		
+		//Declare and Instantiate Score Int Array
+		int[] scoreArray = new int[numberOfPlayers];			
+		//For loop to get User Input for Player Score
+		
+		//Set Arbitrary Value for 0 index
+		for(int i = 1; i < nameArray.length; ++i){
+			System.out.print("Please enter the name of player " + i + ": ");
+			nameArray[i] = userInput.next();
+			}//ending bracket of name entry loop
+		for(int i = 1; i < scoreArray.length; ++i) {
+			System.out.print("Please enter the score for " + nameArray[i] + ": ");
+			scoreArray[i] = userInput.nextInt();
+			}//Ending bracket of score entry loop
+	
+		//Generate loop to iterate through name lengths and set current 
+		//name variable to the longest name numerical value
+		for(int i = 1; i < nameArray.length; ++i) {
+			if(currentArrayName < nameArray[i].length()) {
+				currentArrayName = nameArray[i].length();
+			}//ending bracket for if statement
+		}//ending bracket for for name length loop
+		
+		//Loop to output histogram	
+		//Output title
+		System.out.println();
+		System.out.println("The Scoreboard: ");
+
+		System.out.println();
+		
+		//Variable for calculations of needed spaces
+		int numOfSpaces = 0;
+		//Loop to iterate down and print out names
+		for(int i = 1; i < nameArray.length; ++i) {
+			//Determine if it is the longest name
+				if(nameArray[i].length() < currentArrayName) {
+					//calculation to determine needed spaces
+					numOfSpaces = currentArrayName - nameArray[i].length();
+					//Loop in the number of needed spaces
+					for(int x = 0; x < numOfSpaces; ++x) {
+						System.out.print(" ");
+						}//Ending bracket for needed spaces loop
+					System.out.print(nameArray[i] + ": ");
+					//Loop in the asterisks for the score for each other name
+					for(int s = 0; s < scoreArray[i]; ++s) {
+						System.out.print("*");
+						}//Ending bracket of asterisk for loop
+					System.out.println();
+				//If not print out longest name
+				} else {
+					System.out.print(nameArray[i] + ": ");
+					//Loop in the asterisks for the score for longest name
+					for(int s = 0; s < scoreArray[i]; ++s) {
+						System.out.print("*");
+						}//Ending bracket of asterisk for loop
+					System.out.println();
+					}//Ending Bracket of If Statement
+				}//Ending Bracket of Inner For loop
+		//Close the scanner
+		userInput.close();
+	}//Ending bracket of main method
+}//Ending bracket of class

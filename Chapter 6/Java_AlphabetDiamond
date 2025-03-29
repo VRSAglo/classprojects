@@ -1,0 +1,75 @@
+package edu.mtc.egr281.chapter06;
+import java.util.Scanner;
+//Adam Glover
+//Alphabet Diamond Extra Credit
+//Professor Sims
+//Date Completed: 11-3-2022
+//Date Due: 11-9-2022
+
+public class AlphabetDiamond {
+
+	
+	public static void main(String[] args) {
+		//Declare and instantiate scanner
+		Scanner keysIn = new Scanner(System.in);
+		//Set Variable for input
+		char letter;
+		String userInput;
+		char j;
+		//Request User Input
+		System.out.println("Please enter a letter and I will draw you a picture!");
+		userInput = keysIn.next();
+		letter = userInput.charAt(0);
+		
+		//build the top of the Diamond
+		
+		for(char i = 'A'; i < letter; ++i) {
+			//Being printing spaces for top of diamond
+
+			for(char t = i; t < letter; ++t) {
+				System.out.print(" ");
+	
+			} //Ending Bracket of t = i for loop
+			//Print Upper Alphabet
+			for( j = 'A'; j <= i-1; ++j) {
+				System.out.print(j);
+			}//Ending bracket of for loop	
+			for( char x = j; x >= 'A'; --x) {
+				System.out.print(x);
+			}//Ending Bracket of Top for loop (inner)
+
+			
+		//Print the Trailing spaces
+		System.out.print(" ");
+		for( j = letter; j > i ; --j) {
+			System.out.print(" ");
+			}//Ending bracket of for loop
+			System.out.println();
+		}//ending bracket for Top for Loop (outer)		
+		
+		//Print the bottom of the Diamond
+		for(char i = letter; i >= 'A'; --i) {
+			//Print Bottom Alphabet
+			for(char t = i; t < letter; ++t) {
+				System.out.print(" ");
+			}//Ending bracket of for loop
+			for( j = 'A'; j <= i-1; ++j) {
+				System.out.print(j);
+			}//Ending bracket of for loop	
+			for( char x = j; x >= 'A'; --x) {
+				System.out.print(x);
+			}//Ending bracket for Bottom of Diamond for loop (Inner)
+
+		//Printer the trailing spaces
+		System.out.print(" ");
+		for( j = letter; j > i ; --j) {
+			System.out.print(" ");	
+			}
+		//Move to Next line
+			System.out.println();
+		}//ending bracket for bottom of diamond for loop (outer)
+		//Close Scanner
+		keysIn.close();
+	}//Ending bracket of main method
+		
+}//Ending bracket of Diamond class

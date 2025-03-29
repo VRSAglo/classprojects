@@ -1,0 +1,94 @@
+package edu.mtc.egr281.chapter09;
+//Adam Glover
+//Professor Sims EGR281
+//Final Exam Extra Credit
+//Completed: 11/29/22
+//Due: 12/7/22
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+
+	public class ExtraGui extends JFrame implements ActionListener{
+
+		private static final long serialVersionUID = 1L;
+		private Container contentPane;
+		private JTextField writeFileTextField;
+		private JTextField readFileTextField;
+		private JLabel writeFileTextLabel;
+		private JLabel readFileTextLabel;
+		private JButton processButton;
+		private JButton resetButton;
+		private JLabel fileStatus;
+		
+		public ExtraGui() {
+			super();
+			
+			this.setTitle("Adam's File Processor 5,000");
+			this.setSize(400,250);
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			this.contentPane = this.getContentPane();
+			this.contentPane.setLayout(new FlowLayout());
+			this.contentPane.setBackground(Color.GRAY);
+			
+			this.processButton = new JButton("Process");
+			this.processButton.addActionListener(this);
+			this.contentPane.add(this.processButton);
+			
+			this.resetButton = new JButton("Reset");
+			this.resetButton.addActionListener(this);
+			this.contentPane.add(this.resetButton);
+			
+			this.readFileTextLabel = new JLabel("Enter the path of the file you wish to read (IE: Example.txt)");
+			this.add(readFileTextLabel);
+			
+			this.readFileTextField = new JTextField(25);
+			this.add(this.readFileTextField);
+			this.readFileTextField.setEditable(true);
+			
+			this.writeFileTextLabel = new JLabel("Enter the name of the file you wish to write to.");
+			this.add(writeFileTextLabel);
+			
+			this.writeFileTextField = new JTextField(25);
+			this.add(writeFileTextField);
+			this.writeFileTextField.setEditable(true);
+			
+			this.fileStatus = new JLabel("File Processing Complete.");
+			this.add(this.fileStatus);
+			this.fileStatus.setVisible(false);
+			
+		}//end bracket of constructor
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String actionCommand = e.getActionCommand();
+			if("Process".equals(actionCommand)) {
+			try {
+				ProcessFile.process(writeFileTextField.getText(), readFileTextField.getText());
+				this.fileStatus.setVisible(true);
+			}catch(NoSuchElementException nosuch) {
+				this.fileStatus.setText("There was an error processing the file: " + nosuch);
+				this.fileStatus.setVisible(true);
+				System.exit(0);
+			}
+
+			}else if("Reset".equals(actionCommand)){
+				writeFileTextField.setText("");
+				readFileTextField.setText("");
+				this.fileStatus.setVisible(false);
+				this.fileStatus.setText("File Processing Complete");
+			}//end bracket of if statement
+		}//end bracket of actionPerformed
+		
+		
+}//end bracket of gui class

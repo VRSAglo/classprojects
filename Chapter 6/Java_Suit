@@ -1,0 +1,30 @@
+package edu.mtc.egr281.chapter06;
+
+public enum Suit {
+//constants
+	SPADES("Spades", '\u2660'), CLUBS("Clubs", '\u2663'),
+	HEARTS("Hearts", '\u2665'), DIAMONDS("Diamonds", '\u2666'),
+	STARS("Stars", '\u2605');
+	
+	
+//fields
+	private String name;
+	private char symbol;
+	
+//Constructor
+	private Suit(String newName, char newSymbol) {
+		this.name = newName;
+		this.symbol = newSymbol;
+	}//Ending bracket of Constructor
+	
+//Methods
+	public String getName() {
+		return this.name;
+	}//ending bracket of getName method
+	
+	public char getSymbol() {
+		return this.symbol;
+	}//Ending bracket of getSymbol method
+	
+	
+}//ending bracket of enum Suit

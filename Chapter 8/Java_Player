@@ -1,0 +1,32 @@
+package edu.mtc.egr281.Chapter08;
+
+public abstract class Player {
+	//Fields
+	private String name;
+	private int choice;
+	
+	//Constructor
+	public Player(String newName) {
+		this.setName(newName);
+		this.setChoice(0);
+	}//ending bracket for constructor
+	
+	//Methods
+	 public String getName() {
+		 return this.name;
+	 }//ending bracket of GetName
+	 
+	 private void setName(String newName) {
+		 this.name = newName;
+	 }//ending bracket of setName method
+	 
+	 public int getChoice() {
+		 return this.choice;
+	 }//ending bracket of getChoice method
+	 
+	 protected void setChoice(int newChoice) {
+		 this.choice = newChoice;
+	 }//Ending bracket of setChoice method
+	 
+	 public abstract void makeChoice();
+}//Ending bracket of Player class

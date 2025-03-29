@@ -1,0 +1,55 @@
+package edu.mtc.egr281.Chaptor05;
+
+import java.util.Scanner;
+
+
+public class DieGameArray {
+
+	private static Die d;
+	private static DiepPlayer[] dp;
+	
+	public static void main(String[] args) {
+		
+		//1. Open any resources needed
+		Scanner kb = new Scanner(System.in);
+		
+		//2. Call methods to "Do the Thing"
+		setUpTheGame(kb);
+		playTheGame();
+		
+		//3. Close the resources
+		kb.close();
+		
+	}//Ending bracket of main method
+	
+	private static void setUpTheGame(Scanner keys) {
+		d = new Die();
+		
+		System.out.print("Enter the number of players");
+		dp = new DiepPlayer[keys.nextInt()];
+		for(int i = 0; i < dp.length; ++i) {
+			System.out.print("Enter the name of player " + (i + 1) + ": ");
+			dp[i] = new DiepPlayer(keys.next());
+		}//Ending bracket of For Loop
+	}//Ending bracket of setUpTheGame method
+	
+	private static void playTheGame() {
+		int index = -1;
+		DiepPlayer player;
+	
+		do {
+			++index;
+			player = dp[index % dp.length];
+			
+			d.roll();
+			System.out.print(player.getName() + " Rolls a " + d.getValue() + ", ");
+			player.updateScore(d.getValue());
+			System.out.println(player.getName() + "'s score is now " + player.getScore());
+			
+		}while(player.getScore() < 50);
+		
+		System.out.println("The winnder is " + player.getName() + "!!");
+		
+	}//Ending bracket of playTheGame method
+	
+}//Ending bracket of class DieGameArray

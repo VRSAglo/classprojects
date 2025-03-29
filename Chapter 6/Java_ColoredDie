@@ -1,0 +1,67 @@
+package edu.mtc.egr281.chapter06;
+//Adam Glover
+//Project11
+//Professor Sims
+//EGR-281-V02
+//Date 11-2-2022
+//Due: 11-9-2022
+//This class defines the characteristics for the colored dice in the Snail Pace Game.
+import java.util.Random;
+
+public class ColoredDie {
+//Fields
+	private String color;
+	private Random randomizer;
+
+//Constants
+	public static int TOTALCOLORS = 6;
+	
+//Constructors
+	public ColoredDie() {
+		this.randomizer = new Random();
+		this.setColor("Blue");
+	}//Ending bracket of constructor.
+	
+	
+//Methods
+	//method for getting the color of the die
+	public String getColor() {
+		return this.color;
+	}//Ending bracket of getColor method
+	
+	//method for setting the color of the die
+	private void setColor(String newColor) {
+		this.color = newColor;
+	}//Ending bracket of setColor method
+	
+	//method for rolling the dice and adjusting the random numbers to colors
+	public void roll() {
+		int randomValue = this.randomizer.nextInt(ColoredDie.TOTALCOLORS)+1;
+		
+		String colorRoll = "";
+		switch(randomValue) {
+		case 1:
+			colorRoll = "Red";
+			break;
+		case 2:
+			colorRoll = "Blue";
+			break;
+		case 3: 
+			colorRoll = "Yellow";
+			break;
+		case 4:
+			colorRoll = "Orange";
+			break;
+		case 5:
+			colorRoll = "Pink";
+			break;
+		case 6:
+			colorRoll = "Green";
+			break;
+		}//ending bracket of switch randomValue
+		this.setColor(colorRoll);
+	}//Ending bracket of roll method.
+
+
+	
+}//Ending bracket of ColoredDie class

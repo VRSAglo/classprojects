@@ -1,0 +1,77 @@
+package edu.mtc.egr281.chapter09;
+//Adam Glover
+//Professor Sims EGR281
+//Final Exam Extra Credit
+//Completed: 11/29/22
+//Due: 12/7/22
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class ProcessFile {
+	public static PrintWriter outputStream = null;
+	private static Scanner inputStream = null;
+	private static int totalNames;
+	private static int numOfLines;
+	private static String[] names;
+	private static String readFile;
+	private static String writeFile;
+
+public static void process(String newWriteFile, String newReadFile) {
+	readFile = newReadFile;
+	writeFile = newWriteFile;
+	System.out.println("Reading files from " + readFile);
+	totalNames = 0;
+	try {
+		inputStream = new Scanner(new File(readFile));
+		
+		while(inputStream.hasNextLine()) {
+			++numOfLines;
+			String line = inputStream.nextLine();
+			String[] contents = line.split(" ");
+			for(int i = 0; i < contents.length; ++i) {
+			++totalNames;
+			}//end bracket of for loop
+		}//end bracket of while loop
+
+	 names = new String[totalNames];
+	inputStream.close();
+	inputStream = null;
+	inputStream = new Scanner(new File(readFile));
+	int index = 0;
+	for(int i = 0; i < numOfLines; ++i) {
+		String line = inputStream.nextLine();
+		String[] contents = line.split(" ");
+		for(int j = 0; j < contents.length; ++j) {
+			
+			names[index] = contents[j];
+			++index;
+		}//end bracket of for inner loop
+	
+	}//end bracket of outer for loop
+	System.out.println("Information has been gathered from " + readFile + ".\n"
+			+ "They are being organized and written to " + writeFile);
+	}catch(FileNotFoundException ae) {
+		System.out.println("Could not locate " + readFile);
+		System.exit(0);
+	}//end bracket of try-catch
+	try {
+		outputStream = new PrintWriter(writeFile);
+
+	
+	}catch(FileNotFoundException ae) {
+			System.out.println("Error opening the file " + writeFile);
+			System.exit(0);
+		}//end bracket of try catch
+		for(int i = 0; i < names.length; i=i+2) {
+			String name = names[i] + " " + names[i+1];
+			outputStream.println(name);
+		}//end bracket of for loop
+		System.out.println("The newly organized text was written to " + writeFile);
+			outputStream.close();
+			outputStream = null;
+			inputStream.close();
+			inputStream = null;
+	}//end bracket of process method
+}

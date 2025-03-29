@@ -1,0 +1,131 @@
+package edu.mtc.egr281.chapter07;
+
+//Adam Glover
+//Project09
+//Professor Sims
+//EGR-281-V02
+//Date 10/21/2022
+//Due: 10/26/2022 
+//This program will take user input for cities traveled, store them in an array, compare them against
+//a two dimensional array, and then calculate a dollar value with the given mile value.
+
+import java.util.Scanner;
+
+public class IRSReimbursementCalc {
+	//Declare Needed Constants
+	//Name array	(one dimensional, make values of index 
+	//match mileagearray index.
+	private static final String cityArray[] = { "Boston", "Chicago", "Dallas", "Reno", 
+			"Los Angelas", "Miami", "New Orleans", "Toronto", "Vancouver", "DC" };
+	//Mileage Array (10x10 2 dimensional)
+	private static final int[][] mileArray = {
+/*Boston 0*/{   0, 1004,  1753,  2752,  3017,  1520,  1507,  609,  3155,  448},
+/*Chicago1*/{1004,    0,   921,  1780,  2048,  1397,   919,  515,  2176,  709},
+/*Dallas 2*/{1753,  921,     0,  1230,  1399,  1343,   517, 1435,  2234, 1307},
+/*Reno   3*/{2752, 1780,  1230,     0,   272,  2570,  1732, 2251,  1322, 2420},
+/*LA     4*/{3017, 2048,  1399,   272,     0,  2716,  1858, 2523,  1278, 2646},
+/*Miami  5*/{1520, 1397,  1343,  2570,  2716,     0,   860, 1494,  3447, 1057},
+/*NewOr  6*/{1507,  919,   517,  1732,  1858,   860,     0, 1307,  2734, 1099},
+/*Toront 7*/{ 609,  515,  1435,  2251,  2523,  1494,  1307,    0,  2820,  571},
+/*Vanco  8*/{3155, 2176,  2234,  1322,  1278,  3447,  2734, 2820,     0, 2887},
+/*DC     9*/{ 448,  709,  1307,  2420,  2646,  1057,  1099,  571,  2887,    0}};
+	//      |Bost, Chic,Dallas,  Reno,   LA ,  Miam, NewOr, Toro, Vanco,  DC |
+
+	//Value of mileage in cents (double)
+	private static final int MILEVALUE = 56;
+	private static final int DOLLARVALUE = 100;
+	
+	//Main Method
+	public static void main(String[] args) {
+		//UserInput Array
+		int numOfCities = 0;
+		String startCity;
+		//Declare and instantiate scanner for input
+		Scanner kb = new Scanner(System.in);
+		
+		//Greet user
+		System.out.println("Welcome to the IRS Mileage Calculator.");
+		System.out.println("We will calculate the mileage traveled \n"
+						+ "these cities: ");
+		
+		for(int i = 0; i < cityArray.length; ++i) {
+			System.out.print(cityArray[i] + " ");
+		}//Ending bracket for Print out city loop
+		
+		System.out.println();
+		
+		//Get user imput for starting city (userArray)
+		System.out.println("Please enter your starting city: ");
+		startCity = kb.next();
+		
+		//Get user input for number of cities visited (userArray length)
+		System.out.println("Please enter the number of cities traveled");
+		numOfCities = kb.nextInt() + 1;
+		String[] userCitiesArray = new String[numOfCities];
+		int startingCityIndex = 0;
+		
+		//Get user input for cities (index for userArray)
+		System.out.println("Please enter the names of the cities you have traveled \n"
+						+ "(Please be careful to spell exactly as listed)");
+
+		
+		for(int i = 0; i < userCitiesArray.length; ++i) {
+			if(i == 0) {
+				userCitiesArray[i] = startCity;
+			} else {
+			userCitiesArray[i] = kb.next();
+			
+			} //ending bracket of if loop statement
+			
+		}//Ending bracket for userCities loop
+		
+		//Determine values for mileage between cities and return home
+		int[] indexValues = new int[numOfCities+1];
+		
+		for( int i = 0; i < userCitiesArray.length; ++i) {
+			if(cityArray[i].contains(startCity)) {
+				startingCityIndex = i;
+				}//ending bracket of if cityArray contains
+			for(int j = 0; j < cityArray.length; ++j) {
+				if(cityArray[j].contains(userCitiesArray[i])) {
+					for(int x = 0; x < mileArray[j].length; ++x) {
+						if (cityArray[x].contains(userCitiesArray[i])) {
+							indexValues[i] = x;
+						}//Ending Bracket for Inner If		
+					}//Ending Bracket for Inner For(iterate through all cities to get index value for column)
+				}//Ending bracket for outer if	
+			}//Ending bracket for outer for (Iterate through all cities to get index value for row)
+		}//Ending bracket of OUTER for (userCities)
+		System.out.println();
+		
+		//Testing/Debugging	
+		//	for(int i = 0; i < userCitiesArray.length-1; ++i) {
+		//			System.out.println(mileArray[indexValues[i]][indexValues[i+1]] + "A");
+		////		System.out.println();
+		//		System.out.println(indexValues[i] + "B");
+		//			System.out.println(indexValues[i+1] + "C");
+		//	}
+		//calculate mileage, total, and dollar value
+		int totalMiles = 0;
+		
+		for(int i = 0; i <  userCitiesArray.length - 1; ++i) {
+			totalMiles += mileArray[indexValues[i]][indexValues[i+1]];
+			if(i == userCitiesArray.length - 2) {
+				totalMiles += mileArray[indexValues[i+1]][startingCityIndex];
+			}//Ending bracket of if statement
+		}//Ending bracket of for loop
+		
+	
+		int totalSum = totalMiles * MILEVALUE;
+		int dollarSum = totalSum / DOLLARVALUE;
+		int centSum = totalSum % DOLLARVALUE;
+		
+		System.out.println("You have driven a total of " + totalMiles + ".");
+		System.out.println("The total value of business miles driven is $" + dollarSum + "." + centSum );
+		
+
+		
+		//Close Scanner
+		kb.close();
+	} //ending bracket of Main method
+} //Ending bracket of class IRSReimbursement

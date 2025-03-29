@@ -1,0 +1,28 @@
+package edu.mtc.egr281.Chapter08;
+import java.util.Scanner;
+import java.util.Random;
+public class RPSDriverTest extends RPSGame{
+
+			
+	public static void main(String[] args) {
+			 Scanner keys;
+			 Random numGen;
+			
+		
+		numGen = new Random();
+		keys = new Scanner(System.in);
+		welcomeMessage(keys, numGen);
+		 
+		 
+		System.out.println(RPSGame.player1.getName());
+		System.out.println(RPSGame.player2.getName());
+		
+		player1.makeChoice();
+		player2.makeChoice();
+		
+		System.out.println(player1.getChoice());
+		System.out.println(player2.getChoice());
+		System.out.println(player1.getChoice().isEqual(player2.getChoice()));
+		System.out.println(whoWon(player1 , player2));
+	}
+}

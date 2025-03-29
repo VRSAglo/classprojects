@@ -1,0 +1,40 @@
+package edu.mtc.egr281.chapter07;
+
+import java.util.Scanner;
+
+public class MemoryMatchBoardDriver {
+
+	public static void main(String[] args) {
+		
+		MemoryMatchBoard mmb = new MemoryMatchBoard();
+		//mmb.printBoard();
+		
+		Scanner kb = new Scanner(System.in);
+		int row, column;
+		do {
+			System.out.print("Enter your first guess row [1-4]: ");
+			row = (kb.nextInt()) - 1;
+			System.out.print("Enter your first guess column [1-4[: ");
+			column = (kb.nextInt()) -1;
+			mmb.displayGuess1(row, column);
+			
+			System.out.print("Enter your second guess row [1-4]: ");
+			row = (kb.nextInt()) - 1;
+			System.out.print("Enter your second guess column [1-4]: ");
+			column = (kb.nextInt()) - 1;
+			mmb.displayGuess2(row,  column);	
+			
+			if(mmb.isAMatch()) {
+				System.out.println();
+				System.out.print("Hurray!! You got a match!");
+				System.out.println();
+			
+				
+			}
+		}while(mmb.hasMoreMatches());
+		System.out.print("Game Over!");
+		
+		kb.close();
+	}//ending bracket of main method
+	
+}//Ending bracket of class

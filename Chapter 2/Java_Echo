@@ -1,0 +1,35 @@
+package edu.mtc.egr281.chapter02;
+
+import java.util.Scanner;
+
+
+public class Echo
+{ //Begining Bracket for Class Echo
+
+	public static void main(String [] args)
+	{ //Beginning bracket for main method
+		//Repeat whatever is inputed
+		//1. Obtain input from user
+		//2. Output the user input
+		
+		//Open input stream
+		//1A. Declaration
+		Scanner keyboard;
+		//1B, instantiation
+		keyboard = new Scanner(System.in);
+		
+		//1.C Obtain input from user
+		System.out.print("Enter Echo inputer: ");
+		String userInput = keyboard.next();
+		
+		//2. Output user input
+		System.out.println(userInput);
+		
+		
+		//Close input stream
+		keyboard.close();
+		
+		
+	} //Ending bracket for main method
+	
+} //Ending bracket for Class Echo

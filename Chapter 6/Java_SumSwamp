@@ -1,0 +1,181 @@
+package edu.mtc.egr281.chapter06;
+import java.util.Scanner;
+//Adam Glover
+//Project 12
+//Professor Sims
+//Date Completed: 11-9-2022
+//Date Due: 11-16-2022
+//This program plays an automated version of the Sum Swamp board game.
+public class SumSwamp {
+//Fields
+	private static SumNumberDie die1;
+	private static SumNumberDie die2;
+	private static SumOperationDie plusMinus;
+	private static Scanner keys;
+	private static SumCritter[] players;
+	
+//Constants
+	
+	
+//Methods
+	
+	public static void main(String[] args) {
+		setUpGame();
+		playGame();
+		
+		keys.close();
+	}//End bracket of main method
+	
+	public static void setUpGame() {
+		keys = new Scanner(System.in);
+		
+		die1 = new SumNumberDie();
+		die2 = new SumNumberDie();
+		plusMinus = new SumOperationDie();
+		
+				System.out.println("Welcome to Sum Swamp, how many players?");
+		players = new SumCritter[keys.nextInt()];
+		for(int i = 0; i < players.length; ++i) {
+			String tempName = "";
+			String tempColor = "";
+			System.out.println("Please enter the name of player " + (i + 1) + ":");
+			tempName = keys.next();
+			System.out.println("Please enter the color for " + tempName + ":");
+			System.out.println("The colors available are :");
+			for(int s = 0; s < SumCritter.COLOR.length; ++s) {
+				System.out.print(" " + SumCritter.COLOR[s] + " : ");
+			}
+			tempColor = keys.next();
+			if(i > 0) {
+				if(players[i-1].hasColor(tempColor)) {
+					System.out.println("This color is already chosen, please select another color.");
+					tempColor = keys.next();
+				}
+			}
+			
+			players[i] = new SumCritter(tempName, tempColor);
+			System.out.println();
+		}
+		
+	}//End bracket of setUpGame method
+	
+	public static void playGame() {
+		SumCritter turn;
+		String snailUpdate = "";
+		int index = -1;
+		do {
+			++index;
+			turn = players[index % players.length];
+			System.out.println("****Turn #" + (index+1) + "*****");
+			die1.roll();
+			die2.roll();
+			plusMinus.roll();
+		
+			System.out.println(turn.getName() + " has rolled a: " + die1.getValue() + " a: " + plusMinus.getValue() + " and a: " + die2.getValue());
+			turn.forwardSpace(turn.updateCritterSpace(die1.getValue(), plusMinus.toString(plusMinus.getValue()), die2.getValue()));
+			snailUpdate = turn.specialSpace(turn.updateCritterSpace(die1.getValue(), plusMinus.toString(plusMinus.getValue()), die2.getValue()));
+			System.out.println(turn.getName() + " has landed on space " + turn.getCritterSpace());
+
+			
+				//3, 37: 2 tiles
+			if(turn.getCritterSpace() == 3 || turn.getCritterSpace() == 37) {
+				System.out.println(turn.specialSpace(turn.getCritterSpace()));
+				plusMinus.roll();
+				System.out.println(turn.getName() + " rolls a " + plusMinus.toString(plusMinus.getValue()));
+				if(plusMinus.getValue() == '+') {
+					turn.forwardSpace(2);
+					System.out.println(turn.getName() +" gets to move up 2 spaces!");
+					System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}else if(plusMinus.getValue() == '-') {
+					turn.backSpace(2);
+					System.out.println(turn.getName() + " has to move back 2 spaces");
+					System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}//Ending bracket of inner If 2
+				//11, 27, 33: 3 tiles
+			}else if(turn.getCritterSpace() == 11 || turn.getCritterSpace() == 27 || turn.getCritterSpace() == 33) {
+				System.out.println(turn.specialSpace(turn.getCritterSpace()));
+				plusMinus.roll();
+				System.out.println(turn.getName() + " rolls a " + plusMinus.toString(plusMinus.getValue()));
+				if(plusMinus.getValue() == '+') {
+					turn.forwardSpace(3);
+					System.out.println(turn.getName() +" gets to move up 3 spaces!");
+				//	System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}else if(plusMinus.getValue() == '-') {
+					turn.backSpace(3);
+					System.out.println(turn.getName() + " has to move back 3 spaces");
+				//	System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}//Ending bracket of Inner if 3
+				//18 : 1 tile
+			}else if(turn.getCritterSpace() == 18) {
+				System.out.println(turn.specialSpace(turn.getCritterSpace()));
+				plusMinus.roll();
+				System.out.println(turn.getName() + " rolls a " + plusMinus.toString(plusMinus.getValue()));
+				if(plusMinus.getValue() == '+') {
+					turn.forwardSpace(1);
+					System.out.println(turn.getName() +" gets to move up 1 spaces!");
+				//	System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}else if(plusMinus.getValue() == '-') {
+					turn.backSpace(1);
+					System.out.println(turn.getName() + " has to move back 1 spaces");
+					//	System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}//Ending bracket of inner if 1
+				//25 : 5 tile
+			}else if(turn.getCritterSpace() == 25) {
+				System.out.println(turn.specialSpace(turn.getCritterSpace()));
+				plusMinus.roll();
+				System.out.println(turn.getName() + " rolls a " + plusMinus.toString(plusMinus.getValue()));
+				if(plusMinus.getValue() == '+') {
+					turn.forwardSpace(5);
+					System.out.println(turn.getName() +" gets to move up 5 spaces!");
+				//	System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}else if(plusMinus.getValue() == '-') {
+					turn.backSpace(5);
+					System.out.println(turn.getName() + " has to move back 5 spaces");
+				//	System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}//End bracket of inner if 5
+				//13: 6 tile
+			}else if(turn.getCritterSpace() == 13) {
+				System.out.println(turn.specialSpace(turn.getCritterSpace()));
+				plusMinus.roll();
+				System.out.println(turn.getName() + " rolls a " + plusMinus.toString(plusMinus.getValue()));
+				if(plusMinus.getValue() == '+') {
+					turn.forwardSpace(6);
+					System.out.println(turn.getName() +" gets to move up 6 spaces!");
+				//	System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}else if(plusMinus.getValue() == '-') {
+					turn.backSpace(6);
+					System.out.println(turn.getName() + " has to move back 6 spaces");
+				//	System.out.println(turn.getName() + " is now on space " + turn.getCritterSpace());
+				}//Ending bracket of inner if 6
+				//Evens Tiles : 2,16,36
+			}else if(turn.getCritterSpace() == 2 || turn.getCritterSpace() == 16 || turn.getCritterSpace() == 36) {
+				System.out.println(turn.specialSpace(turn.getCritterSpace()));
+				die1.roll();
+				System.out.println(turn.getName() + " rolls a " + die1.getValue());
+				if(die1.getValue() % 2 == 0) {
+					turn.forwardSpace(die1.getValue());
+					System.out.println(turn.getName() + " gets to move forward " + die1.getValue() + " space(s)!");
+				}//ending bracket of evens roll if
+				//Odds Tile: 8, 32
+			}else if(turn.getCritterSpace() == 8 || turn.getCritterSpace() == 32) {
+				System.out.println(turn.specialSpace(turn.getCritterSpace()));
+				die1.roll();
+				System.out.println(turn.getName() + " rolls a " + die1.getValue());
+				if(die1.getValue() % 2 == 1) {
+					turn.forwardSpace(die1.getValue());
+					System.out.println(turn.getName() + " gets to move forward " + die1.getValue() + " space(s)!");
+				}//ending bracket of odds roll if
+			}
+			if(turn.getCritterSpace() == 6 || turn.getCritterSpace() == 15) {
+				turn.specialSpace(turn.getCritterSpace());
+			}//End bracket of if statement
+
+			
+		//	turn.specialSpace(turn.getCritterSpace());
+			System.out.println(turn.getName() + " ended their turn on space " + turn.getCritterSpace());
+			System.out.println();
+			
+		}while(!turn.hasWon());
+		System.out.println(turn.getName() + " has won!");
+	}//End bracket of playGame method
+}

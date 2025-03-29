@@ -1,0 +1,41 @@
+package edu.mtc.egr281.chapter02;
+
+import java.util.Scanner;
+
+
+public class EggCounter {
+
+	//Constants are declared outside the main method
+	//but still inside the class
+	public static final int DOZEN = 12;
+	
+	public static void main(String[] args) {
+		//Declaration
+			Scanner keys;
+		//Instantiation
+			keys = new Scanner(System.in);
+		
+		//PREPARE
+			int numberOfEggs, numberOfDozens, remainingEggs;
+			
+	    //INPUT
+			System.out.print("Enter number of eggs collected: ");
+			numberOfEggs = keys.nextInt();
+			
+		//PROCESS
+			numberOfDozens = numberOfEggs / DOZEN;
+			remainingEggs = numberOfEggs % DOZEN;
+			
+		//OUTPUT
+		
+			System.out.print(numberOfEggs + " eggs is ");
+			System.out.print(numberOfDozens + " dozen eggs with ");
+			System.out.println(remainingEggs + " left over");
+			
+		
+		//Close the input system
+		keys.close();
+	} //Ending main method bracket
+	
+	
+}// Ending bracket for EggCounter class

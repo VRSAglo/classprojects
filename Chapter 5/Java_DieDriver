@@ -1,0 +1,23 @@
+package edu.mtc.egr281.Chaptor05;
+
+public class DieDriver {
+	
+	public static void main(String[] args) {
+	
+		Die d = new Die();
+		System.out.println("Initial value: " + d.getValue());
+		System.out.println("Number of sides: " + d.getNumberOfSides());
+		for(int i = 0; i < 12; ++i) {
+			d.roll();
+			System.out.println(d.getValue());
+		}//ending bracket of for loop
+		Die d2 = new Die(4);
+		System.out.println("Initial value: " + d2.getValue());
+		System.out.println("Number of sides: " + d2.getNumberOfSides());
+		for(int i = 0; i < 8; ++i) {
+			d2.roll();
+			System.out.println(d2.getValue());
+		}//ending bracket of for loop
+	}//Ending bracket of method
+	
+}//Ending bracket of DieDriver class

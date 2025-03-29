@@ -1,0 +1,119 @@
+package edu.mtc.egr281.Chapter08;
+//Adam Glover
+//Project 13
+//Professor Sims
+//Date Completed: 11-16-2022
+//Date Due: 11-23-2022
+//Game class for Rock Paper Scissors
+
+
+import java.util.Scanner;
+import java.util.Random;
+
+public class RPSGame {
+//Fields
+	static Scanner keys;
+	static Random numGen;
+	private static  int numOfHumans;
+	static RPSPlayer player1;
+	static RPSPlayer player2;
+	
+//Constants	
+	private static final int WINNINGSCORE = 5;
+
+	
+//Methods
+	public static void welcomeMessage(Scanner kb, Random rando) {
+		keys = kb;
+		numGen = rando;
+		System.out.println("Welcome to Rock Paper Scissors");
+		System.out.println("Please enter the number of Human players. [Choose 0, 1, or 2]");
+		do {
+		numOfHumans = keys.nextInt();
+		}while(numOfHumans != 1 && numOfHumans != 2 && numOfHumans != 0);
+		if(numOfHumans == 2) {
+			System.out.println("Let's get started!");
+			System.out.println("Please enter the name of player 1:");
+			player1 = new RPSHuman(keys, keys.next());
+			System.out.println("Please enter the name of player 2:");
+			player2 = new RPSHuman(keys, keys.next());
+		}else if(numOfHumans == 1) {
+			System.out.println("Man versus Machine");
+			System.out.println("Please enter the name of human player 1");
+			player1 = new RPSHuman(keys, keys.next());
+			player2 = new RPSComputer(numGen);
+			System.out.println("Your opponent will be " + player2.getName());
+		}else if(numOfHumans == 0){
+			System.out.println("Computer Versus Computer then?");
+			player1 = new RPSComputer(numGen);
+			System.out.println("Player 1 will be " + player1.getName());
+			player2 = new RPSComputer(numGen);
+			System.out.println("Player 2 will be " + player2.getName());
+		}//end bracket of if statement
+	}//Ending bracket of welcomeMessage method
+	
+	public static String whoWon(RPSPlayer player1,  RPSPlayer player2) {
+		String rv = "I've got nothing!";
+				 if(player1.getChoice().isEqual(RPSOptions.ROCK) && player2.getChoice().isEqual(RPSOptions.SCISSORS)) {
+					rv = player1.getName() + " chose " + player1.getChoice() + " and " + player2.getName() + " chose " + player2.getChoice()
+					 			+ ", " + player1.getName() + " wins!";
+					player1.updateScore();
+					System.out.println(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+				}else if(player2.getChoice().isEqual(RPSOptions.ROCK) && player1.getChoice().isEqual(RPSOptions.SCISSORS)) {
+					rv = player2.getName() + " chose " + player2.getChoice() + " and " + player1.getName() + " chose " + player1.getChoice()
+								+ ", " + player2.getName() + " wins!";
+					player2.updateScore();
+					System.out.println(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+				}else if(player1.getChoice().isEqual(RPSOptions.PAPER) && player2.getChoice().isEqual(RPSOptions.ROCK )) {
+					rv = player1.getName() + " chose " + player1.getChoice() + " and " + player2.getName() + " chose " + player2.getChoice()
+		 			+ ", " + player1.getName() + " wins!";
+					player1.updateScore();
+					System.out.println(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+				}else if(player2.getChoice().isEqual(RPSOptions.PAPER) && player1.getChoice().isEqual(RPSOptions.ROCK)) {
+					rv = player2.getName() + " chose " + player2.getChoice() + " and " + player1.getName() + " chose " + player1.getChoice()
+					+ ", " + player2.getName() + " wins!";
+					player2.updateScore();
+					System.out.println(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+				}else if(player1.getChoice().isEqual(RPSOptions.SCISSORS) && player2.getChoice().isEqual(RPSOptions.PAPER)) {
+					rv = player1.getName() + " chose " + player1.getChoice() + " and " + player2.getName() + " chose " + player2.getChoice()
+		 			+ ", " + player1.getName() + " wins!";
+					player1.updateScore();
+					System.out.println(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+				}else if(player2.getChoice().isEqual(RPSOptions.SCISSORS) && player1.getChoice().isEqual(RPSOptions.PAPER)) {
+					rv = player2.getName() + " chose " + player2.getChoice() + " and " + player1.getName() + " chose " + player1.getChoice()
+					+ ", " + player2.getName() + " wins!";
+					player2.updateScore();
+					System.out.println(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+				}else {
+					rv = player1.getName() + " chose " + player1.getChoice() + " and " + player2.getName() + " chose " + player2.getChoice() + ", It's a tie!";	
+					System.out.println(player1.getName() + ": " + player1.getScore() + " | " + player2.getName() + ": " + player2.getScore());
+				}
+				
+			return rv;
+	}//end bracket of whoWon method
+	
+	public static void playGame(Scanner keys, Random numGen) {
+		welcomeMessage(keys, numGen);
+		int index = 0;
+		boolean hasWon = true;
+		do {
+			++index;
+			System.out.println(player1.getName() + " Versus " + player2.getName());
+			System.out.println("Round #" + index);
+			player1.makeChoice();
+			player2.makeChoice();
+			System.out.println(whoWon(player1,player2));
+			if(player1.getScore() == WINNINGSCORE || player2.getScore() == WINNINGSCORE) {
+				hasWon = false;
+			}
+		}while(hasWon);
+		if(player1.getScore() == 5) {
+			System.out.println(player1.getName() + "Wins!  It took " + index + " rounds!");
+		}else {
+			System.out.println(player2.getName() + "Wins!  It took " + index + " rounds!");
+		}//End bracket of else statement
+			
+	}//end bracket of play game method
+	
+	
+}//End bracket of Game class

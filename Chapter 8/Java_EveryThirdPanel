@@ -1,0 +1,71 @@
+package edu.mtc.egr281.Chapter08;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class EveryThirdPanel extends JPanel implements ActionListener {
+
+	//Constant
+	
+	private static final long serialVersionUID = 1L;
+
+	
+	
+	//Fields
+	private JLabel cipherLabel;
+	private JLabel plainLabel;
+	private JTextField cipherText;
+	private JTextField plainText;
+	private JButton decode;
+	private EveryThird et;
+	
+	
+	//Constructor
+	public EveryThirdPanel() {
+		
+		super();
+		this.setPreferredSize(new Dimension(375, 300));
+		this.setBackground(Color.RED);
+		this.setLayout(new FlowLayout());
+		
+		this.cipherLabel = new JLabel("Enter cipher text to decode: ");
+		this.add(this.cipherLabel);
+		
+		this.decode = new JButton("Decode");
+		this.decode.setToolTipText("Click button to decode text");
+		this.decode.addActionListener(this);
+		this.add(this.decode);
+		
+		this.cipherText = new JTextField(25);
+		this.add(this.cipherText);
+		
+		this.plainLabel = new JLabel("Decode message: ");
+		this.add(this.plainLabel);
+		
+		this.plainText = new JTextField(25);
+		this.add(this.plainText);
+		this.plainText.setEditable(false);
+		this.add(this.plainText);
+		
+		
+		this.et = new EveryThird();
+	}//ending bracket of constructor
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		String actionCommand = e.getActionCommand();
+		if("Decode".equals(actionCommand)) {
+			this.plainText.setText(this.et.decode(this.cipherText.getText()));
+		}//Ending bracket of if
+		
+	}//Ending bracket of actionPerformed method
+
+}//Ending bracket of class EveryThirdpanel

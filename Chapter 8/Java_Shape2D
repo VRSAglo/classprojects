@@ -1,0 +1,43 @@
+package edu.mtc.egr281.Chapter08;
+
+public class Shape2D {
+//Fields
+	private String name;
+//Constructor
+	public Shape2D() {
+		this(Shape2D.class.getName());
+	}
+	
+	public Shape2D(String newName) {
+		this.setName(newName);
+	}//ending bracket of constructor
+	
+	
+//Methods
+	public String getName() {
+		return this.name;
+	}//Ending bracket of getname method
+	
+	private void setName(String newName) {
+		this.name = newName;
+	}//End bracket for setName method
+	
+	@Override
+	public String toString() {
+		return this.getName();
+	}//ending bracket of toString overRide
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean rv = false;
+		
+		if((obj != null) && (obj instanceof Shape2D)) {
+			Shape2D s = (Shape2D) obj;
+			if(this.getName().equals(s.getName())) {
+				rv = true;
+			}//ending bracket of inner If 
+		}//Ending bracket of outer if statement 
+		
+		return rv;
+	}//Ending bracket of equals method
+}//ending bracket of shape2d class

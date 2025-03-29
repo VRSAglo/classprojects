@@ -1,0 +1,20 @@
+package edu.mtc.egr281.Chapter08;
+
+import CodeTest.CodeBreaker;
+
+public class EveryThird implements CodeBreaker {
+
+	@Override
+	public String decode(String cipherText) {
+		StringBuffer sb = new StringBuffer();
+		
+		for(int i = 1; i < cipherText.length(); i = i+3) {
+			sb.append(cipherText.charAt(i));
+		}//Ending bracket of for loop
+		
+		
+		return sb.toString();
+		
+	}//Ending bracket of decode method
+	
+}//Ending bracket of class EveryThird

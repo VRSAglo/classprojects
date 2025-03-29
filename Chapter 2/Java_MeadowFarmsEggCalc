@@ -1,0 +1,72 @@
+package edu.mtc.egr281.chapter02;
+import javax.swing.JOptionPane;
+
+public class MeadowfarmsEggCalculator {  //Starting Bracket for MeadowFarms Class
+	//Constants for Cost of a Dozen, Cost of an egg, and the number of eggs in a dozen
+	public static final double COSTOFDOZEN = 4.05;
+	public static final double COSTOFEGG = .35;
+	public static final int DOZEN = 12;
+	
+	public static void main (String[] args) {  //beginning bracket for main method
+		//Prepare
+		int numberOfEggs, numberOfDozens, initialAmount, amountCalc;
+		double costDozen, costEggs, totalCost ;
+		String eggString, displayCost;
+	
+		
+		//Input
+		//Greet User and ask them to input the number of eggs they would like to order.
+			eggString = JOptionPane.showInputDialog( "Welcome to Meadowdale Dairy's Egg Order Form \n" +
+													 "How many eggs would you like to order today?");
+		//Convert egg string to egg int
+		initialAmount = Integer.parseInt(eggString);
+		
+		//Store Initial Amount for later
+		amountCalc = initialAmount;
+		
+		//Process
+		//Calculate the number of dozens in the order
+		numberOfDozens = amountCalc / DOZEN;
+		
+		//Calculate the number of eggs left over
+		numberOfEggs = amountCalc % DOZEN;
+		
+		//Calculate the cost of the eggs
+		//Per Dozen
+		costDozen = numberOfDozens * COSTOFDOZEN;
+		costEggs = numberOfEggs * COSTOFEGG;
+		totalCost = costDozen + costEggs;
+		
+		//Set rounded value for total cost
+		
+		System.out.println(numberOfDozens + " numberofDozens");
+		System.out.println(numberOfEggs + " numberOfEggs");
+		System.out.println(amountCalc + " amountcalc");
+		System.out.println(totalCost + " totalCost");
+		System.out.println(costDozen + " costDozen");
+		System.out.println(costEggs + " costEggs");
+		
+				
+		JOptionPane.showMessageDialog(null, "Thank you for your order \n " +
+									 "You have ordered \n "
+									+ numberOfDozens + " Dozen eggs at $" + COSTOFDOZEN + "\n" 
+									+ numberOfEggs + " Single Eggs at $" + COSTOFEGG +  " \n "
+									+ "The total cost for your order is $"
+									+ totalCost);
+		
+		
+		
+		//Output
+		
+		
+		
+		
+		
+		//Close input stream
+		System.exit(0);
+		
+	} //Ending Bracket for Main Method
+
+	
+	
+}   //Ending bracket for meadowFarmsEggCalculator

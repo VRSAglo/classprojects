@@ -1,0 +1,39 @@
+package edu.mtc.egr281.chapter06;
+
+
+public class Dice {
+	//Fields
+	private Die d1;
+	private Die d2;
+	
+	//Constants
+	
+	//Constructors
+	public Dice () {
+		this(Die.SIDES);
+	}//Ending bracket of default "no-args" constructor
+	
+	public Dice (int newNumberOfSides) {
+		this.d1 = new Die(newNumberOfSides);
+		this.d2 = new Die(newNumberOfSides);
+	}//Ending bracket for Dice constructor
+	
+	//Methods
+	public int getValue() {
+		return this.d1.getValue() + this.d2.getValue();
+	}//Ending bracket of getValue dice method
+	
+	public void roll() {
+		this.d1.roll();
+		this.d2.roll();
+	}//ending bracket of Roll method
+	
+	public int getNumberOfSides() {
+		return this.d1.getNumberOfSides();
+	}//Ending bracket of getNumberOfSides method
+	
+	public boolean isDoubles() {
+		return (this.d1.getValue() == this.d2.getValue());
+	}//Ending bracket of isDoubles method
+	
+}//Ending bracket for Dice Class

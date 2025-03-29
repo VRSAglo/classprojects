@@ -1,0 +1,56 @@
+package edu.mtc.egr281.Chapter08;
+
+import java.util.Scanner;
+
+public class Game {
+	
+	public static Scanner kb;
+	private static Player[] player;
+	private static String[] COMPUTER_NAME = {"R2D2" , "C3PO", "BB8"};
+	
+	public static void main(String[] args) {
+		kb = new Scanner(System.in);
+		
+		//Assuming 3 players in the game
+		player = new Player[3];
+		for(int i = 0; i < player.length; ++i) {
+			System.out.print("Is player #" + (i+1) + " human or computer? [H/C]");
+			if ("H".equalsIgnoreCase(kb.next())) {
+				System.out.print("Enter name of human player :");
+				player[i] = new HumanPlayer(kb.next(), kb);
+			}else {
+				player[i] = new ComputerPlayer(COMPUTER_NAME[i]);
+			}//Ending bracket of if statement
+		}//Ending bracket of for loop
+		boolean isStillPlaying = false;
+		do {
+			isStillPlaying = false;
+			//Getting the players choises
+			for(int i = 0; i < player.length; ++i) {
+				System.out.print(player[i].getName() + " make your choice " );
+				player[i].makeChoice();
+				System.out.println("Choice is " + player[i].getChoice());
+				
+			}//ending bracket of for loop
+			//Check for a tie
+			if(player[0].getChoice() == player[1].getChoice() && player[1].getChoice() == player[2].getChoice()) {
+				isStillPlaying = true;
+				System.out.println("It's a tie! Go again");
+			}//Ending bracket of if statement
+			
+		}while(isStillPlaying);
+		
+		//Determine winner - KEEP IT SIMPLE
+		System.out.print("The winner is " );
+		if(player[0].getChoice() == player[1].getChoice()) {
+			System.out.println(player[2].getName());
+		}else if (player[0].getChoice() == player[2].getChoice()) {
+			System.out.println(player[1].getName());
+		}else {
+			System.out.println(player[0].getName());
+		}//ending bracket of if statement.
+		
+		kb.close();
+	}//ending bracket of main method
+	
+}//ending bracket of Game Class

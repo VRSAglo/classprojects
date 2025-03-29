@@ -1,0 +1,40 @@
+package edu.mtc.egr281.Chaptor05;
+
+import java.util.Scanner;
+
+public class DieGame {
+
+	public static void main(String[] args) {
+		
+		Scanner kb = new Scanner(System.in);
+		
+		//setup the Contents of the Game
+		Die d = new Die();
+		
+		System.out.print("Enter name of player 1");
+		DiepPlayer dp1 = new DiepPlayer(kb.next());
+		
+		System.out.print("Enter the name of player 2");
+		DiepPlayer dp2 = new DiepPlayer(kb.next());
+		
+		//Play the game
+		do {
+				d.roll();
+				System.out.print(dp1.getName() + " rolls " + d.getValue());
+				dp1.updateScore(d.getValue());
+				System.out.println(", score is now " + dp1.getScore());
+				
+				d.roll();
+				System.out.print(dp2.getName() + " rolls " + d.getValue());
+				dp2.updateScore(d.getValue());
+				System.out.println(", score is now " + dp2.getScore());
+				
+		} while(dp1.getScore() < 50 && dp2.getScore() < 50);
+		
+		
+		//Close Resources
+		kb.close();
+	}
+	
+	
+}//Ending bracket of DieGame

@@ -1,0 +1,33 @@
+package edu.mtc.egr281.Chapter08;
+
+public class Square extends Rectangle {
+	//Constants
+	public static final String DEFAULT_NAME = "Square";
+	
+	//Fields
+	
+	
+	//Constructor
+	public Square() {
+		this(Measurable.DEFAULT_VALUE);
+	}//Ending bracket of default constructor
+	public Square(double newSide) {
+		this(Square.DEFAULT_NAME, newSide);
+	}//Ending bracket constructor 1 args
+	public Square(String newName, double newSide) {
+		super(newName, newSide, newSide);
+	}//Ending bracket of construct 2 arg
+	
+	
+	//Methods
+	public void setSide(double newSide) {
+		this.setLength(newSide);
+		this.setWidth(newSide);
+	}//Ending bracket of setSide method
+	
+	public double getSide() {
+		return this.getLength();
+	}//end bracket of getSide method
+	
+
+}//ending bracket of class square

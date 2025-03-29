@@ -1,0 +1,78 @@
+package edu.mtc.egr281.chapter04;
+//Adam Glover
+//Project07
+//Professor Sims
+//EGR-281-V02
+//Date 10/5/2022
+//Due: 10/12/2022 
+//This program will print out a diamond whose size is based on user entry.
+
+import java.util.Scanner;
+
+
+
+public class DiamondMaker {
+
+	public static void main(String[] args) {
+		//Declare and instantiate scanner
+		Scanner keysIn = new Scanner(System.in);
+		//Set Variable for input
+		int number;
+		//Request User Input
+		System.out.println("Please enter a number and I will draw you a picture!");
+		number = keysIn.nextInt() - 1;
+		
+		//build the top of the Diamond
+		for(int i = 0; i < number; ++i) {
+			//Spaces before Asterisk/S
+			for(int t = i; t < number; ++t) {
+				System.out.print(" ");
+			} //ENding Bracket of t = i for loop
+			//Print Outer Asterisk
+			System.out.print("*");
+			//Print inner S and Asterisk
+			for(int j = 0; j < i; ++j) {
+				System.out.print("s");
+				for (int x = j; x <= j; ++x) {
+					System.out.print("*");
+				} //Ending bracket of j = 0 for loop
+			}//Ending Bracket of Top for loop (inner)
+	
+		//Print the Trailing spaces
+		System.out.print(" ");
+		for(int j = number; j > i ; --j) {
+			System.out.print(" ");
+			}
+			System.out.println();
+		}//ending bracket for Top for Loop (outer)		
+		
+		//Print the bottom of the Diamond
+		for(int i = number; i >= 0; --i) {
+			//Print Spaces before Asterisks
+			for(int t = i; t < number; ++t) {
+				System.out.print(" ");
+			}
+			//Print Outer Asterisk
+			System.out.print("*");
+			//Print Inner S and inner Asterisks
+			for(int j = 0; j < i; ++j) {
+				System.out.print("s");
+				for (int x = j; x <= j; ++x) {
+					System.out.print("*");
+				}	
+
+			}//Ending bracket for Bottom of Diamond for loop (Inner)
+
+		//Printer the trailing spaces
+		System.out.print(" ");
+		for(int j = number; j > i ; --j) {
+			System.out.print(" ");	
+			}
+		//Move to Next line
+			System.out.println();
+		}//ending bracket for bottom of diamond for loop (outer)
+		//Close Scanner
+		keysIn.close();
+	} //Ending bracket for main method
+	
+} //Ending bracket DiamondMaker Class

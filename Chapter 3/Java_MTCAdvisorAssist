@@ -1,0 +1,253 @@
+package edu.mtc.egr281.chapter03;
+//Adam Glover
+//Project05
+//Professor Sims
+//EGR-281-V02
+//Date 9-21-2022
+//Due: 9-28-2022  
+
+//This program requests a selection between advisor placement scheduling and the 12 Days of Christmas and outputs relevant data based on user input.
+
+import java.util.Scanner;
+	
+
+	
+
+public class MTCAdvisorAssist {
+//Reading and Writing Course Number setup as constants to make for easy adjustments if course numbers change at a later date.
+	public final static String RDG1 = "RDG032";
+	public final static String RDG2 = "RDG100";
+	public final static String RDG3 = "RDG101";
+	public final static String RDG4 = "RDG099";
+	public final static String ENG1 = "ENG100";
+	public final static String ENG2 = "ENG101";
+//Scoring Ranges listed as constants in case they are adjusted later
+	public final static int RDGTOOLOW = 20;
+	public final static int RDGLOW = 45;
+	public final static int RDGMID = 64;
+	public final static int RDGHIGH = 72;
+	public final static int WRITELOW = 1;
+	public final static int WRITEMID = 2;
+	public final static int WRITEHIGH = 3;
+	
+	
+	public static void main(String[] args) {
+		//Store
+		//Declare variables needed for processing
+		int readingScoreInput, writingScoreInput, initialOptionSelection, daySelection;
+		String christmasDay = "";
+		
+		
+		//Create new Scanner for input
+		//Declare and Instantiate scanner
+		Scanner keys = new Scanner(System.in);
+		//Output greeting and directions to user
+		System.out.print("Welcome to MTC Advisor Assit." 
+						+ "Please choose 1 for Advisement Assistance and 2 for the 12 Days of Christmas");
+		initialOptionSelection = keys.nextInt();
+		
+		//Input and Processing
+		//Beginning Flow Control, select 1 for advisor program
+		if(initialOptionSelection == 1) {
+			//Ask user to input students reading score and store in variable
+			System.out.print("Please enter the students Compass Reading Score");
+			readingScoreInput = keys.nextInt();
+			//Ask user to input students writing score and store in variable
+			System.out.print("Please enter the students Writing Score");
+			writingScoreInput = keys.nextInt();
+			//Control flow of students scores and output data
+			// Grouping of reading scores Less than 20
+				if(readingScoreInput <= RDGTOOLOW) {
+					//New flow of scores involving writing scores
+					//First if for invalid writing score entry
+					if (writingScoreInput > 3 ) {
+						System.out.print("You have entered an invalid score, please try again");
+					} else {
+						//Correct score entry and output
+						System.out.print("The students scores are too low for our placement requirements");
+					} //Ending invalid entry If (writingScoreInput > 3)
+				}//Ending Bracket for Initial Advisement If
+			//grouping of reading scores between 20 - 45
+				else if(readingScoreInput <= RDGLOW) {
+					//Check for writing scores 2 or 3 and output recommended courses
+					if(writingScoreInput == WRITEMID || writingScoreInput == WRITEHIGH) {
+						System.out.print("The student cannot take any " + ENG2 + " until " + RDG4 + " is completed.\n"
+										+ "The student will also be placed in " + RDG1);
+						//Check for writing score 1 and output recommended courses
+					  } else if(writingScoreInput == WRITELOW) {
+						  System.out.print("The student will be placed in " + RDG4 + "\n"
+								  			+ "The student will also be placed in " + RDG1);
+						  //Check for no or 0 writing score and recommend courses
+					  } else if(writingScoreInput < WRITELOW) {
+						  System.out.print("The student will be placed in " + RDG1);
+						  //check for error input and output message
+					  } else if(writingScoreInput > 3) {
+						  System.out.print("You have entered an invalid score, please try again");
+					  }//Ending bracket for if ==WRITEMID
+				}//ending Bracket of 1st else If (<=RDGLOW)
+			//Grouping of reading scores between 45-64
+				else if(readingScoreInput <= RDGMID) {
+					//Check for writing score 3 and output recommended courses
+					if(writingScoreInput == WRITEHIGH) {
+						System.out.print("The student cannot be placed in " + ENG2 + " until " + RDG4 + " is completed.\n"
+										+ "The student will also be placed in " + RDG2);
+						//Check for writing score 2 and output recommended courses
+					} else if(writingScoreInput == WRITEMID) {
+						System.out.print("The student will be placed in " + ENG1 + "\n"
+										+ "The student will also be placed in " + RDG2);
+						//check for writing score 1 and output recommended courses
+					} else if(writingScoreInput == WRITELOW) {
+						System.out.print("The student will be placed in " + RDG4
+								  		+ "\n The student will also be placed in " + RDG2);
+						//Check for no or 0 writing score and output courses
+					} else if(writingScoreInput < WRITELOW) {
+						System.out.print("The student will be placed in " + RDG2);
+						//Check for invalid entry and output message
+					} else if(writingScoreInput > 3) {
+						System.out.print("You have entered an invalid score, please try again.");
+					} //Ending < WRITELOW else if
+				}//ending bracket for 2nd Else if (<=RDGMID)
+			//Grouping of reading scores between 64-72	
+				else if(readingScoreInput <= RDGHIGH) {
+					//check for writing score 3 and output recommended courses
+					if(writingScoreInput == WRITEHIGH) {
+						System.out.print("The student will be placed in " + ENG2 + "\n"
+										+ "The student will also be placed in " + RDG3 + " if it is required by their program.");
+						//Check for writing score  2 and output recommended courses
+					} else if(writingScoreInput == WRITEMID) {
+						System.out.print("The student will be placed in " + ENG1 + "\n"
+										+ "The student will also be placed in " + RDG3 + " if it is required by their program.");
+						//Check for writing score 1 and output recommended courses
+					} else if(writingScoreInput == WRITELOW) {
+						System.out.print("The student will be placed in " + RDG4 + "\n"
+										+ "The student will also be placed in " + RDG3 + " if it is required by their program.");
+						//Check for no or 0 writing score and recommend courses
+					} else if(writingScoreInput < WRITELOW) {
+						System.out.print("The student will be placed in " + RDG3 + " if it is required by their program.");
+						//Check for invalid entry and output error message
+					} else if(writingScoreInput > 3) {
+						System.out.print("You have entered an invalid score, please try again.");
+					} //Ending if > 3
+				}//ending else if ( <= RDGHIGH)
+			//Grouping of reading scores 73+ 	
+				else if(readingScoreInput > RDGHIGH) {
+					//Check for writing score 3 and output recommended courses
+						if(writingScoreInput == WRITEHIGH) {
+							System.out.print("The student will be placed in " + ENG2 + "\n"
+											+ "No additional Reading course required.");
+							//Check for writing score 2 and output recommended courses
+					} else if(writingScoreInput == WRITEMID) {
+							System.out.print("The student will be placed in " + ENG1 + "\n"
+											+ "No additional Reading course required.");
+							//Check for writing score 1 and output recommended courses
+					} else if(writingScoreInput == WRITELOW) {
+							System.out.print("The student will be placed in " + RDG4 + "\n"
+											+ "No additional Reading course required.");
+							//Check for no or 0 writing score, no recommendations placed, reverts to closest value of writing score = 1
+					} else if(writingScoreInput < WRITELOW) {
+							System.out.print("The student is not required by our standards to take a Reading course, but it is advised to take " + RDG4);
+						//Check for invalid entry and output error message.
+					} else if(writingScoreInput > 3) {
+							System.out.print("You have entered an invalid score, please try again.");
+					}//ending bracket of writeScore
+				} //Ending Bracket Else if > RDGHIGH
+		}//Ending bracket of IF option 1
+		//Beginning else if for option 2 12 Days of Christmas
+		else if(initialOptionSelection == 2) { 
+			//Request input and store for the number day of christmas
+			System.out.print("Enter a number between 1 and 12 for the 12 Days of Christmas");
+			daySelection = keys.nextInt();
+			//Switch statement for converting int day of christmas to a string
+			switch(daySelection) {
+			case 12:
+				christmasDay = "Twelth";
+				break;
+			case 11: 
+				christmasDay = "Eleventh";
+				break;
+			case 10:
+				christmasDay = "Tenth";
+				break;
+			case 9:
+				christmasDay = "Ninth";
+				break;
+			case 8:
+				christmasDay = "Eighth";
+				break;
+			case 7:
+				christmasDay = "Seventh";
+				break;
+			case 6:
+				christmasDay = "Sixth";
+				break;
+			case 5:
+				christmasDay = "Fifth";
+				break;
+			case 4:
+				christmasDay = "Fourth";
+				break;
+			case 3:
+				christmasDay = "Third";
+				break;
+			case 2:
+				christmasDay = "Second";
+				break;
+			case 1:
+				christmasDay = "First";
+				break;
+				default:
+					System.out.println("You have made an invalid selection");
+			} //Ending of Day selection Switch	
+			//Print out static, non-variable christmas lyrics
+		System.out.print("On the " + christmasDay + " day of Christmas, my true love sent to me,\n");
+		//Switch statement without break for flowing lyrics depending on day selected
+		switch(daySelection) {
+			case 12:
+					System.out.print(" Twelve Drummers Drummer, ");
+			
+			case 11:
+					System.out.print( " Eleven Pipers Piping, ");
+			
+			case 10:
+					System.out.print(" Ten Lords a-Leaping,\n");
+					
+			case 9:
+					System.out.print(" Nine Ladies Dancing, ");
+				
+			case 8:
+					System.out.print(" Eight Maids a-Milking, ");
+					
+			case 7:
+					System.out.print(" Seven Swans a-Swimming,\n");
+					
+			case 6:
+					System.out.print(" Six Geese a-Laying,");
+				
+			case 5:
+					System.out.print(" Five Golven Rings, ");
+				
+			case 4:
+				 	System.out.print(" Four Calling Birds,\n");
+				 
+			case 3:
+					System.out.print(" Three French Hens, ");
+					
+			case 2:
+					System.out.print(" Two Turtle Doves, and ");
+					
+			case 1:
+					System.out.print(" a Partridge in a pair tree.");	
+					
+			} //end of switch statement Lyric
+
+			
+		} //Ending Bracket for Else if == 2 Statement
+		//Error entry control for initial menu selection
+		else if(initialOptionSelection  > 2) {
+			System.out.print("We're sorry, you have entered an invalid selection, please try again");
+		} //Ending Bracket of else statement
+	
+		//Closing scanner
+		keys.close();
+	}//Ending bracket of main method	
+} //Ending bracket of MTCAdvisorClass

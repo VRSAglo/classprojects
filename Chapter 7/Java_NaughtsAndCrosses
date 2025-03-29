@@ -1,0 +1,96 @@
+package edu.mtc.egr281.chapter07;
+
+import java.util.Scanner;
+
+public class NaughtsandCrosses {
+
+	//Declerations
+	private static Scanner kb;
+	private static int row, column, turn;
+	private static char[][] board;
+	private static char[] token;
+	
+	public static void main(String[] args) {
+		
+		//open up any resources(Input Stream)
+		kb = new Scanner(System.in);
+		//Do the work
+		setUpTheGame();
+		playTheGame();
+		
+		//Close all resources opened.
+		kb.close();
+	} //Ending bracket for main method
+	
+	private static void setUpTheGame() {
+		turn = 0;
+		token = new char[] {'0', 'X'};
+		board = new char[3][3];
+		for(int r = 0; r < board.length; ++r) {
+			for(int c = 0; c < board[row].length; ++c) {
+				board[r][c] = '_';
+			}//ending bracket of inner for loop - columb
+		}//ending bracket of OUTER for loop - row
+	}//Ending bracket for setUpTheGame method
+	
+	private static void playTheGame() {
+		char t;
+		do {
+			++turn;
+			System.out.println();
+			System.out.println("Turn #" + turn + ":");
+			printTheBoard();
+			
+			t = token[turn % token.length];
+			
+			System.out.print(t + ", please enter a row: ");
+			row = (kb.nextInt()) - 1;
+			System.out.print(t + ", please enter a column: ");
+			column = (kb.nextInt()) - 1;
+			
+			board[row][column] = t;
+			
+		}while(!isGameOver(row, column));
+		System.out.println();
+		System.out.print("In turn #" + turn + ",");
+		System.out.print(t + " wins!");
+		
+		printTheBoard();
+	}//ending bracket for playTheGame method
+	
+	private static boolean isGameOver(int rMove, int cMove) {
+		boolean returnValue = false;
+		
+		//check for the possible winning combinations
+		// 3 Horizontals, 3 verticals, 2 diagonals
+		if(board[rMove][0] == board[rMove][1] && board[rMove][1] == board[rMove][2]) {
+			returnValue = true;
+		} else if(board[0][cMove] == board[1][cMove] && board[1][cMove] == board[2][cMove]) {
+			returnValue = true;
+		} else if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[1][1] != '_') {
+			returnValue = true;
+		} else if(board[2][0] == board[1][1] && board[1][1] == board[0][2] && board[1][1] != '_') {
+			returnValue = true;
+		} //ending bracket of if statement
+		return returnValue;
+	}// ending bracket of is game over
+	
+	private static void printTheBoard() {
+		System.out.println();
+		System.out.println("   | 1 | 2 | 3 |");
+		System.out.println("   -------------");
+		for(int r = 0; r < board.length; ++r) {
+			for(int c = 0; c < board[row].length; ++c) {
+				if(c == 0) {
+					System.out.print(r +1 + ": | ");
+				}//Ending bracket of if statement
+				System.out.print(board[r][c] + " | ");
+			}//ending bracket of inner for loop - column
+			
+			System.out.println();
+			
+		}//ending bracket of outer for loop -row
+	}//Ending bracket of method printTheBoard
+	
+
+} //Ending bracket of NaughtsandCrosses class

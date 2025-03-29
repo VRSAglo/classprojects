@@ -1,0 +1,40 @@
+package edu.mtc.egr281.Chaptor05;
+//Adam Glover
+//Professor Sims
+//Project10
+//Due Date: 11/2/2022
+//Current Date: 11/1/2022
+//This class creates the dice needed for the mechanics game.
+
+
+import java.util.Random;
+
+public class MechanicsDie {
+
+	//Fields
+	private int value;
+	private Random numberGenerator;
+	
+	//Constants
+	final static int MAX_SIDES = 6;
+	
+	//Constructor
+	public MechanicsDie() {
+		this.setValue(0);
+		this.numberGenerator = new Random();
+	}
+	
+	//Method
+	public int getValue() {
+		return this.value;
+	}//Ending bracket of getValue getter
+	
+	private void setValue(int newValue) {
+		this.value = newValue;
+	}//Ending bracket of setValue
+	
+	public void roll() {
+		this.setValue(this.numberGenerator.nextInt(MAX_SIDES) + 1);
+	}//Ending bracket for roll method
+	
+}//Ending bracket of class

@@ -1,0 +1,35 @@
+package edu.mtc.egr281.chapter06;
+import java.util.Scanner;
+
+public class SumTestClass {
+	
+	public static void main(String[] args) {
+		Scanner keys = new Scanner(System.in);
+		SumNumberDie d = new SumNumberDie();
+		SumNumberDie h = new SumNumberDie();
+		SumOperationDie x = new SumOperationDie();
+	
+			d.roll();
+			x.roll();
+			h.roll();
+			System.out.println(d.getValue());
+			System.out.println(x.getValue());
+			System.out.println(h.getValue());
+	
+
+		System.out.println("How many players");
+		int numPlayers = keys.nextInt();
+		SumCritter p[] = new SumCritter[numPlayers];
+				;
+		//for(int i = 0; i < p.length; ++i) {
+		//	p[i] = new SumCritter(i);
+	//		System.out.println( p[i].getColor());
+		//}
+	    System.out.println(p[0].updateCritterSpace( d.getValue(), "+", h.getValue()));
+		System.out.println(p[0].updateCritterSpace(d.getValue(), "-", h.getValue()));
+		System.out.println(p[0].updateCritterSpace(d.getValue(), x.toString(x.getValue()), h.getValue()));
+		
+	}
+	
+	
+}

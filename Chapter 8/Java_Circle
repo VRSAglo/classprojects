@@ -1,0 +1,59 @@
+package edu.mtc.egr281.Chapter08;
+
+public class Circle extends Shape2D implements Measurable{
+//fields
+	public static final String DEFAULT_NAME = "Circle";
+	
+//Constants
+	private double radius;
+	
+//Constructors
+	public Circle() {
+		this(Measurable.DEFAULT_VALUE);
+	}//ending bracket default constructor
+	
+	public Circle(double newRadius) {
+		this(Circle.DEFAULT_NAME,  newRadius);
+	}//ending bracket constructor
+	
+	public Circle(String newName, double newRadius) {
+		super(newName);
+		this.setRadius(newRadius);
+	}//ending bracket of constructor
+	
+//Methods
+	private double getRadius() {
+		return this.radius;
+	}//End bracket of getRadius method
+	
+	private void setRadius(double newRadius) {
+		this.radius = newRadius;
+	}//End bracket of set Radius method
+	
+	@Override
+	public double getArea() {
+		return Math.PI * Math.pow(this.getRadius(), 2);
+	}//ending bracket of getArea
+	
+	@Override
+	public double getPerimeter() {
+		return 2 * Math.PI * this.getRadius();
+	}//ending bracket of getPerimeter method
+	
+	@Override
+	public String toString() {
+		return super.toString() + ", Radius: [" + this.getRadius() + "]";
+	}//ending bracket of toString method
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean rv = false;
+		if(obj instanceof Circle) {
+			Circle c = (Circle) obj;
+			if(this.getRadius() == c.getRadius()) {
+				rv = true;
+			}//Ending bracket of inner if statement
+		}//Ending bracket of outer if statement
+		return rv;
+	}//ending bracket of equals method
+}//ending bracket of Circle class

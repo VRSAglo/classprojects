@@ -1,0 +1,20 @@
+package edu.mtc.egr281.chapter09;
+//Adam Glover
+//Professor Sims EGR281
+//Project 15
+//Completed : 11/30/22
+//Due: 12/7/22
+//This program uses a GUI to output the color inputed by the user as a background color and issues an exception 
+public class UnknownColorException extends Exception {
+
+	private static final long serialVersionUID = 1L;
+	
+	public UnknownColorException(String newMessage) {
+		super(newMessage);
+	}//end bracket of constructor
+	
+	public UnknownColorException() {
+		this("You have selected an unknown color");
+	}//end bracket of default-constructor
+	
+}//End class of exception

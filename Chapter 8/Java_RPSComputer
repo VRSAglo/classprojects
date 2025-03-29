@@ -1,0 +1,41 @@
+package edu.mtc.egr281.Chapter08;
+//Adam Glover
+//Project 13
+//Professor Sims
+//Date Completed: 11-16-2022
+//Date Due: 11-23-2022
+//Computer player child class for Rock paper Scissors
+
+import java.util.Random;
+
+
+public class RPSComputer extends RPSPlayer {
+//Fields
+	private Random numGen;
+//Constants
+	private static final String[] NAMES = {"R2D2", "C3PO", "BB8", "General Grevious", "Data", "Robot B9", "Beep Boop the Destroyer"};
+//Constructor
+	public RPSComputer(Random rando) {
+		super(RPSComputer.NAMES[rando.nextInt(RPSComputer.NAMES.length)]);
+		numGen = rando;
+	}//Ending bracket of constructor 
+	
+//Methods
+	@Override
+	public void makeChoice() {
+		RPSOptions choice = null;
+		switch(numGen.nextInt(3) + 1) {
+		case 1:
+			choice = RPSOptions.ROCK;
+			break;
+		case 2: 
+			choice = RPSOptions.PAPER;
+			break;
+		case 3:
+			choice = RPSOptions.SCISSORS;
+			break;
+		}//End bracket of Switch
+		this.setChoice(choice);
+	}//End bracket of make choice
+	
+}//End bracket of RPSComputer class

@@ -1,0 +1,74 @@
+package edu.mtc.egr281.chapter02;
+
+import javax.swing.JOptionPane;
+
+
+
+public class ChangeMaker {
+	//Constants
+	public static final int QUARTER = 25;
+	public static final int DIME = 10;
+	public static final int NICKEL = 5;
+	
+	
+	
+	public static void main(String[] args) {
+		//PREPARE
+		int amount , originalAmount, quarters, dimes, nickels, pennies;
+		String amountString;
+		
+		//INPUT
+		//Enter the amounter of change in cents required
+		amountString = JOptionPane.showInputDialog("Enter a whole number from 1 to 99\n" +
+													"I will output a combination of coins, \n" +
+													"that equals the amounts of change");
+		//Parses the string to an int
+		amount = Integer.parseInt(amountString);
+		
+		
+		
+		
+		//PROCESS
+		//Determine the number of quarters, dimes, nickels and pennies
+		
+		
+		//Store off the original amount entered.
+		originalAmount = amount;
+		
+		//determine the number of quarters
+		quarters = amount / QUARTER;
+		//Calculate the remaining amount after quarters
+		amount = amount % QUARTER;
+		
+		//Calculate the number of dimes
+		dimes = amount / DIME;
+		//calculate the remaining amount after dimes
+		amount = amount % DIME;
+		
+		//calculate the number of nickels
+		nickels = amount / NICKEL;
+		//calculate the remaining amount after nickels
+		amount = amount % NICKEL;
+		
+		//Remaining amount
+		pennies = amount;
+		
+		
+		
+		
+		//OUTPUT
+		//Display to the user the number of coins
+		JOptionPane.showMessageDialog(null, originalAmount + " cents in coins can be given as: \n" +
+											quarters + " Quarters \n" +
+											dimes + " Dimes \n" +
+											nickels + " nickels \n " +
+											pennies + " pennies.");
+														
+		
+		
+		System.exit(0);
+	} //Ending bracket of main method
+	
+	
+	
+} //ending bracket for ChangeMaker class

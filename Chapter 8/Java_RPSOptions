@@ -1,0 +1,45 @@
+package edu.mtc.egr281.Chapter08;
+//Adam Glover
+//Project 13
+//Professor Sims
+//Date Completed: 11-16-2022
+//Date Due: 11-23-2022
+//Object enumeration class for rock paper scissors
+public enum RPSOptions {
+//Constants
+	ROCK("Rock"), PAPER("Paper"), SCISSORS("Scissors"); 
+//Fields
+	private String option;
+	
+//Constructor
+	private RPSOptions(String newOption) {
+		this.option = newOption;
+	}
+//Methods
+	
+	public String getOption() {
+		return this.option;
+	
+	}//ending bracket for getOption method
+	
+	
+	
+	public String toString() {
+		return this.getOption();
+	}//end bracket for toString method
+	
+	public boolean isEqual(Object obj) {
+		boolean rv = false;
+		
+		if(obj != null && obj instanceof RPSOptions) {
+			RPSOptions test = (RPSOptions) obj;
+			if(this.getOption().equals(test.getOption())) {
+				rv = true;
+			}//End bracket of inner if
+		}//End bracket of outer if
+		
+		return rv;
+	}//end bracket of equals method
+
+
+}

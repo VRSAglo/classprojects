@@ -1,0 +1,75 @@
+package edu.mtc.egr281.chapter02;
+//Adam Glover
+//Professor Sims
+//Project04
+//Due Date: 9-21-2022
+//Current Date:(written  8=14-2022) (turned in 9-19-2022)
+//This program has the user input the amount of rainfall each month and provides a total and an average for the year.
+
+import javax.swing.JOptionPane;
+import java.text.DecimalFormat;
+
+public class RainTracker {
+
+		//Declared Constants
+		public static final int MONTHS = 12;
+	
+	public static void main(String[] args) {
+		//Prepare
+		//Double values for rainfall amounts for each month
+		double janRain, febRain, marchRain, aprilRain, mayRain, juneRain, julyRain, augustRain, septRain, octRain, novRain, decRain, totalRain, averageRain;
+		//String values to parse from user input
+		String janString, febString, marchString, aprilString, mayString, juneString, julyString, augustString, septString, octString, novString, decString;
+		//Decimal Formatting
+
+		DecimalFormat formatPattern = new DecimalFormat("0.0");
+	
+			
+		//Input
+		//Greet and request input from user for each month and store in string variables.
+		janString = JOptionPane.showInputDialog("Welcome to Rain Track. \n" +
+												"Please input the amount of rainfall for January");
+		febString = JOptionPane.showInputDialog("Input the amount of rainfall for February.");
+		marchString = JOptionPane.showInputDialog("Input the amount of rainfall for March.");
+		aprilString = JOptionPane.showInputDialog("Input the amount of rainfall for April.");
+		mayString = JOptionPane.showInputDialog("Input the amount of rainfall for May.");
+		juneString = JOptionPane.showInputDialog("Input the amount of rainfall for June.");
+		julyString = JOptionPane.showInputDialog("Input the amount of rainfall for July.");
+		augustString = JOptionPane.showInputDialog("Input the amount of rainfall for August.");
+		septString = JOptionPane.showInputDialog("Input the amount of rainfall for September.");
+		octString = JOptionPane.showInputDialog("Input the amount of rainfall for October.");
+		novString = JOptionPane.showInputDialog("Input the amount of rainfall for November.");
+		decString = JOptionPane.showInputDialog("Input the amount of rainfall for December.");
+		
+		//Process
+		//Parse decimal value from string to double datatype
+		janRain = Double.parseDouble(janString);
+		febRain = Double.parseDouble(febString);
+		marchRain = Double.parseDouble(marchString);
+		aprilRain = Double.parseDouble(aprilString);
+		mayRain = Double.parseDouble(mayString);
+		juneRain = Double.parseDouble(juneString);
+		julyRain = Double.parseDouble(julyString);
+		augustRain = Double.parseDouble(augustString);
+		septRain = Double.parseDouble(septString);
+		octRain = Double.parseDouble(octString);
+		novRain = Double.parseDouble(novString);
+		decRain = Double.parseDouble(decString);
+		//Calculate all the rain for every month
+		totalRain = janRain + febRain + marchRain + aprilRain + mayRain + juneRain + julyRain + augustRain + septRain + octRain + novRain + decRain;
+		//Calculate the average rainfall for the year
+		averageRain = totalRain / MONTHS;
+	
+		//Output
+		JOptionPane.showMessageDialog(null,  "The total amount of rain for this year is " + formatPattern.format(totalRain) + "\n"
+										+    "The average rainfall was " + formatPattern.format(averageRain) );
+	
+		//Close
+		System.exit(0);
+	
+	}//Ending Bracket for Main Method
+
+
+	
+	
+}//Ending Bracket for RainTracker Class

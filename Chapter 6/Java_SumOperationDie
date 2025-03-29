@@ -1,0 +1,71 @@
+package edu.mtc.egr281.chapter06;
+import java.util.Random;
+//Adam Glover
+//Project 12
+//Professor Sims
+//Date Completed: 11-9-2022
+//Date Due: 11-16-2022
+//Operations die for the sum swamp game
+public class SumOperationDie {
+//Fields
+	private int numberOfSides;
+	private char value;
+	private Random rando;
+//Constants
+	private static final int SIDES = 6;
+	
+//Constructor
+	public SumOperationDie() {
+		this.setNumberOfSides(SIDES);
+		rando = new Random();
+	}//End bracket of constructor
+//Methods
+	
+	public char getValue() {
+		return this.value;
+	}//End bracket of getValue method
+	
+	private void setValue(char newValue) {
+		this.value = newValue;
+	}//Ending bracket of setValue method
+	
+	private void setNumberOfSides(int newNumberOfSides) {
+		this.numberOfSides = newNumberOfSides;
+	}//Ending bracket of setNumberOfSides method
+	
+	public void roll() {
+		int randomNumber = this.rando.nextInt(SIDES)+1;
+		
+		switch(randomNumber) {
+			case 1: 
+				this.setValue('+');
+				break;
+			case 2:
+				this.setValue('-');
+				break;
+			case 3:
+				this.setValue('+');
+				break;
+			case 4:
+				this.setValue('-');
+				break;
+			case 5:
+				this.setValue('+');
+				break;
+			case 6:
+				this.setValue('-');
+				break;
+		}//Ending bracket for switch
+	}//Ending bracket for the roll method
+	
+	public String toString(char opDie) {
+		String returnString = "";
+		if(opDie == '+') {
+			returnString = "+";
+		}else if(opDie == '-') {
+			returnString = "-";
+		}
+			
+		return returnString;
+	}
+}//Ending bracket of OperationDie class

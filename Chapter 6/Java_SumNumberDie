@@ -1,0 +1,45 @@
+package edu.mtc.egr281.chapter06;
+import java.util.Random;
+//Adam Glover
+//Project 12
+//Professor Sims
+//Date Completed: 11-9-2022
+//Date Due: 11-16-2022
+//Number die for the sum swamp game.
+public class SumNumberDie {
+//Fields
+	private int value;
+	private int numberOfSides;
+	private Random rando;
+	
+//Constants
+	public static final int SIDES = 6;
+	
+//Constructor
+	public SumNumberDie() {
+		this.setNumberOfSides(SIDES);
+		rando = new Random();
+	}//Ending bracket of constructor
+	
+	
+//Methods
+	private void setNumberOfSides(int newNumberOfSides) {
+		this.numberOfSides = newNumberOfSides;
+	}
+	public int getNumberOfSides() {
+		return this.numberOfSides;
+	}//Ending bracket of getNumberOfSides method
+	
+	public int getValue() {
+		return this.value;
+	}//ending bracket of getValue method
+	
+	private void setValue(int newValue) {
+		this.value = newValue;
+	}//End bracket of setValue method
+	
+	public void roll() {
+		this.setValue(this.rando.nextInt(SIDES)+1);
+	}//Ending bracket of roll method
+	
+}//Ending bracket of SumNumberDie class

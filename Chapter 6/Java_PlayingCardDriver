@@ -1,0 +1,23 @@
+package edu.mtc.egr281.chapter06;
+
+public class PlayingCardDriver {
+
+	public static void main(String[] args) {
+		
+		for(Suit s : Suit.values()) {
+			for(Rank r : Rank.values()) {
+				PlayingCard pc = new PlayingCard(s,r);
+				System.out.print(pc.toStringSymbol() + " " + pc.toString());
+				System.out.println();
+			}//Ending bracket of inner for
+		}//bracket of outer for
+		
+		PlayingCard pc1 = new PlayingCard(Suit.CLUBS, Rank.ACE);
+		PlayingCard pc2 = new PlayingCard(Suit.DIAMONDS, Rank.ACE);
+		PlayingCard pc3 = new PlayingCard(Suit.CLUBS, Rank.ACE);
+		
+		System.out.println(" Ace of clubs == Ace of Diamonds?" + pc1.equals(pc2));
+		System.out.println(" Ace of clubs == ace of clubs?" + pc1.equals(pc3));
+	}//ending bracket of main method
+	
+}//ending bracket of class playingcarddrive

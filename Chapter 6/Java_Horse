@@ -1,0 +1,38 @@
+package edu.mtc.egr281.chapter06;
+
+public class Horse {
+//Fields
+	private String name;
+	private int furlong;  //Approx. 1/8 of a mile
+	
+//Constants
+	
+	
+//Constructor
+	public Horse (String newName) {
+		this.setName(newName);
+		this.setFurlong(0);
+	}//Ending bracket of Horse constructor
+	
+//Methods
+	public String getName () {
+		return this.name;
+	}//ending bracket of getName method
+	
+	private void setName (String newName) {
+		this.name = newName;
+	}//Ending bracket of setName method
+	
+	public int getFurlong () {
+		return this.furlong;
+	}//Ending bracket for getFurlong method
+	
+	private void setFurlong (int newFurlong) {
+		this.furlong = newFurlong;
+	}//ending bracket of setFurlong method
+	
+	public void updateFurlong (int update) {
+		this.setFurlong(update + this.getFurlong());
+	}//Ending bracket of updateFurlong method.
+	
+}//Ending bracket of horse class

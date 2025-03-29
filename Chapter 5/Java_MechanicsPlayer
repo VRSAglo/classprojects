@@ -1,0 +1,186 @@
+package edu.mtc.egr281.Chaptor05;
+//Adam Glover
+//Professor Sims
+//Project10
+//Due Date: 11/2/2022
+//Current Date: 11/1/2022
+//This class creates the player objects for the mechanics game.
+public class MechanicsPlayer {
+
+	//Fields
+	private String playerName;
+	//Index 1 = Body, 2 = Engine 3 = Handlebars 4 = Headlights 5 = Seat 6 = Wheel1 7 = Wheel2 8 = Wheel3 9 = Wheel4  10 = wheel5 11 = Wheel6)
+	public boolean hasPiece[] = {false, false ,false, false, false, false, false, false, false, false, false};
+	private int score;		
+	
+	//Constants
+	private static final String BODY = "Body";
+	private static final String ENGINE = "Engine";
+	private static final String HANDLEBARS = "Handlebars";
+	private static final String HEADLIGHTS = "Headlights";
+	private static final String SEAT = "Seat";
+	private static final String TIRE = "Tire";
+	private static final String ACQUIRE = " has acquired the ";
+	private static final String MISS = " dropped the wrench! Try again!";
+	
+	//Constructor
+	public MechanicsPlayer(String newName) {
+		this.setName(newName);
+		this.hasAllPiece();
+	}//Ending bracket for Constructor
+	
+	//Methods
+	//getName
+	public String getName() {
+		return this.playerName;
+	}//Ending bracket for getName method
+	
+	//setName
+	private void setName(String newName) {
+		this.playerName = newName;
+	}//Ending bracket of setName method
+	
+	//getsPiece
+	public boolean getPiece(int index) {
+		boolean playersPiece = false;
+		if(hasPiece[index] == true) {
+			playersPiece = true;
+		}else {
+			playersPiece = false;
+		}
+		return playersPiece;
+	}//Ending bracket for getPiece method
+	
+	public int getScore() {
+		return this.score;
+	}//Ending bracket getScore Method
+	
+	public void setScore(int newScore) {
+		this.score = newScore;
+	}//Ending bracket setScore method
+	
+	public void incrementScore() {
+		this.setScore(this.getScore() + 1);
+	}//ending bracket incrementScore method
+	
+	public boolean hasAllPiece() {
+		boolean allPieces = false;
+		
+		int calculateTotal = 0;
+		for(int i = 0; i < hasPiece.length; ++i) {
+			if(this.getPiece(i) == true) {
+				calculateTotal += 1;
+			}//End bracket first if
+		}//End bracket for loop
+			if(calculateTotal == hasPiece.length ) {
+				allPieces = true;
+			}else {
+				allPieces = false;
+			}
+			return allPieces;
+	}//Ending bracket hasAllPiece method
+	
+	public String updateScore(int update) {
+		String returnPiece;
+		String hitOrMiss;
+		if(update == 1 & this.getPiece(0) != true) {
+			this.setPiece(0, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = BODY;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the body!");
+		}else if(update == 2  & this.getPiece(0) == true & this.getPiece(1) != true ) {
+			this.setPiece(1, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = ENGINE;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the engine!");
+		}else if(update == 3 & this.getPiece(1) == true & this.getPiece(2) != true) {
+			this.setPiece(2,  true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = HANDLEBARS;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the handlebars!");
+		}else if(update == 4 & this.getPiece(1) == true & this.getPiece(3) != true) {
+			this.setPiece(3, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = HEADLIGHTS;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the headlights!");
+		}else if(update == 5 & this.getPiece(1) == true & this.getPiece(4) != true) {
+			this.setPiece(4, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = SEAT;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the seat!");
+		}else if(update == 6 & this.getPiece(1) == true & this.getPiece(5) != true) {
+			this.setPiece(5, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = "First " + TIRE;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the first tire!");
+		}else if(update == 6 & this.getPiece(1) == true & this.getPiece(6) != true) {
+			this.setPiece(6, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = "Second " + TIRE;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the second tire!");
+		}else if(update == 6 & this.getPiece(6) == true & this.getPiece(7) != true) {
+			this.setPiece(7, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = "Third " + TIRE;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the third tire!");
+		}else if(update == 6 & this.getPiece(7) == true & this.getPiece(8) != true) {
+			this.setPiece(8, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = "Fourth " + TIRE;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the fourth tire!");
+		}else if(update == 6 & this.getPiece(8) == true & this.getPiece(9) != true) {
+			this.setPiece(9, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = "Fifth " + TIRE;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the fifth tire!");
+		}else if(update == 6 & this.getPiece(9) == true & this.getPiece(10) != true) {
+			this.setPiece(10, true);
+			this.incrementScore();
+			hitOrMiss = ACQUIRE;
+			returnPiece = "Sixth " + TIRE;
+		//	System.out.print(player.getScore());
+		//	System.out.println("Player " + this.getName() + " has acquired the last tire!");
+			
+		}else {
+			hitOrMiss = MISS;
+			returnPiece = "";
+			//System.out.println(this.getName() + " dropped the wrench! Try again!");
+		}//Ending bracket else statement
+		
+		String returnValue;
+		
+		returnValue = this.getName() + hitOrMiss + returnPiece;
+		
+		return returnValue;
+	}//Ending bracket of updateScore method
+	
+	
+	//setsPiece
+	
+	public void setPiece(int index, boolean addPiece) {
+		this.hasPiece[index] = addPiece;
+	}//Ending bracket for setPiece method
+	
+	
+	
+}//ending bracket of mechanics player class

@@ -1,0 +1,179 @@
+package edu.mtc.egr281.chapter06;
+//Adam Glover
+//Project 12
+//Professor Sims
+//Date Completed: 11-9-2022
+//Date Due: 11-16-2022
+//Critter class for the Sum Swamp game
+public class SumCritter {
+//Fields
+	private String name;
+	private String critterColor;
+	private int critterSpace;
+	
+//Constants
+	
+	public static final int FINISH = 40;
+	public static final String[] COLOR = {"Blue", "Yellow", "Green", "Red" };
+	
+//Constructor
+	
+	public SumCritter(String newName, String color) {
+		this.setColor(color);
+		this.setCritterSpace(0);
+		this.setName(newName);
+	}//End bracket of Constructor
+	
+//Methods
+	private void setName(String newName) {
+		this.name = newName;
+	}//Ending bracket for setName method
+	
+	public String getName() {
+		return this.name;
+	}//Ending bracket for getName method
+	
+	private void setColor(String newColor) {
+		this.critterColor = newColor;
+	}//Ending bracket of setColor method
+	
+	public String getColor() {
+		return this.critterColor;
+	}//End Bracket of getColor method
+	
+	private void setCritterSpace(int newSpace) {
+		this.critterSpace = newSpace;
+	}//End bracket of setCritterSpace method
+	
+	public int getCritterSpace() {
+		return this.critterSpace;
+	}//Ending bracket of getCritterSpace method
+	
+	public int updateCritterSpace(int die1, String opDie, int die2) {
+	
+		int num1 = 0;
+		int num2 = 0;
+		int sum = 0;
+		
+		if(die2 <= die1) {
+			num2 = die2;
+			num1 = die1;
+		}else if(die1 <= die2) {
+			num2 = die1;
+			num1 = die2;
+		}//Ending bracket of dice evaluation if
+		
+		if(opDie.contains("+")) {
+			sum = num1 + num2;
+		}else if(opDie.contains("-")) {
+			sum = num1 - num2;
+			if(sum < 0) {
+				sum = 0;
+			}//Ending bracket of inner If
+		}//Ending bracket of Else if
+		
+	
+		return sum;
+		
+	}//Ending bracket of updateCritterSpace
+	
+	public String specialSpace(int currentSpace) {
+		
+		String returnValue = "";
+		
+		switch(currentSpace) {
+			case 2:
+				returnValue = this.getName() + " has landed on an evens tile! Roll a dice, if you get an even, move forward that many spaces";
+				break;
+			case 3:
+				returnValue = this.getName() + " has landed on a 2 tile! Roll an operation die. \n"
+						+ "if you get a +, move forward by 2, if you get a -, move back by 2.";
+				break;
+			case 6:
+				returnValue = this.getName() + " has found a short cut! Move to space 14";
+				this.setCritterSpace(14);
+				break;
+			case 8:
+				returnValue = this.getName() + " has landed on a odds tile! Roll a dice, if you get an odd number, move forward that many spaces.";
+				break;
+			case 11:
+				returnValue = this.getName() + " has landed on a 3 tile! Roll an operation die. \n"
+						+ "If you get a +, move forward by 3, if you get a -, move back by 3.";
+				break;
+			case 13:
+				returnValue = this.getName() + " has landed on a 6 tile! Roll an operation die. \n"
+						+ "If you get a +, move forward by 6, if you get a -, move back by 6.";
+				break;
+			case 15:
+				returnValue = this.getName() + " has found a short cut! Move to space 21";
+				this.setCritterSpace(21);
+				break;
+			case 16: 
+				returnValue = this.getName() + " has landed on an evens tile! Roll a dice, if you get an even, move forward that many spaces";
+				break;
+			case 18:
+				returnValue = this.getName() +  " has landed on a 1 tile! Roll an operation die. \n"
+						+ "If you get a +, move forward by 1, if you get a -, move back by 1.";
+				break;
+			case 22:
+				returnValue = "Uh oh, " + this.getName() + " has entered the endless loop!";
+				break;
+			case 25:
+				returnValue = this.getName() + " has landed on a 5 tile! Roll an operation die. \n"
+						+ "If you get a +, move forward by 5, if you get a -, move back by 5.";
+				break;
+			case 27:
+				returnValue = this.getName() + " has landed on a 3 tile! Roll an operation die. \n"
+						+ "If you get a +, move forward by 3, if you get a -, move back by 3.";
+				break;
+			case 30:
+				returnValue = this.getName() + " made it out of the endless loop!";
+				break;
+			case 32:
+				returnValue = this.getName() + " has landed on a odds tile! Roll a dice, if you get an odd number, move forward that many spaces.";
+				break;
+			case 33:
+				returnValue = this.getName() + " has landed on a 3 tile! Roll an operation die. \n"
+						+ "If you get a +, move forward by 3, if you get a -, move back by 3.";
+				break;
+			case 36:
+				returnValue = this.getName() + " has landed on an evens tile! Roll a dice, if you get an even, move forward that many spaces";
+				break;
+			case 37:
+				returnValue = this.getName() + " has landed on a 2 tile! Roll an operation die. \n"
+						+ "if you get a +, move forward by 2, if you get a -, move back by 2.";
+				break;
+			case FINISH:
+				returnValue = this.getName() + " made it! You win!";
+				break;
+		}//Ending bracket of Switch statement
+		
+		return returnValue;
+		
+	}//Ending bracket of SpecialSpace method
+	
+
+	public boolean hasColor(String newColor) {
+		boolean returnValue = false;
+		if(this.getColor().contentEquals(newColor)){
+			returnValue = true;
+		}
+		return returnValue;
+	}
+	
+	public boolean hasWon() {
+		boolean won = false;
+		if(this.getCritterSpace() >= 40) {
+			won = true;
+		}
+		return won;
+	}
+	public void forwardSpace(int numSpaces) {
+		this.setCritterSpace(this.getCritterSpace() + numSpaces);
+	}
+	
+	public void backSpace(int numSpaces) {
+		this.setCritterSpace(this.getCritterSpace() - numSpaces);
+	}
+
+}//End bracket of Critter class

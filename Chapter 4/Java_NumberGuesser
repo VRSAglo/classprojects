@@ -1,0 +1,96 @@
+package edu.mtc.egr281.chapter04;
+//Adam Glover
+//Project06
+//Professor Sims
+//EGR-281-V02
+//Date 9-28-2022
+//Due: 10-5-2022  
+
+//This program is a simple game where the user thinks of a number and the program attempts to guess the number.
+import java.util.Scanner;
+
+
+public class LetMeGuessYourNumber {
+
+	public static void main(String[] args) {
+		//STORE 
+		//Create a scanner for user input
+		Scanner keyboard = new Scanner(System.in);
+		//Greet user and explain the game
+		System.out.println("Welcome to The Psychic Computer \n"
+						+ "I will attempt to guess a number you are thinking of \n"
+						+ "Please enter a maximum number to guess");
+		
+		//Set a variable to create a movable upper bound
+		int upperBound = -1;
+		
+		//Set a variable to create a movable lower bound
+		int lowerBound = 0;
+		
+		//Create a char variable to store users direction
+		char userInput = 'T';
+		String userString = "";
+		
+		//Create a int variable to store number of guesses
+		int numberOfGuesses = 0;
+		//create an int to store the computers current guess
+		int myGuess = 0;
+		//Create an int for cheatCheck
+		int cheatCheck = -1;
+		
+		//Input Data
+		//Get a value for the upper bound
+		upperBound = keyboard.nextInt();
+		
+		//Process Data
+		//LOOP
+		do {
+			//Increment number of guesses
+			numberOfGuesses += 1;
+			//Calculate my guess
+			myGuess = (upperBound + lowerBound) / 2;
+			//Issue a guess based on (Lower + Upper) / 2
+			//Check for cheating
+				if(myGuess != cheatCheck) {
+					System.out.println("Is your number " + myGuess + "?" + "\n"
+					+ "Enter 'H' for higher, 'L' for lower, or 'Y' for correct guess.");
+				} else if(cheatCheck == myGuess) {
+					System.out.println("Are you cheating? That's not very nice!");
+					System.exit(0);
+					} //Ending bracket cheat check if
+			//Get user Feedback and adjust to uppercase char
+			userString = keyboard.next();
+			userString = userString.toUpperCase();
+			userInput = userString.charAt(0);
+			while(userInput != 'Y' && userInput != 'H' && userInput != 'L') {
+				System.out.println("You have entered an invalid entry, please only enter 'Y', 'H', or 'L'");
+				numberOfGuesses -= 1;
+				break;
+			}//Ending bracket of error input loop
+
+			
+			//If the guess is lower, decrease the upper bound to previous guess
+				if(userInput == 'H') {
+					lowerBound = myGuess;
+					cheatCheck = myGuess;
+				}else if(userInput == 'L') {
+					upperBound = myGuess;
+					cheatCheck = myGuess;
+				} //Ending bracket for moving boundries if
+			//If the number is higher, increase the lower bound to previous guess
+			//If Upper bound == lower bound, Output user is cheating
+		} while (userInput != 'Y');
+		//Output Data
+		
+		//Output the congratulations statement with number of guesses
+		if(userInput == 'Y') {
+		System.out.println("I got it, didn't i? Your number was " + myGuess + "\n"
+						+ "and it only took me " + numberOfGuesses + " tries!");
+		}else {
+			System.out.println("Game over!");
+		}//Ending bracket of game over if
+		//Close Scanner Resource
+		keyboard.close(); 
+	} //Ending bracket for main method
+	
+} //Ending Bracket for LetMeGuessYourNumber class

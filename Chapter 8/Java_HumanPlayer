@@ -1,0 +1,27 @@
+package edu.mtc.egr281.Chapter08;
+
+import java.util.Scanner;
+
+public class HumanPlayer extends Player{
+	//Fields
+	private Scanner keys;
+	//Constructor
+	public HumanPlayer(String newName, Scanner keyboard) {
+		super(newName);
+		this.keys = keyboard;
+	}//ending bracket of constructor
+	
+	//Methods
+	@Override
+	public void makeChoice() {
+		int choice;
+		
+		do {
+			System.out.print("Enter your choice [1 or 2]: ");
+			choice = keys.nextInt();
+		}while(choice != 1 && choice != 2);
+		
+		this.setChoice(choice);
+	}//Ending bracket of makeChoice override
+	
+}//ending bracket of HumanPlayer class

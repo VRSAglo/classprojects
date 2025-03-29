@@ -1,0 +1,45 @@
+package edu.mtc.egr281.Chapter08;
+//Adam Glover
+//Project 13
+//Professor Sims
+//Date Completed: 11-16-2022
+//Date Due: 11-23-2022
+//Player Human class for Rock Paper Scissors
+
+import java.util.Scanner;
+
+public class RPSHuman extends RPSPlayer{
+//Fields
+	private Scanner keys;
+	
+//Constructors
+	public RPSHuman(Scanner keyboard, String newName) {
+		super(newName);
+		this.keys = keyboard;
+	}//Ending bracket of constructor.
+	
+//Methods
+	@Override
+	public void makeChoice() {
+		RPSOptions option;
+		String userInput;
+		do {
+			System.out.println("Please make your selection [Rock, Paper, or Scissors]");
+			userInput = keys.next();
+			switch(userInput) {
+			case "Rock":
+				option = RPSOptions.ROCK;
+				break;
+			case "Scissors":
+				option = RPSOptions.SCISSORS;
+				break;
+			default:
+				option = RPSOptions.PAPER;	
+			}
+			
+		}while(option.isEqual(RPSOptions.ROCK) && option.isEqual(RPSOptions.SCISSORS) && option.isEqual(RPSOptions.PAPER) );
+		this.setChoice(option);
+		
+	}//Ending bracket of makechoice method
+	
+}

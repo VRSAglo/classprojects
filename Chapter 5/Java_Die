@@ -1,0 +1,47 @@
+package edu.mtc.egr281.Chaptor05;
+
+import java.util.Random;
+
+public class Die {
+
+	//Fields
+	private int value;
+	private int numberOfSides;
+	private Random numberGenerator;
+	
+	//Constant
+	public static final int DEFAULT_NUMBER_OF_SIDES = 6;
+	
+	//Constructors
+	public Die() {
+		this(Die.DEFAULT_NUMBER_OF_SIDES);
+	}//Ending bracket of default "no-args" constructor Die()
+	
+	public Die(int newNumberOfSides) {
+		this.setValue(0);
+		this.setNumberOfSides(newNumberOfSides);
+		this.numberGenerator = new Random();
+	}//Ending bracket for Die Constructor
+	
+	//Methods
+	public int getValue() {
+		return this.value;
+	} //Ending bracket of getValue method
+	
+	private void setValue(int newValue) {
+		this.value = newValue;
+	}//ending bracket of setValue method
+	
+	public int getNumberOfSides() {
+		return this.numberOfSides;
+	}//Ending bracket of getNumberOfSides method
+	
+	private void setNumberOfSides(int newNumberOfSides) {
+		this.numberOfSides = newNumberOfSides;
+	}//ending bracket of setNumberOfSides method
+	
+	public void roll() {
+		this.setValue(this.numberGenerator.nextInt(this.getNumberOfSides()) + 1);
+	}//Ending bracket of the method roll
+	
+}//Ending bracket of die class

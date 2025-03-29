@@ -1,0 +1,95 @@
+package edu.mtc.egr281.chapter02;
+//Adam Glover
+//Professor Sims
+//Project02
+//Due Date: 9-7-2022
+//Current Date: 8=31=2022
+//This program calculates the users BMI and outputs their rating and what category they fall into.
+
+
+
+//Import Scanner Utilities
+import java.util.Scanner;
+
+
+
+public class AdamsBMICalculator { //Beginning Bracket for AdamsBMICalculator Class
+	// Declare the Imperial Formula Constant 703
+	public static final int BMICONSTANT = 703;
+	//Declare Constant for Conversion of feet to inches
+	public static final int FEETTOINCHES = 12;
+	
+	//For Fun If statement constants
+	//Under weight Max Scale Value
+	public static final double UNDERBMI = 18.5;
+	//Normal Weight Max Scale Value
+	public static final double NORMALBMI = 25.0;
+	//Over Weight Max Scale Value
+	public static final double OVERBMI = 30;
+	
+	public static void main(String [] args)
+	{ //Beginning Bracket for Main Method
+		//Create Variables for Input (weight, heightinfeet, heightininches, totalheight, weightinpounds, weightplusconstant, heightsquared, totalbmi
+		int heightInFeet, heightInInches, totalHeight, weightInPounds, heightSquared;
+		float totalBmi,  weightPlusConstant;
+		
+		//Instantiate and Declare Scanner
+		Scanner userInput;
+		userInput = new Scanner(System.in);
+		
+		//Greet User
+		System.out.println("Greetings, do you want to calculate your BMI?");
+		
+		//Ask for user input for height in feet
+		System.out.println("Please enter the feet portion of your height (Example: 6'3 enter 6):");
+		
+		//Get user input for height in feet
+		heightInFeet = userInput.nextInt();
+		
+		//Ask user input for height in inches
+		System.out.println("Please input the inch portion of your height (Example: 6'3 enter 3):");
+		
+		//get user input for height in inches
+		heightInInches = userInput.nextInt();
+		
+		//Ask user input for weight in pounds
+		System.out.println("Please enter your weight in pounds:");
+		//Get user input for weight in pounds
+		weightInPounds = userInput.nextInt();
+		
+		//calculate total height
+		totalHeight = (heightInFeet * FEETTOINCHES) + heightInInches;
+		
+		//calculate weight plus constant
+		weightPlusConstant = weightInPounds * BMICONSTANT;
+		
+		//calculate height squared
+		heightSquared = totalHeight * totalHeight;
+		
+		//calculate total bmi
+		totalBmi = (float)weightPlusConstant / heightSquared;
+		
+		//Print output
+		System.out.println("Your BMI is " + totalBmi);
+		
+		//Give information on BMI ratings (this is for fun and I hope It doesn't get me a bad grade)
+		System.out.println();
+		if (totalBmi <= UNDERBMI )
+			System.out.println("You register as underweight.");
+		else if (totalBmi > UNDERBMI & totalBmi < NORMALBMI)
+			System.out.println("You register as normal weight.");
+		else if (totalBmi > NORMALBMI & totalBmi < OVERBMI)
+			System.out.println("You register as overweight.");
+		else if (totalBmi >= OVERBMI)
+			System.out.println("You register as obese.");
+		
+		
+		
+		//Close Scanner
+		userInput.close();
+		
+		
+	} //Ending Bracket for Main method
+	
+	
+} //Ending Bracket for AdamsBMICalculator Class

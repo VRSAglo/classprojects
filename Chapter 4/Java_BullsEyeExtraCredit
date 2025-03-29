@@ -1,0 +1,184 @@
+package edu.mtc.egr281.chapter04;
+//Adam Glover
+//ExtraCredit 1
+//Professor Sims
+//EGR-281-V02
+//Due: 10-5-22
+//Date: 9-28-22
+
+//This program draws a pictures of the programmer
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+
+
+
+public class BullsEyeExtraCredit extends JFrame {
+	private static final long serialVersionUID = 1L;
+	
+	public BullsEyeExtraCredit() {
+		super ();
+		//Set name for title bar
+		setTitle("Glover's Bullseye");
+		//Set size of Canvas
+		setSize(900,800);
+		//Set close operation
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	} //Ending bracket for BullsEyeExtraCredit 
+
+	public void paint(Graphics brush) {
+	//Outer circles (white with black lines)
+		brush.setColor(Color.WHITE);
+		//Fill white oval
+		brush.fillOval(100, 100, 550, 550);
+		//Outline white oval with black rings
+		brush.setColor(Color.BLACK);
+		brush.drawOval(100, 100, 550, 550);
+		//Draw second outer ring
+		brush.drawOval(125, 125, 500, 500);
+	//Second layer circles (black with white lines)
+		//Draw filled oval for second layer
+		brush.fillOval(150, 150, 450, 450);
+		//Set brush color for outer rings
+		brush.setColor(Color.WHITE);
+		//Draw inner rings
+		brush.drawOval(175, 175, 400, 400);
+	//Third Layer Circles (blue with black liens)
+		//set brush color for filling third layer oval
+		brush.setColor(Color.BLUE);
+		//Draw filled oval
+		brush.fillOval(200,  200, 350,  350);
+		//Set color for inner rings on third layer
+		brush.setColor(Color.BLACK);
+		//Draw inner rings
+		brush.drawOval(225, 225, 300, 300);
+		brush.drawOval(224, 224, 300, 300);
+		brush.drawOval(226, 226, 300, 300);	
+	//Fourth Layer Circles (red with black lines)	
+		//Set brush color for fourth layer circles
+		brush.setColor(Color.RED);
+		//draw Filled oval for third layer
+		brush.fillOval(250, 250, 250, 250);
+		//draw inner circles for third layer
+		brush.setColor(Color.BLACK);
+		brush.drawOval(275, 275, 200, 200);
+		brush.drawOval(274, 274, 200, 200);
+		brush.drawOval(276, 276, 200, 200);
+	//Fifth Layer Circles (Yellow with black lines)
+		//set brush color for fill
+		brush.setColor(Color.YELLOW);
+		//Draw inner filled oval
+		brush.fillOval(300, 300, 150, 150);
+		//Set color and draw inner rings
+		brush.setColor(Color.BLACK);
+		brush.drawOval(325, 325, 100, 100);
+		brush.drawOval(326, 326, 100, 100);
+		brush.drawOval(324, 324, 100, 100);
+		//Next ring
+		brush.drawOval(350, 350, 50, 50);
+		brush.drawOval(351, 351, 50, 50);
+		brush.drawOval(349, 349, 50, 50);
+
+	//Set Text Settings
+
+		
+	
+		
+		
+		
+		//Set line for bulleye score label (circle 10)
+		brush.drawLine(375, 375, 700, 200);
+		//Set text for bulleye score (circle 10)
+		
+		//Set line for circle 9 score label
+		brush.drawLine(410, 375, 700, 230);
+		//Set text for circle 9 score label
+		
+		//Set line for circle 8 score label
+		brush.drawLine(435, 375, 700, 255);
+		//Set text for circle 8 score label
+		
+		//Set line for circle 7 score label
+		brush.drawLine(465, 375, 700, 280);
+		//Set text for circle 7 score label
+		
+		//Set line for circle 6 score label
+		brush.drawLine(490, 375, 700, 310);
+		//Set text for circle 6 score label
+		
+		//Set line for circle 5 score label
+		brush.drawLine(510, 390, 700, 340);
+		//Set text for circle 5 score label
+		
+		//Set line for circle 4 score label
+		brush.drawLine(530, 410, 700, 370);
+		//Set text for circle 4 score label
+		
+		//Set line for circle 3 score label
+		brush.drawLine(550, 430, 700, 400);
+		//Set text for circle 3 score label
+		
+		//Set line for circle 2 score label
+		brush.drawLine(570, 450, 700, 430);
+		//Set text for circle 2 score label
+		
+		//set line for circle 1 score label 
+		brush.drawLine(590, 470, 700, 460);
+		//Set text for circle 1 score label
+		
+		//set line for outer ring
+		brush.drawLine(610, 490, 700, 490);
+		//set text for outer ring
+		
+		//Write score text for Bullseye
+		brush.drawString("X Ring 10 points" , 705 , 200);
+		
+		//Write score text for next ring
+		brush.drawString("10 Points", 705, 230);
+		
+		//Write score text for next ring
+		brush.drawString("9 Points", 705, 260);
+		
+		//write score text for next ring
+		brush.drawString("8 Points", 705, 280);
+		
+		//Write score text for next ring
+		brush.drawString("7 Points", 705, 310);
+		
+		//Write score text for next ring
+		brush.drawString("6 Points", 705, 340);
+		
+		//Write score text for next ring
+		brush.drawString("5 Points", 705, 370);
+		
+		//Write score text for next ring
+		brush.drawString("4 Points", 705, 400);
+		
+		//Write score text for next ring
+		brush.drawString("3 Points", 705, 430);
+		
+		//Write score text for next ring
+		brush.drawString("2 Points", 705, 460);
+		
+		//write score text for next ring
+		brush.drawString("1 Point", 705, 490);
+	} //Ending bracket of paint method
+	
+	public static void main(String[] args) {
+		//Create new canvas on program start
+		BullsEyeExtraCredit hf = new BullsEyeExtraCredit();
+		//Set canvas to visible
+		hf.setVisible(true);
+		
+		//Create text and Set Visible
+		JFrame textOne = new JFrame ();
+		textOne.setSize(15, 15);
+		textOne.setVisible(true);
+		textOne.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		textOne.setResizable(false);
+		
+		
+	}//Ending bracket of main method
+	
+	
+} //Ending Bracket for BullsEyeClass
